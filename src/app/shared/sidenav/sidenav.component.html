@@ -1,0 +1,252 @@
+<mat-sidenav-container class="light-container" [hasBackdrop]="true">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" position="end">
+    <div
+      data-color="white"
+      data-background-color="red"
+      data-image="../../../assets/angular2-logo-white.webp"
+      class="sidebar px-2"
+    >
+      <div class="logo flex items-center py-3">
+        <a class="simple-text logo-mini"
+          ><div class="logo-img mr-3">
+            <img
+              src="../../../assets/angular2-logo-white.webp"
+              class="w-10"
+            /></div></a
+        ><a
+          href="https://www.creative-tim.com"
+          class="simple-text logo-normal bg-rose-5"
+        >
+          LIGHT CONNECT
+        </a>
+      </div>
+
+      <div class="sidebar-wrapper">
+        <hr />
+        <div class="user flex items-center py-5">
+          <div class="photo mr-3">
+            <img class="w-10 rounded-full" src="../../../assets/avatar.jpeg" />
+          </div>
+          <div class="user-info">John Andrew</div>
+        </div>
+        <hr />
+        <!---->
+        <ul class="nav">
+          <li routerlinkactive="active" class="nav-item active">
+            <a class="nav-link" href="#/dashboard"
+              ><i class="material-icons">dashboard</i>
+              <p>Dashboard</p></a
+            >
+          </li>
+          <li routerlinkactive="active" class="nav-item">
+            <!----><a
+              data-toggle="collapse"
+              class="nav-link"
+              href="#components"
+              aria-expanded="true"
+              ><i class="material-icons">apps</i>
+              <p>Components<b class="caret"></b></p></a
+            ><!---->
+          </li>
+
+          <li routerlinkactive="active" class="nav-item">
+            <!----><a
+              data-toggle="collapse"
+              class="nav-link collapsed"
+              href="#maps"
+              aria-expanded="false"
+              ><i class="material-icons">place</i>
+              <p>Maps<b class="caret"></b></p></a
+            ><!---->
+
+            <!---->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <span>Light Connect</span>
+      <span class="example-spacer"></span>
+
+      <button
+        (click)="sidenav.toggle()"
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with share icon"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <div class="main-content py-8 px-10">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+      >
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          <img
+            class="w-full"
+            src="../../../assets/mountain.jpg"
+            alt="Sunset in the mountains"
+          />
+          <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+            <p class="text-gray-700 text-base">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Voluptatibus quia, nulla! Maiores et perferendis eaque,
+              exercitationem praesentium nihil.
+            </p>
+          </div>
+          <div class="px-6 pt-4 pb-2">
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#photography</span
+            >
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#travel</span
+            >
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#winter</span
+            >
+          </div>
+        </div>
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          <img
+            class="w-full"
+            src="../../../assets/mountain.jpg"
+            alt="Sunset in the mountains"
+          />
+          <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+            <p class="text-gray-700 text-base">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Voluptatibus quia, nulla! Maiores et perferendis eaque,
+              exercitationem praesentium nihil.
+            </p>
+          </div>
+          <div class="px-6 pt-4 pb-2">
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#photography</span
+            >
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#travel</span
+            >
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#winter</span
+            >
+          </div>
+        </div>
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          <img
+            class="w-full"
+            src="../../../assets/mountain.jpg"
+            alt="Sunset in the mountains"
+          />
+          <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+            <p class="text-gray-700 text-base">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Voluptatibus quia, nulla! Maiores et perferendis eaque,
+              exercitationem praesentium nihil.
+            </p>
+          </div>
+          <div class="px-6 pt-4 pb-2">
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#photography</span
+            >
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#travel</span
+            >
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#winter</span
+            >
+          </div>
+        </div>
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          <img
+            class="w-full"
+            src="../../../assets/mountain.jpg"
+            alt="Sunset in the mountains"
+          />
+          <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+            <p class="text-gray-700 text-base">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Voluptatibus quia, nulla! Maiores et perferendis eaque,
+              exercitationem praesentium nihil.
+            </p>
+          </div>
+          <div class="px-6 pt-4 pb-2">
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#photography</span
+            >
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#travel</span
+            >
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              >#winter</span
+            >
+          </div>
+        </div>
+
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          <div
+            class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+            style="background-image: url('../../../assets/mountain.jpg')"
+            title="Woman holding a mug"
+          ></div>
+          <div
+            class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal"
+          >
+            <div class="mb-8">
+              <p class="text-sm text-gray-600 flex items-center">
+                <svg
+                  class="fill-current text-gray-500 w-3 h-3 mr-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z"
+                  />
+                </svg>
+                Members only
+              </p>
+              <div class="text-gray-900 font-bold text-xl mb-2">
+                Can coffee make you a better developer?
+              </div>
+              <p class="text-gray-700 text-base">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Voluptatibus quia, nulla! Maiores et perferendis eaque,
+                exercitationem praesentium nihil.
+              </p>
+            </div>
+            <div class="flex items-center">
+              <img
+                class="w-10 h-10 rounded-full mr-4"
+                src="../../../assets/mountain.jpg"
+                alt="Avatar of Jonathan Reinink"
+              />
+              <div class="text-sm">
+                <p class="text-gray-900 leading-none">Jonathan Reinink</p>
+                <p class="text-gray-600">Aug 18</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

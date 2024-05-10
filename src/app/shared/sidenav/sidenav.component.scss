@@ -1,0 +1,75 @@
+.light-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: rgba(0, 0, 0, 0.35) !important;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+mat-sidenav {
+  width: 250px;
+}
+
+mat-sidenav-content {
+  background-color: rgba(245, 245, 245);
+}
+
+.main-content {
+  min-height: calc(100vh - 123px);
+}
+.sidebar {
+  height: 100%;
+  position: relative;
+
+  &::before {
+    content: "";
+    background-image: linear-gradient(
+        to bottom,
+        rgb(254, 205, 211, 0.9),
+        rgb(255, 241, 242, 0.2)
+      ),
+      url("../../../assets/mountain.jpg");
+    background-size: 100%;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    z-index: -1;
+  }
+}
+
+.sidebar-wrapper {
+  ul {
+    li {
+      a {
+        display: flex;
+        align-items: center;
+        padding: 1rem 0 1rem 0.5rem;
+        border-radius: 3px;
+        color: #3c4858;
+        text-transform: capitalize;
+        font-size: 13px;
+
+        &:hover {
+          background-color: rgb(240, 235, 235);
+          outline: none;
+        }
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
