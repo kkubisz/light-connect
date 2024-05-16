@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BreakpointObserver, MediaMatcher } from '@angular/cdk/layout';
 import { NgIf } from '@angular/common';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -17,6 +18,8 @@ import { NgIf } from '@angular/common';
     MatSidenavModule,
     MatListModule,
     NgIf,
+    RouterLink,
+    RouterOutlet,
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',

@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+button,
+button:not(:disabled) {
+  color: white;
+  background-color: rgb(186, 0, 92);
+}
