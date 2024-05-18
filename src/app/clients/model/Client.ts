@@ -22,6 +22,6 @@ export type Client = {
   price: string;
   additional_cost: string;
   petrol: string;
-  session_type: string;
+  session_type: string[];
   other: string;
 };

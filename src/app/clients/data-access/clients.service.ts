@@ -10,11 +10,18 @@ export class ClientsService {
 
   private http = inject(HttpClient);
 
-  getAll(client_type: string) {
+  getAll(client_type: string | string[]) {
     return this.http.get<Client[]>(`${this.ClientSeriveURL}/clients`, {
       observe: 'response',
       params: { client_type },
     });
+  }
+
+  getClient(clientId: string) {
+    return this.http.get<Client>(
+      `${this.ClientSeriveURL}/clients/${clientId}`,
+      { observe: 'response' }
+    );
   }
 
   delete(taskId: number) {
