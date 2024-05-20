@@ -5,13 +5,13 @@ import { ClientsService } from '../../clients/data-access/clients.service';
 import { Client } from '../../clients/model/Client';
 import { BaseChartComponent } from '../base-chart/base-chart.component';
 @Component({
-  selector: 'app-clients-summary',
+  selector: 'app-clients-summary-doughnut-chart',
   standalone: true,
   imports: [BaseChartDirective, BaseChartComponent],
-  templateUrl: './clients-summary.component.html',
-  styleUrl: './clients-summary.component.scss',
+  templateUrl: './clients-summary-doughnut-chart.component.html',
+  styleUrl: './clients-summary-doughnut-chart.component.scss',
 })
-export class ClientsSummaryComponent implements OnInit {
+export class ClientsSummaryDoughnutChartComponent implements OnInit {
   private clientService = inject(ClientsService);
   doughnutChartData: ChartData<'doughnut'> = { datasets: [] };
   recordCountArray: number[] = [];
@@ -40,11 +40,19 @@ export class ClientsSummaryComponent implements OnInit {
       },
     });
   }
+  getCurrentYearData(data: Client[]) {
+    const currentYear = new Date().getFullYear();
+    return data.filter((item) => {
+      const date = new Date(item.date);
+      return date.getFullYear() === currentYear;
+    });
+  }
 
   calculateRecordCountByClientType(data: Client[]) {
+    const currentYearData = this.getCurrentYearData(data);
     const recordCountMap: { [clientType: string]: number } = {};
 
-    data.forEach((item) => {
+    currentYearData.forEach((item) => {
       const clientType = item.client_type;
 
       if (!recordCountMap[clientType]) {

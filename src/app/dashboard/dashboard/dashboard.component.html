@@ -11,8 +11,21 @@
   </mat-tab>
 </mat-tab-group>
 
-<div class="grid sm:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-4 mt-20">
-  <div><app-clients-summary></app-clients-summary></div>
-  <div><app-income-summary></app-income-summary></div>
-  <div><app-clients-month></app-clients-month></div>
+<div
+  class="grid sm:grid-cols-2 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mt-20 lg:gap-y-12"
+>
+  <div>
+    <app-clients-summary-doughnut-chart></app-clients-summary-doughnut-chart>
+  </div>
+  <div><app-income-summary-bar-chart></app-income-summary-bar-chart></div>
+  <div><app-clients-month-line-chart></app-clients-month-line-chart></div>
+</div>
+
+<div
+  class="grid sm:grid-cols-3 grid-cols-1 lg:grid-cols-4 gap-4 mt-20 sm:gap-y-12 xl:gap-y-4"
+>
+  <app-total-clients [clients]="this.clients"></app-total-clients>
+  <app-total-income [clients]="this.clients"></app-total-income>
+  <app-total-cost [clients]="this.clients"></app-total-cost>
+  <app-upcoming-assignment [clients]="this.clients"></app-upcoming-assignment>
 </div>

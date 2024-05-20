@@ -1,0 +1,28 @@
+<div
+  class="block p-6 bg-white border border-gray-200 rounded-lg shadow relative"
+>
+  <div
+    class="icon -top-6 left-5 p-5 rounded relative sm:absolute inline-flex sm:block"
+    [class]="iconColor"
+  >
+    <mat-icon>{{ icon }}</mat-icon>
+  </div>
+
+  <div class="content-wrapper pt-4">
+    <div class="heading-wrapper text-end">
+      <h4 class="mb-2 font-light tracking-tight text-gray-300 dark:text-white">
+        {{ title }}
+      </h4>
+      <p class="font-normal text-gray-700 dark:text-gray-400">{{ value }}</p>
+    </div>
+
+    <hr />
+
+    <div class="footnote flex items-end pt-3">
+      <mat-icon class="icon total-count" [class]="iconType">
+        {{ iconType }}
+      </mat-icon>
+      <span> {{ footNote }} </span>
+    </div>
+  </div>
+</div>

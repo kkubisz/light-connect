@@ -1,0 +1,22 @@
+mat-icon {
+  font-size: 24px;
+  color: #fff;
+}
+
+.mat-mdc-tab .mdc-tab-indicator__content--underline {
+  color: #db2777;
+}
+
+.icon {
+  color: #000;
+}
+
+.icon {
+  color: #dbd227;
+  &.arrow_upward {
+    color: #10bb82;
+  }
+  &.arrow_downward {
+    color: #db2777;
+  }
+}

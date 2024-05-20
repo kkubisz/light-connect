@@ -35,9 +35,9 @@
       "date": "test",
       "venue": "test",
       "type": "test",
-      "price": "test",
-      "additional_cost": "test",
-      "petrol": "test",
+      "price": 250,
+      "additional_cost": 0,
+      "petrol": 50,
       "session_type": "test",
       "other": "test",
       "createdAt": 1693042928127
@@ -58,17 +58,17 @@
       "date": "test",
       "venue": "test",
       "type": "test",
-      "price": "test",
-      "additional_cost": "test",
-      "petrol": "test",
+      "price": 250,
+      "additional_cost": 50,
+      "petrol": 150,
       "session_type": "test",
       "other": "test",
       "createdAt": 1693042928127
     },
     {
-      "price": "123123",
-      "additional_cost": "",
-      "petrol": "1",
+      "price": 123123,
+      "additional_cost": 0,
+      "petrol": 1,
       "session_type": "",
       "other": "12",
       "groom_name": "",
@@ -91,9 +91,9 @@
       "id": 4
     },
     {
-      "price": "1500",
-      "additional_cost": "150",
-      "petrol": "100",
+      "price": 1500,
+      "additional_cost": 150,
+      "petrol": 100,
       "session_type": "",
       "other": "Number of kids: 3\nAdditional cost: book and prints",
       "groom_name": "",
@@ -115,9 +115,9 @@
       "id": 5
     },
     {
-      "price": "4500",
-      "additional_cost": "450",
-      "petrol": "200",
+      "price": 4500,
+      "additional_cost": 450,
+      "petrol": 200,
       "session_type": ["Engagement Session", "Wedding", "Full Movie"],
       "other": "",
       "groom_name": "Tomek",
@@ -139,9 +139,9 @@
       "id": 6
     },
     {
-      "price": "4500",
-      "additional_cost": "450",
-      "petrol": "200",
+      "price": 4500,
+      "additional_cost": 450,
+      "petrol": 200,
       "session_type": ["Engagement Session", "Wedding", "Full Movie"],
       "other": "",
       "groom_name": "Romek",
@@ -163,9 +163,9 @@
       "id": 7
     },
     {
-      "price": "8500",
-      "additional_cost": "300",
-      "petrol": "250",
+      "price": 8500,
+      "additional_cost": 300,
+      "petrol": 250,
       "session_type": ["Wedding", "Full Movie", "Short"],
       "other": "",
       "groom_name": "Jasiek",
@@ -187,9 +187,9 @@
       "id": 8
     },
     {
-      "price": "7800",
-      "additional_cost": "150",
-      "petrol": "100",
+      "price": 7800,
+      "additional_cost": 150,
+      "petrol": 100,
       "session_type": ["Wedding"],
       "other": "",
       "groom_name": "Pawel",
@@ -211,9 +211,9 @@
       "id": 9
     },
     {
-      "price": "1000",
-      "additional_cost": "100",
-      "petrol": "50",
+      "price": 1000,
+      "additional_cost": 100,
+      "petrol": 50,
       "session_type": "",
       "other": "",
       "groom_name": "",
@@ -235,9 +235,9 @@
       "id": 10
     },
     {
-      "price": "5000",
-      "additional_cost": "20",
-      "petrol": "100",
+      "price": 5000,
+      "additional_cost": 20,
+      "petrol": 100,
       "session_type": "",
       "other": "",
       "groom_name": "",
@@ -259,9 +259,9 @@
       "id": 11
     },
     {
-      "price": "1200",
-      "additional_cost": "150",
-      "petrol": "50",
+      "price": 1200,
+      "additional_cost": 150,
+      "petrol": 50,
       "session_type": "",
       "other": "",
       "groom_name": "",
@@ -283,9 +283,9 @@
       "id": 12
     },
     {
-      "price": "5000",
-      "additional_cost": "",
-      "petrol": "",
+      "price": 5000,
+      "additional_cost": 199,
+      "petrol": 90,
       "session_type": "",
       "other": "",
       "groom_name": "",
@@ -307,9 +307,9 @@
       "id": 13
     },
     {
-      "price": "5000",
-      "additional_cost": "",
-      "petrol": "",
+      "price": 5000,
+      "additional_cost": 250,
+      "petrol": 100,
       "session_type": "",
       "other": "",
       "groom_name": "",
@@ -331,9 +331,9 @@
       "id": 14
     },
     {
-      "price": "5000",
-      "additional_cost": "",
-      "petrol": "",
+      "price": 5000,
+      "additional_cost": 300,
+      "petrol": 150,
       "session_type": "",
       "other": "",
       "groom_name": "",
@@ -355,9 +355,9 @@
       "id": 14
     },
     {
-      "price": "29000",
-      "additional_cost": "2500",
-      "petrol": "500",
+      "price": 29000,
+      "additional_cost": 250,
+      "petrol": 500,
       "session_type": ["Wedding", "Full Movie"],
       "other": "",
       "groom_name": "Tom",
@@ -379,9 +379,9 @@
       "id": 15
     },
     {
-      "price": "5000",
-      "additional_cost": "",
-      "petrol": "",
+      "price": 5000,
+      "additional_cost": 500,
+      "petrol": 200,
       "session_type": "",
       "other": "",
       "groom_name": "",
@@ -403,9 +403,9 @@
       "id": 14
     },
     {
-      "price": "49000",
-      "additional_cost": "2500",
-      "petrol": "500",
+      "price": 49000,
+      "additional_cost": 250,
+      "petrol": 500,
       "session_type": ["Wedding", "Full Movie"],
       "other": "",
       "groom_name": "Tom2",
@@ -425,6 +425,30 @@
       "wedding_location": "",
       "civil_location": "",
       "id": 15
+    },
+    {
+      "price": 37000,
+      "additional_cost": 1200,
+      "petrol": 500,
+      "session_type": ["Wedding", "Full Movie"],
+      "other": "",
+      "groom_name": "Tom2 2023",
+      "groom_surname": "Ro2 2023",
+      "groom_location": "asdas",
+      "groom_phone_number": "123123",
+      "bridge_name": "Name 2023",
+      "bridge_surname": "SUern",
+      "bridge_location": "123123",
+      "bridge_phone_number": "",
+      "location": "Warszawa 2023",
+      "date": "2023-07-16T22:00:00.000Z",
+      "venue": "",
+      "client_type": "1",
+      "name": "",
+      "wedding_type": "1",
+      "wedding_location": "",
+      "civil_location": "",
+      "id": 16
     }
   ]
 }

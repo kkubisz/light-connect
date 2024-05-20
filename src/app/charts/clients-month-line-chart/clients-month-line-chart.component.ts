@@ -6,13 +6,13 @@ import { Client } from '../../clients/model/Client';
 import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 @Component({
-  selector: 'app-clients-month',
+  selector: 'app-clients-month-line-chart',
   standalone: true,
   imports: [BaseChartDirective, BaseChartComponent],
-  templateUrl: './clients-month.component.html',
-  styleUrl: './clients-month.component.scss',
+  templateUrl: './clients-month-line-chart.component.html',
+  styleUrl: './clients-month-line-chart.component.scss',
 })
-export class ClientsMonthComponent implements OnInit {
+export class ClientsMonthLineChartComponent implements OnInit {
   private clientService = inject(ClientsService);
   lineChartData: ChartData<'line'> = { datasets: [] };
   recordCountArray: number[] = [];
@@ -24,6 +24,14 @@ export class ClientsMonthComponent implements OnInit {
   description: string =
     'This chart shows the number of clients per month for the year [Year].';
 
+  getCurrentYearData(data: Client[]) {
+    const currentYear = new Date().getFullYear();
+    return data.filter((item) => {
+      const date = new Date(item.date);
+      return date.getFullYear() === currentYear;
+    });
+  }
+
   ngOnInit(): void {
     this.clientService.getAll(['1', '2', '3']).subscribe({
       next: (response) => {
@@ -32,8 +40,6 @@ export class ClientsMonthComponent implements OnInit {
             this.dataClient = this.calculateTotalOrdersPerMonth(response.body);
 
             this.generateData();
-
-            console.log(this.dataClient);
           }
         }
       },
@@ -44,9 +50,10 @@ export class ClientsMonthComponent implements OnInit {
   }
 
   calculateTotalOrdersPerMonth(data: Client[]) {
+    const currentYearData = this.getCurrentYearData(data);
     this.totalOrdersPerMonth = Array(12).fill(0);
 
-    data.forEach((item) => {
+    currentYearData.forEach((item) => {
       const date = new Date(item.date);
       const month = date.getMonth(); // Miesiące są indeksowane od 0 (styczeń) do 11 (grudzień)
 

@@ -6,13 +6,13 @@ import { Client } from '../../clients/model/Client';
 import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 @Component({
-  selector: 'app-income-summary',
+  selector: 'app-income-summary-bar-chart',
   standalone: true,
   imports: [BaseChartDirective, BaseChartComponent],
-  templateUrl: './income-summary.component.html',
-  styleUrl: './income-summary.component.scss',
+  templateUrl: './income-summary-bar-chart.component.html',
+  styleUrl: './income-summary-bar-chart.component.scss',
 })
-export class IncomeSummaryComponent implements OnInit {
+export class IncomeSummaryBarChartComponent implements OnInit {
   private clientService = inject(ClientsService);
   private clients: Client[] = [];
   barChartData: ChartData<'bar'> = { datasets: [] };
@@ -30,6 +30,14 @@ export class IncomeSummaryComponent implements OnInit {
   description: string =
     'This chart shows the number of clients per month for the year [Year].';
 
+  getCurrentYearData(data: Client[]) {
+    const currentYear = new Date().getFullYear();
+    return data.filter((item) => {
+      const date = new Date(item.date);
+      return date.getFullYear() === currentYear;
+    });
+  }
+
   ngOnInit(): void {
     this.clientService.getAll(['1', '2', '3']).subscribe({
       next: (response) => {
@@ -40,8 +48,6 @@ export class IncomeSummaryComponent implements OnInit {
             this.dataClient = this.calculateIncomeDataByClientType(
               response.body
             );
-
-            console.log(this.dataClient);
 
             this.generateData();
           }
@@ -61,12 +67,14 @@ export class IncomeSummaryComponent implements OnInit {
       };
     } = {};
 
-    data.forEach((item) => {
+    const currentYearData = this.getCurrentYearData(data);
+
+    currentYearData.forEach((item) => {
       const date = new Date(item.date);
       const month = date.getMonth(); // Miesiące są indeksowane od 0 (styczeń) do 11 (grudzień)
-      const price = parseFloat(item.price);
-      const petrol = -Math.abs(parseFloat(item.petrol)); // Upewnij się, że wartość jest ujemna
-      const additionalCost = -Math.abs(parseFloat(item.additional_cost)); // Upewnij się, że wartość jest ujemna
+      const price = item.price;
+      const petrol = -Math.abs(item.petrol); // Upewnij się, że wartość jest ujemna
+      const additionalCost = -Math.abs(item.additional_cost); // Upewnij się, że wartość jest ujemna
       const totalCost = petrol + additionalCost; // Sumujemy koszty
       const clientType = item.client_type;
 

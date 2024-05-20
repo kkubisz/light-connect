@@ -19,9 +19,9 @@ export type Client = {
   name?: string;
 
   //additionalForm
-  price: string;
-  additional_cost: string;
-  petrol: string;
+  price: number;
+  additional_cost: number;
+  petrol: number;
   session_type: string[];
   other: string;
 };

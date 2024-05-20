@@ -1,0 +1,34 @@
+<div
+  class="block p-6 bg-white border border-gray-200 rounded-lg shadow relative"
+>
+  <div
+    class="icon -top-6 left-5 bg-amber-500 p-5 rounded relative sm:absolute inline-flex sm:block"
+  >
+    <mat-icon>people</mat-icon>
+  </div>
+
+  <div class="content-wrapper pt-4">
+    <div class="heading-wrapper text-end">
+      <h4 class="mb-2 font-light tracking-tight text-gray-300 dark:text-white">
+        Upcoming assignment
+      </h4>
+      <p class="font-normal text-gray-700 dark:text-gray-400">
+        {{ upcomingAssignment.location }}
+      </p>
+    </div>
+
+    <hr />
+
+    <a [routerLink]="['/clients/', upcomingAssignment.id]">
+      <div class="footnote flex items-end pt-3">
+        <span>{{
+          upcomingAssignment.wedding_type == "1"
+            ? upcomingAssignment.bridge_name +
+              " & " +
+              upcomingAssignment.groom_name
+            : upcomingAssignment.name
+        }}</span>
+      </div>
+    </a>
+  </div>
+</div>
