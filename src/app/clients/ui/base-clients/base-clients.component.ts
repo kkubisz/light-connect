@@ -18,13 +18,10 @@ export abstract class BaseClientsComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor() {
-    this.getAllClients();
     this.dataSource = new MatTableDataSource(this.clients);
   }
 
   abstract getClientTypes(): string[];
-
-  getAllClients(): void {}
 
   ngAfterViewInit() {
     this.clientService.getAll(this.getClientTypes()).subscribe({

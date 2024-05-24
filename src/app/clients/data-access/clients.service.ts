@@ -17,6 +17,13 @@ export class ClientsService {
     });
   }
 
+  getAllByYear(year: number) {
+    return this.http.get<Client[]>(`${this.ClientSeriveURL}/clients`, {
+      observe: 'response',
+      params: { year },
+    });
+  }
+
   getClient(clientId: string) {
     return this.http.get<Client>(
       `${this.ClientSeriveURL}/clients/${clientId}`,
@@ -28,9 +35,9 @@ export class ClientsService {
     return this.http.delete(`${this.ClientSeriveURL}/clients/${taskId}`);
   }
 
-  update(taskId: number, payload: any) {
+  update(clientId: number, payload: any) {
     return this.http.patch(
-      `${this.ClientSeriveURL}/clients/${taskId}`,
+      `${this.ClientSeriveURL}/clients/${clientId}`,
       payload
     );
   }

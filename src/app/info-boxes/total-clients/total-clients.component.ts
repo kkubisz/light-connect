@@ -1,7 +1,14 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { BaseInfoComponent } from '../base-info/base-info.component';
 import { Client } from '../../clients/model/Client';
 import { getIcon } from '../../utlis/icon-type';
+import { AppConfigStateService } from '../../config/config.state.service';
 
 type TotalClientsData = {
   currentYear: number;
@@ -20,37 +27,48 @@ type TotalClientsData = {
   styleUrl: './total-clients.component.scss',
 })
 export class TotalClientsComponent implements OnChanges {
-  @Input({ required: true }) clients: Client[] = [];
+  @Input({ required: true }) clients!: Client[];
+  @Input({ required: true }) clientYearly!: Client[];
+
+  private configState = inject(AppConfigStateService);
+  $view = this.configState.taskListView;
 
   totalClientData: TotalClientsData = {} as TotalClientsData;
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.compaerClientsToLastYear();
+    if (changes['clientYearly'] && changes['clientYearly'].currentValue) {
+      this.compaerClientsToLastYear();
+    }
   }
 
   compaerClientsToLastYear(): void {
-    const clientByCurrentYar = this.getCurrentYearData(this.clients);
-    const clientByLastYear = this.getCurrentYearData(this.clients, true);
-
+    const clientByCurrentYar = this.clientYearly;
+    const clientByLastYear = this.getPreviousYearClient();
     const comparedClients = clientByCurrentYar.length - clientByLastYear.length;
-    const percentageCompare = (comparedClients / clientByLastYear.length) * 100;
+    let percentageCompare = 0;
+
+    if (clientByLastYear.length !== 0) {
+      percentageCompare = (comparedClients / clientByLastYear.length) * 100;
+    }
 
     this.totalClientData = {
       currentYear: clientByCurrentYar.length,
       lastYear: clientByLastYear.length,
       diffrenceValue: comparedClients,
       diffrencePercentage: percentageCompare,
-      iconType: getIcon(comparedClients),
-      footNote: percentageCompare + '% compare to last year',
+      iconType: percentageCompare === 0 ? '' : getIcon(comparedClients),
+      footNote:
+        percentageCompare === 0
+          ? 'No data from previous year'
+          : percentageCompare.toFixed(2) + '% compare to last year',
     };
   }
 
-  getCurrentYearData(data: Client[], compare: boolean = false) {
-    let currentYear = new Date().getFullYear();
-    return data.filter((item) => {
-      const date = new Date(item.date);
+  getPreviousYearClient() {
+    return this.clients.filter((client) => {
+      const date = new Date(client.date);
 
-      return date.getFullYear() === (compare ? currentYear - 1 : currentYear);
+      return date.getFullYear() === this.$view() - 1;
     });
   }
 }

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AddNewClientComponent } from './clients/add-new-client/add-new-client.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { SingleClientComponent } from './clients/single-client/single-client.component';
+import { EditClientComponent } from './clients/edit-client/edit-client.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,10 @@ export const routes: Routes = [
         path: ':clientId',
         title: 'Client',
         component: SingleClientComponent,
+      },
+      {
+        path: 'edit/:clientId',
+        component: EditClientComponent,
       },
     ],
   },

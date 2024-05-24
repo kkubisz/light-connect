@@ -1,9 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
-  FormGroup,
-  FormControl,
   NonNullableFormBuilder,
 } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -19,44 +17,11 @@ import { JsonPipe, NgFor } from '@angular/common';
 import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 import { ClientsService } from '../data-access/clients.service';
 import { Router } from '@angular/router';
-
-type FormType = {
-  basicInformation: FormGroup<{
-    groom_name: FormControl<string>;
-    groom_surname: FormControl<string>;
-    groom_location: FormControl<string>;
-    groom_phone_number: FormControl<string>;
-    bridge_name: FormControl<string>;
-    bridge_surname: FormControl<string>;
-    bridge_location: FormControl<string>;
-    bridge_phone_number: FormControl<string>;
-    location: FormControl<string>;
-    date: FormControl<string>;
-    venue: FormControl<string>;
-    client_type: FormControl<string>;
-    name: FormControl<string>;
-    wedding_type: FormControl<string>;
-    wedding_location: FormControl<string>;
-    session_type: FormControl<string>;
-  }>;
-  additionalInformation: FormGroup<{
-    price: FormControl<string>;
-    additional_cost: FormControl<string>;
-    petrol: FormControl<string>;
-    other: FormControl<string>;
-  }>;
-};
+import { Client } from '../model/Client';
 
 @Component({
-  selector: 'app-add-new-client',
+  selector: 'app-edit-client',
   standalone: true,
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { showError: false },
-    },
-    provideNativeDateAdapter(),
-  ],
   imports: [
     MatStepperModule,
     FormsModule,
@@ -71,16 +36,22 @@ type FormType = {
     NgFor,
     MatRadioModule,
   ],
-  templateUrl: './add-new-client.component.html',
-  styleUrl: './add-new-client.component.scss',
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: false },
+    },
+    provideNativeDateAdapter(),
+  ],
+  templateUrl: './edit-client.component.html',
+  styleUrl: './edit-client.component.scss',
 })
-export class AddNewClientComponent implements OnInit {
-  onChangeWeddingLocation($event: MatRadioChange) {
-    throw new Error('Method not implemented.');
-  }
+export class EditClientComponent {
   private formBuilder = inject(NonNullableFormBuilder);
   private clientService = inject(ClientsService);
   private router = inject(Router);
+
+  @Input() clientId!: string;
 
   selectedType: string = '';
   isWedding = true;
@@ -101,7 +72,6 @@ export class AddNewClientComponent implements OnInit {
       bridge_phone_number: this.formBuilder.control<string>(''),
       location: this.formBuilder.control<string>(''),
       date: this.formBuilder.control<string>(''),
-      venue: this.formBuilder.control<string>(''),
       client_type: this.formBuilder.control<string>('1'),
       name: this.formBuilder.control<string>(''),
       wedding_type: this.formBuilder.control<string>('1'),
@@ -109,10 +79,10 @@ export class AddNewClientComponent implements OnInit {
       civil_location: this.formBuilder.control<string>(''),
     }),
     additionalInformation: this.formBuilder.group({
-      price: this.formBuilder.control<string>(''),
-      additional_cost: this.formBuilder.control<string>(''),
-      petrol: this.formBuilder.control<string>(''),
-      session_type: this.formBuilder.control<string>(''),
+      price: this.formBuilder.control<number>(0),
+      additional_cost: this.formBuilder.control<number>(0),
+      petrol: this.formBuilder.control<number>(0),
+      session_type: this.formBuilder.control<string[]>([]),
       other: this.formBuilder.control<string>(''),
     }),
   });
@@ -121,7 +91,71 @@ export class AddNewClientComponent implements OnInit {
     console.log('submit');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.clientId);
+    if (this.clientId) {
+      this.clientService.getClient(this.clientId).subscribe({
+        next: (client) => {
+          if (client.body) {
+            this.generateForm(client.body);
+          }
+        },
+      });
+    }
+  }
+
+  generateForm(client: Client) {
+    this.form = this.formBuilder.group({
+      basicInformation: this.formBuilder.group({
+        groom_name: this.formBuilder.control<string>(client.groom_name ?? ''),
+        groom_surname: this.formBuilder.control<string>(
+          client.groom_surname ?? ''
+        ),
+        groom_location: this.formBuilder.control<string>(
+          client.groom_location ?? ''
+        ),
+        groom_phone_number: this.formBuilder.control<string>(
+          client.groom_phone_number ?? ''
+        ),
+        bridge_name: this.formBuilder.control<string>(client.bridge_name ?? ''),
+        bridge_surname: this.formBuilder.control<string>(
+          client.bridge_surname ?? ''
+        ),
+        bridge_location: this.formBuilder.control<string>(
+          client.bridge_location ?? ''
+        ),
+        bridge_phone_number: this.formBuilder.control<string>(
+          client.bridge_phone_number ?? ''
+        ),
+        location: this.formBuilder.control<string>(client.location ?? ''),
+        date: this.formBuilder.control<string>(client.date ?? ''),
+        client_type: this.formBuilder.control<string>(
+          client.client_type ?? '1'
+        ),
+        name: this.formBuilder.control<string>(client.name ?? ''),
+        wedding_type: this.formBuilder.control<string>(
+          client.wedding_type ?? '1'
+        ),
+        wedding_location: this.formBuilder.control<string>(
+          client.wedding_location ?? ''
+        ),
+        civil_location: this.formBuilder.control<string>(
+          client.civil_location ?? ''
+        ),
+      }),
+      additionalInformation: this.formBuilder.group({
+        price: this.formBuilder.control<number>(client.price ?? 0),
+        additional_cost: this.formBuilder.control<number>(
+          client.additional_cost ?? 0
+        ),
+        petrol: this.formBuilder.control<number>(client.petrol ?? 0),
+        session_type: this.formBuilder.control<string[]>(
+          client.session_type ?? []
+        ),
+        other: this.formBuilder.control<string>(client.other ?? ''),
+      }),
+    });
+  }
 
   onChange($event: any) {
     this.isWedding = false;
@@ -188,9 +222,8 @@ export class AddNewClientComponent implements OnInit {
       ...this.form.getRawValue().basicInformation,
     };
 
-    this.clientService.add(data).subscribe({
+    this.clientService.update(+this.clientId, data).subscribe({
       next: (client) => {
-        console.log(client);
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

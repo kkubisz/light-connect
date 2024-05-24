@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+.card-header {
+  background-image: linear-gradient(
+      to bottom,
+      rgb(254, 205, 211, 0.9),
+      rgb(255, 241, 242, 0.2)
+    ),
+    url("../../../assets/mountain.jpg");
+  background-size: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+h3,
+h4 {
+  margin-bottom: 10px;
+}
+::ng-deep {
+  mat-chip {
+    background-color: #ec407a !important;
+  }
+  .mat-mdc-standard-chip {
+    --mdc-chip-label-text-color: #fff;
+  }
+}

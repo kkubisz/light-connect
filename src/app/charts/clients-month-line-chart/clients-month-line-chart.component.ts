@@ -1,4 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { ClientsService } from '../../clients/data-access/clients.service';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
@@ -12,7 +19,9 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
   templateUrl: './clients-month-line-chart.component.html',
   styleUrl: './clients-month-line-chart.component.scss',
 })
-export class ClientsMonthLineChartComponent implements OnInit {
+export class ClientsMonthLineChartComponent implements OnChanges {
+  @Input({ required: true }) clientsData!: Client[];
+
   private clientService = inject(ClientsService);
   lineChartData: ChartData<'line'> = { datasets: [] };
   recordCountArray: number[] = [];
@@ -24,36 +33,18 @@ export class ClientsMonthLineChartComponent implements OnInit {
   description: string =
     'This chart shows the number of clients per month for the year [Year].';
 
-  getCurrentYearData(data: Client[]) {
-    const currentYear = new Date().getFullYear();
-    return data.filter((item) => {
-      const date = new Date(item.date);
-      return date.getFullYear() === currentYear;
-    });
-  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['clientsData'] && changes['clientsData'].currentValue) {
+      this.dataClient = this.calculateTotalOrdersPerMonth(this.clientsData);
 
-  ngOnInit(): void {
-    this.clientService.getAll(['1', '2', '3']).subscribe({
-      next: (response) => {
-        if (response.ok) {
-          if (Array.isArray(response.body)) {
-            this.dataClient = this.calculateTotalOrdersPerMonth(response.body);
-
-            this.generateData();
-          }
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+      this.generateData();
+    }
   }
 
   calculateTotalOrdersPerMonth(data: Client[]) {
-    const currentYearData = this.getCurrentYearData(data);
     this.totalOrdersPerMonth = Array(12).fill(0);
 
-    currentYearData.forEach((item) => {
+    data.forEach((item) => {
       const date = new Date(item.date);
       const month = date.getMonth(); // Miesiące są indeksowane od 0 (styczeń) do 11 (grudzień)
 

@@ -1,7 +1,14 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { Client } from '../../clients/model/Client';
 import { getIcon } from '../../utlis/icon-type';
 import { BaseInfoComponent } from '../base-info/base-info.component';
+import { AppConfigStateService } from '../../config/config.state.service';
 
 type TotalCostData = {
   currentYear: number;
@@ -21,14 +28,20 @@ type TotalCostData = {
 })
 export class TotalCostComponent implements OnChanges {
   @Input({ required: true }) clients: Client[] = [];
+  @Input({ required: true }) clientYearly!: Client[];
+
+  private configState = inject(AppConfigStateService);
+  $view = this.configState.taskListView;
   totalCostData: TotalCostData = {} as TotalCostData;
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.compaerClientsToLastYear();
+    if (changes['clientYearly'] && changes['clientYearly'].currentValue) {
+      this.compaerClientsToLastYear();
+    }
   }
 
   compaerClientsToLastYear(): void {
-    const clientCurrentYar = this.getCurrentYearData(this.clients);
+    const clientCurrentYar = this.clientYearly;
     let totalCost = 0;
     let totalCostLastYear = 0;
 
@@ -37,7 +50,7 @@ export class TotalCostComponent implements OnChanges {
       totalCost += +single.petrol;
     });
 
-    const clientByLastYear = this.getCurrentYearData(this.clients, true);
+    const clientByLastYear = this.getPreviousYearClient();
 
     clientByLastYear.forEach((single) => {
       totalCostLastYear += +single.petrol;
@@ -45,7 +58,11 @@ export class TotalCostComponent implements OnChanges {
     });
 
     const comparedClients = totalCost - totalCostLastYear;
-    const percentageCompare = (comparedClients / totalCost) * 100;
+    let percentageCompare = 0;
+
+    if (totalCostLastYear !== 0) {
+      percentageCompare = (comparedClients / totalCost) * 100;
+    }
 
     let calculatedCost =
       totalCostLastYear > totalCost
@@ -57,17 +74,19 @@ export class TotalCostComponent implements OnChanges {
       lastYear: totalCostLastYear,
       diffrenceValue: comparedClients,
       diffrencePercentage: percentageCompare,
-      iconType: getIcon(calculatedCost),
-      footNote: calculatedCost.toFixed(2) + '% compare to last year',
+      iconType: percentageCompare === 0 ? '' : getIcon(calculatedCost),
+      footNote:
+        percentageCompare === 0
+          ? 'No data from previous year'
+          : calculatedCost.toFixed(2) + '% compare to last year',
     };
   }
 
-  getCurrentYearData(data: Client[], compare: boolean = false) {
-    let currentYear = new Date().getFullYear();
-    return data.filter((item) => {
-      const date = new Date(item.date);
+  getPreviousYearClient() {
+    return this.clients.filter((client) => {
+      const date = new Date(client.date);
 
-      return date.getFullYear() === (compare ? currentYear - 1 : currentYear);
+      return date.getFullYear() === this.$view() - 1;
     });
   }
 }

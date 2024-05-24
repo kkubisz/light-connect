@@ -1,0 +1,139 @@
+<div class="flex justify-center pt-10 relative">
+  @if(client.session_type) {
+  <mat-chip-set aria-label="Fish selection">
+    @for (single of client.session_type; track single) {
+    <mat-chip>{{ single }}</mat-chip>
+    }
+  </mat-chip-set>
+  }
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10 p-8">
+  <div>
+    <div class="flex flex-col items-start">
+      <h4>Before Photo</h4>
+      <p><mat-slide-toggle>Umowa </mat-slide-toggle></p>
+      <p><mat-slide-toggle>Zadatek wpłacony </mat-slide-toggle></p>
+      <p><mat-slide-toggle>Sfotografowane </mat-slide-toggle></p>
+
+      <h4 class="pt-5">After photo</h4>
+      <p><mat-slide-toggle>Zapłacone </mat-slide-toggle></p>
+      <p><mat-slide-toggle>Produkty zamówione </mat-slide-toggle></p>
+      <p><mat-slide-toggle>Produkty oddane </mat-slide-toggle></p>
+    </div>
+  </div>
+
+  <div class="border-x-2 border-x-slate-200">
+    <div class="pl-8">
+      <h4 class="text-start mb-2">Bridge Info</h4>
+
+      <ul class="list-group flex flex-col items-start">
+        <li class="list-group-item border-0 ps-0 pt-0 text-sm">
+          <strong class="text-dark">Full Name:</strong>
+
+          <span class="text-slate-500">
+            {{ client.bridge_name }} {{ client.bridge_surname }}
+          </span>
+        </li>
+        <li class="list-group-item border-0 ps-0 text-sm">
+          <strong class="text-dark">Mobile:</strong> &nbsp;
+
+          <span class="text-slate-500">
+            {{ client.bridge_phone_number }}
+          </span>
+        </li>
+
+        <li class="list-group-item border-0 ps-0 text-sm">
+          <strong class="text-dark">Location:</strong> &nbsp;
+
+          <span class="text-slate-500">
+            {{ client.bridge_location }}
+          </span>
+        </li>
+      </ul>
+      <h3 class="text-start pt-5">Groom Info</h3>
+      <ul class="list-group flex flex-col items-start">
+        <li class="list-group-item border-0 ps-0 pt-0 text-sm">
+          <strong class="text-dark">Full Name:</strong>
+          <span class="text-slate-500">
+            {{ client.groom_name }} {{ client.groom_surname }}
+          </span>
+        </li>
+        <li class="list-group-item border-0 ps-0 text-sm">
+          <strong class="text-dark">Mobile:</strong> &nbsp;
+
+          <span class="text-slate-500">
+            {{ client.groom_phone_number }}
+          </span>
+        </li>
+
+        <li class="list-group-item border-0 ps-0 text-sm">
+          <strong class="text-dark">Location:</strong> &nbsp;
+
+          <span class="text-slate-500">
+            {{ client.groom_location }}
+          </span>
+        </li>
+      </ul>
+
+      <h3 class="text-start pt-5">Venue Info</h3>
+      <ul class="list-group flex flex-col items-start">
+        <li class="list-group-item border-0 ps-0 pt-0 text-sm">
+          <strong class="text-dark">Wedding type:</strong>
+          <span class="text-slate-500">
+            {{ client.wedding_type === "1" ? "Church" : "Civili" }}
+          </span>
+        </li>
+        <li class="list-group-item border-0 ps-0 text-sm">
+          <strong class="text-dark"> Wedding location::</strong> &nbsp;
+          <span class="text-slate-500">
+            {{
+              client.wedding_location === "2"
+                ? client.civil_location
+                : client.wedding_location
+            }}
+          </span>
+        </li>
+
+        <li class="list-group-item border-0 ps-0 text-sm">
+          <strong class="text-dark">Venue:</strong> &nbsp;
+          <span class="text-slate-500">
+            {{ client.location }}
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <h3>Cost</h3>
+      <ul class="list-group flex flex-col items-start pl-8">
+        <li class="list-group-item border-0 ps-0 pt-0 text-sm">
+          <strong class="text-dark">Price:</strong>
+
+          <span class="text-slate-500"> {{ client.price }} PLN </span>
+        </li>
+        <li class="list-group-item border-0 ps-0 text-sm">
+          <strong class="text-dark"> Petrol::</strong> &nbsp;
+
+          <span class="text-slate-500"> {{ client.petrol }} PLN </span>
+        </li>
+
+        <li class="list-group-item border-0 ps-0 text-sm">
+          <strong class="text-dark">Additional Cost:</strong> &nbsp;
+
+          <span class="text-slate-500"> {{ client.additional_cost }} PLN </span>
+        </li>
+
+        <li class="list-group-item border-0 ps-0 text-sm">
+          <strong class="text-dark">Other:</strong> &nbsp;
+
+          <span class="text-slate-500">
+            {{ client.other ? client.other : "-" }}
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

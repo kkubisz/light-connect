@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ClientsService } from '../../clients/data-access/clients.service';
@@ -13,8 +20,8 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
   styleUrl: './income-summary-bar-chart.component.scss',
 })
 export class IncomeSummaryBarChartComponent implements OnInit {
-  private clientService = inject(ClientsService);
-  private clients: Client[] = [];
+  @Input({ required: true }) clientsData!: Client[];
+
   barChartData: ChartData<'bar'> = { datasets: [] };
 
   incomeDataByClientType: {
@@ -30,33 +37,18 @@ export class IncomeSummaryBarChartComponent implements OnInit {
   description: string =
     'This chart shows the number of clients per month for the year [Year].';
 
-  getCurrentYearData(data: Client[]) {
-    const currentYear = new Date().getFullYear();
-    return data.filter((item) => {
-      const date = new Date(item.date);
-      return date.getFullYear() === currentYear;
-    });
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['clientsData'] && changes['clientsData'].currentValue) {
+      this.dataClient = this.calculateIncomeDataByClientType(this.clientsData);
+
+      if (this.dataClient[0]?.incomePricePerMonth !== undefined) {
+        this.generateData();
+      }
+    }
   }
 
   ngOnInit(): void {
-    this.clientService.getAll(['1', '2', '3']).subscribe({
-      next: (response) => {
-        if (response.ok) {
-          if (Array.isArray(response.body)) {
-            this.clients = response.body;
-
-            this.dataClient = this.calculateIncomeDataByClientType(
-              response.body
-            );
-
-            this.generateData();
-          }
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    console.log('init');
   }
 
   calculateIncomeDataByClientType(data: Client[]) {
@@ -67,9 +59,7 @@ export class IncomeSummaryBarChartComponent implements OnInit {
       };
     } = {};
 
-    const currentYearData = this.getCurrentYearData(data);
-
-    currentYearData.forEach((item) => {
+    data.forEach((item) => {
       const date = new Date(item.date);
       const month = date.getMonth(); // Miesiące są indeksowane od 0 (styczeń) do 11 (grudzień)
       const price = item.price;
@@ -133,6 +123,73 @@ export class IncomeSummaryBarChartComponent implements OnInit {
   };
 
   generateData() {
+    const datasets: any[] = [];
+    if (
+      this.dataClient[0]?.incomePricePerMonth &&
+      this.dataClient[0]?.incomePricePerMonth.length > 0
+    ) {
+      datasets.push({
+        data: this.dataClient[0]['incomePricePerMonth'],
+        label: 'Income From Wedding',
+        backgroundColor: '#A2D2FF',
+      });
+    }
+
+    if (
+      this.dataClient[1]?.incomePricePerMonth &&
+      this.dataClient[1]?.incomePricePerMonth.length > 0
+    ) {
+      datasets.push({
+        data: this.dataClient[1]['incomePricePerMonth'],
+        label: 'Income From Family',
+        backgroundColor: '#FFC8DD',
+      });
+    }
+
+    if (
+      this.dataClient[2]?.incomePricePerMonth &&
+      this.dataClient[2]?.incomePricePerMonth.length > 0
+    ) {
+      datasets.push({
+        data: this.dataClient[2]['incomePricePerMonth'],
+        label: 'Income From Commercial',
+        backgroundColor: '#CDB4DB',
+      });
+    }
+
+    if (
+      this.dataClient[0]?.totalCostPerMonth &&
+      this.dataClient[0]?.totalCostPerMonth.length > 0
+    ) {
+      datasets.push({
+        data: this.dataClient[0]['totalCostPerMonth'],
+        label: 'Total Cost From Wedding',
+        backgroundColor: '#F94144',
+      });
+    }
+
+    if (
+      this.dataClient[1]?.totalCostPerMonth &&
+      this.dataClient[1]?.totalCostPerMonth.length > 0
+    ) {
+      datasets.push({
+        data: this.dataClient[1]['totalCostPerMonth'],
+        label: 'Total Cost From Family',
+        backgroundColor: '#F3722C',
+      });
+    }
+
+    if (
+      this.dataClient[2]?.totalCostPerMonth &&
+      this.dataClient[2]?.totalCostPerMonth.length > 0
+    ) {
+      datasets.push({
+        data: this.dataClient[2]['totalCostPerMonth'],
+        label: 'Total Cost From Commercial',
+        backgroundColor: '#F8961E',
+      });
+    }
+
     this.barChartData = {
       labels: [
         'Jan(1)',
@@ -148,39 +205,7 @@ export class IncomeSummaryBarChartComponent implements OnInit {
         'Nov(11)',
         'Dec(12)',
       ],
-      datasets: [
-        {
-          data: this.dataClient[0]['incomePricePerMonth'],
-          label: 'Income From Wedding',
-          backgroundColor: '#A2D2FF',
-        },
-        {
-          data: this.dataClient[1]['incomePricePerMonth'],
-          label: 'Income From Family',
-          backgroundColor: '#FFC8DD',
-        },
-        {
-          data: this.dataClient[2]['incomePricePerMonth'],
-          label: 'Income From Commercial',
-          backgroundColor: '#CDB4DB',
-        },
-
-        {
-          data: this.dataClient[0]['totalCostPerMonth'],
-          label: 'Total Cost From Wedding',
-          backgroundColor: '#F94144',
-        },
-        {
-          data: this.dataClient[1]['totalCostPerMonth'],
-          label: 'Total Cost From Family',
-          backgroundColor: '#F3722C',
-        },
-        {
-          data: this.dataClient[2]['totalCostPerMonth'],
-          label: 'Total Cost From Commercial',
-          backgroundColor: '#F8961E',
-        },
-      ],
+      datasets: datasets,
     };
   }
 }
