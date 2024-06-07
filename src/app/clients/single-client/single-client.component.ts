@@ -1,13 +1,14 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { ClientsService } from '../data-access/clients.service';
-import { Client } from '../model/Client';
+import { Client, ClientStatus } from '../model/Client';
 import { MatChipsModule } from '@angular/material/chips';
 import { WeddingComponent } from './ui/wedding/wedding.component';
 import { FamilyComponent } from './ui/family/family.component';
-import { DatePipe } from '@angular/common';
+import { DatePipe, JsonPipe } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { SnackbarService } from '../../shared/snackbar/service/snackbar.service';
 
 @Component({
   selector: 'app-single-client',
@@ -20,6 +21,7 @@ import { RouterLink } from '@angular/router';
     MatSlideToggleModule,
     MatIconModule,
     RouterLink,
+    JsonPipe,
   ],
   templateUrl: './single-client.component.html',
   styleUrl: './single-client.component.scss',
@@ -27,6 +29,8 @@ import { RouterLink } from '@angular/router';
 export class SingleClientComponent implements OnInit {
   @Input() clientId?: string;
   private clientService = inject(ClientsService);
+
+  private snackbarService = inject(SnackbarService);
   hidden = true;
 
   client: Client = {} as Client;
@@ -38,11 +42,44 @@ export class SingleClientComponent implements OnInit {
             this.client = response.body;
           }
         },
+        error: (error) => {
+          console.log('errpr', error);
+        },
       });
     }
   }
   openDropdown() {
     this.hidden = !this.hidden;
     console.log(this.hidden);
+  }
+
+  updateStatus(statusId: number) {
+    if (this.client?.client_status) {
+      const status = this.client.client_status.find((s) => s.id === statusId);
+
+      const finalStatus = status?.id === 6;
+
+      if (status) {
+        status.status = !status.status;
+
+        console.log(status.status);
+
+        this.clientService.updateClient(this.client).subscribe({
+          next: (response) => {
+            console.log(response);
+
+            if (finalStatus && status.status) {
+              this.snackbarService.show(
+                'Wohho! You are done with it! You deserve good coffee',
+                'check'
+              );
+            }
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
+      }
+    }
   }
 }

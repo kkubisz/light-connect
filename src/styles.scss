@@ -9,6 +9,54 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.custom-snackbar {
+  .mdc-snackbar__surface {
+    background-color: #ea2c6d !important;
+    padding-right: 30px;
+    width: 300px;
+  }
+
+  .icon-wrapper mat-icon {
+    position: absolute;
+    margin-top: -27px;
+    font-size: 20px;
+    background-color: #fff;
+    color: #ea2c6d;
+    padding: 2px;
+    border-radius: 50%;
+    max-width: 38px;
+    box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+      0 4px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.custom-snackbar.alert-notifications {
+  .mdc-snackbar__surface {
+    background-color: #ffa726 !important;
+  }
+  .icon-wrapper mat-icon {
+    color: #ffa726 !important;
+  }
+}
+
+.custom-snackbar.alert-check {
+  .mdc-snackbar__surface {
+    background-color: #10b981 !important;
+  }
+  .icon-wrapper mat-icon {
+    color: #10b981 !important;
+  }
+}
+
+.custom-snackbar.alert-warning {
+  .mdc-snackbar__surface {
+    background-color: #ea2c6d !important;
+  }
+  .icon-wrapper mat-icon {
+    color: #ea2c6d;
+  }
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

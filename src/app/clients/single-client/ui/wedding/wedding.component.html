@@ -12,14 +12,32 @@
   <div>
     <div class="flex flex-col items-start">
       <h4>Before Photo</h4>
-      <p><mat-slide-toggle>Umowa </mat-slide-toggle></p>
-      <p><mat-slide-toggle>Zadatek wpłacony </mat-slide-toggle></p>
-      <p><mat-slide-toggle>Sfotografowane </mat-slide-toggle></p>
+      <div *ngFor="let status of client.client_status">
+        <ng-container *ngIf="status.category === 'before'">
+          <p>
+            <mat-slide-toggle
+              [checked]="status.status"
+              (change)="toggleStatus(status.id)"
+            >
+              {{ replaceUnderscore(status.name) | titlecase }}
+            </mat-slide-toggle>
+          </p>
+        </ng-container>
+      </div>
 
-      <h4 class="pt-5">After photo</h4>
-      <p><mat-slide-toggle>Zapłacone </mat-slide-toggle></p>
-      <p><mat-slide-toggle>Produkty zamówione </mat-slide-toggle></p>
-      <p><mat-slide-toggle>Produkty oddane </mat-slide-toggle></p>
+      <h4 class="pt-5">After Photo</h4>
+      <div *ngFor="let status of client.client_status">
+        <ng-container *ngIf="status.category === 'after'">
+          <p>
+            <mat-slide-toggle
+              [checked]="status.status"
+              (change)="toggleStatus(status.id)"
+            >
+              {{ replaceUnderscore(status.name) | titlecase }}
+            </mat-slide-toggle>
+          </p>
+        </ng-container>
+      </div>
     </div>
   </div>
 

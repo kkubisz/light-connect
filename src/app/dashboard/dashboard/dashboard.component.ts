@@ -1,4 +1,12 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { WeddingClientsComponent } from '../../clients/ui/wedding-clients/wedding-clients.component';
@@ -17,6 +25,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { AppConfigStateService } from '../../config/config.state.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { PlaceAutocompleteComponent } from '../../shared/place-autocomplete/place-autocomplete.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,6 +49,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
+    SnackbarComponent,
+    PlaceAutocompleteComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

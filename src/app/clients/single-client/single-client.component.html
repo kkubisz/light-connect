@@ -13,7 +13,8 @@
         </button>
       </div>
       @if (client.client_type === '1') {
-      <app-wedding [client]="this.client"> </app-wedding>
+      <app-wedding [client]="this.client" (updateStatus)="updateStatus($event)">
+      </app-wedding>
       }@else {
       <app-family [client]="this.client"></app-family>
       }

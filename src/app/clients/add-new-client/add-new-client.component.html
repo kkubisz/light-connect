@@ -109,13 +109,10 @@
 
             <div class="grid md:grid-cols-2 gap-4 text-center">
               <mat-form-field>
-                <mat-label>Locationq</mat-label>
-                <input
-                  matInput
-                  placeholder="Location"
-                  formControlName="location"
-                  required
-                />
+                <mat-label>Location</mat-label>
+
+                //to ma byc z compoonentu
+                <app-place-autocomplete></app-place-autocomplete>
               </mat-form-field>
 
               <mat-form-field>
@@ -268,6 +265,7 @@
               <mat-form-field>
                 <mat-label>Price</mat-label>
                 <input
+                  type="number"
                   matInput
                   placeholder="Price"
                   formControlName="price"
@@ -276,13 +274,19 @@
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Petrol</mat-label>
-                <input matInput placeholder="Petrol" formControlName="petrol" />
+                <input
+                  matInput
+                  type="number"
+                  placeholder="Petrol"
+                  formControlName="petrol"
+                />
               </mat-form-field>
 
               <mat-form-field>
                 <mat-label>Additional Cost</mat-label>
                 <input
                   matInput
+                  type="number"
                   placeholder="Additional cost"
                   formControlName="additional_cost"
                 />

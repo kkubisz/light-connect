@@ -1,0 +1,13 @@
+<div class="light-snackbar">
+  <div class="icon-wrapper">
+    <mat-icon>{{ data.type }}</mat-icon>
+  </div>
+
+  <span>{{ data.message }}</span>
+
+  <div class="light-close absolute top-1 right-1">
+    <button mat-raised-button (click)="dismiss()">
+      <mat-icon class="text-xl">close</mat-icon>
+    </button>
+  </div>
+</div>

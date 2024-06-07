@@ -24,4 +24,12 @@ export type Client = {
   petrol: number;
   session_type: string[];
   other: string;
+  client_status?: ClientStatus[];
 };
+
+export interface ClientStatus {
+  id: number;
+  name: string;
+  status: boolean;
+  category: 'before' | 'after';
+}

@@ -18,6 +18,7 @@ import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 import { ClientsService } from '../data-access/clients.service';
 import { Router } from '@angular/router';
 import { Client } from '../model/Client';
+import { SnackbarService } from '../../shared/snackbar/service/snackbar.service';
 
 @Component({
   selector: 'app-edit-client',
@@ -50,6 +51,7 @@ export class EditClientComponent {
   private formBuilder = inject(NonNullableFormBuilder);
   private clientService = inject(ClientsService);
   private router = inject(Router);
+  private snackbarService = inject(SnackbarService);
 
   @Input() clientId!: string;
 
@@ -224,7 +226,11 @@ export class EditClientComponent {
 
     this.clientService.update(+this.clientId, data).subscribe({
       next: (client) => {
-        this.router.navigate(['/dashboard']);
+        this.snackbarService.show('All data has been saved', 'check');
+
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, 1000);
       },
       error: (err) => {
         console.log(err);

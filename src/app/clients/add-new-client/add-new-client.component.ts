@@ -19,6 +19,10 @@ import { JsonPipe, NgFor } from '@angular/common';
 import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 import { ClientsService } from '../data-access/clients.service';
 import { Router } from '@angular/router';
+import { ClientStatus } from '../model/Client';
+import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { SnackbarService } from '../../shared/snackbar/service/snackbar.service';
+import { PlaceAutocompleteComponent } from '../../shared/place-autocomplete/place-autocomplete.component';
 
 type FormType = {
   basicInformation: FormGroup<{
@@ -70,6 +74,8 @@ type FormType = {
     JsonPipe,
     NgFor,
     MatRadioModule,
+    SnackbarComponent,
+    PlaceAutocompleteComponent,
   ],
   templateUrl: './add-new-client.component.html',
   styleUrl: './add-new-client.component.scss',
@@ -81,6 +87,9 @@ export class AddNewClientComponent implements OnInit {
   private formBuilder = inject(NonNullableFormBuilder);
   private clientService = inject(ClientsService);
   private router = inject(Router);
+  private snackbarService = inject(SnackbarService);
+
+  showSnackBar = false;
 
   selectedType: string = '';
   isWedding = true;
@@ -183,15 +192,33 @@ export class AddNewClientComponent implements OnInit {
   }
 
   addClient() {
+    const initialStatuses: ClientStatus[] = [
+      { id: 1, name: 'umowa', status: true, category: 'before' },
+      { id: 2, name: 'zadatek', status: false, category: 'before' },
+      { id: 3, name: 'sfotografowano', status: false, category: 'before' },
+      { id: 4, name: 'zaplacono', status: false, category: 'before' },
+      { id: 5, name: 'produkty_zamowione', status: false, category: 'before' },
+      { id: 6, name: 'produkty_oddane', status: false, category: 'before' },
+    ];
+
     const data = {
       ...this.form.getRawValue().additionalInformation,
       ...this.form.getRawValue().basicInformation,
+      client_status: initialStatuses,
     };
 
     this.clientService.add(data).subscribe({
       next: (client) => {
-        console.log(client);
-        this.router.navigate(['/dashboard']);
+        this.showSnackBar = true;
+
+        this.snackbarService.show(
+          'Congratulation. You get new client',
+          'check'
+        );
+
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, 1000);
       },
       error: (err) => {
         console.log(err);

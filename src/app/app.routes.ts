@@ -3,16 +3,21 @@ import { AddNewClientComponent } from './clients/add-new-client/add-new-client.c
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { SingleClientComponent } from './clients/single-client/single-client.component';
 import { EditClientComponent } from './clients/edit-client/edit-client.component';
+import { MapsComponent } from './maps/maps/maps.component';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: DashboardComponent,
+    redirectTo: 'dashboard',
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
+  },
+  {
+    path: 'map',
+    component: MapsComponent,
   },
   {
     path: 'clients',
