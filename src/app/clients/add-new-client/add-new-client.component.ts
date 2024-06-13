@@ -1,4 +1,13 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  NgZone,
+  OnInit,
+  Output,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -51,6 +60,12 @@ type FormType = {
   }>;
 };
 
+export interface PlaceSearchResult {
+  address: string;
+  location?: { lat: number; lng: number };
+  name?: string;
+}
+
 @Component({
   selector: 'app-add-new-client',
   standalone: true,
@@ -89,6 +104,8 @@ export class AddNewClientComponent implements OnInit {
   private router = inject(Router);
   private snackbarService = inject(SnackbarService);
 
+  autocomplete: google.maps.places.Autocomplete | undefined;
+
   showSnackBar = false;
 
   selectedType: string = '';
@@ -97,6 +114,52 @@ export class AddNewClientComponent implements OnInit {
 
   fromValues: any;
   summary = '';
+  autcompleteData = {};
+
+  @ViewChild('inputField')
+  inputField!: ElementRef;
+  @Output() placeChanged = new EventEmitter<PlaceSearchResult>();
+
+  constructor(private ngZone: NgZone) {}
+
+  options = {
+    componentRestrictions: { country: 'PL' },
+  };
+
+  ngAfterViewInit() {
+    this.autocomplete = new google.maps.places.Autocomplete(
+      this.inputField.nativeElement,
+      this.options
+    );
+
+    this.autocomplete.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        const place = this.autocomplete?.getPlace();
+        if (!place) {
+          return;
+        }
+
+        console.log(place);
+
+        const result: PlaceSearchResult = {
+          address: this.inputField.nativeElement.value,
+          name: place?.name,
+          location: place?.geometry?.location?.toJSON(),
+        };
+
+        console.log(result);
+
+        this.autcompleteData = result;
+        // this.placeChanged.emit(result);
+      });
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.autocomplete) {
+      google.maps.event.clearInstanceListeners(this.autocomplete);
+    }
+  }
 
   form = this.formBuilder.group({
     basicInformation: this.formBuilder.group({
@@ -116,6 +179,14 @@ export class AddNewClientComponent implements OnInit {
       wedding_type: this.formBuilder.control<string>('1'),
       wedding_location: this.formBuilder.control<string>(''),
       civil_location: this.formBuilder.control<string>(''),
+      location2: this.formBuilder.group({
+        name: this.formBuilder.control<string>(''),
+        address: this.formBuilder.control<string>(''),
+        location: this.formBuilder.group({
+          lat: this.formBuilder.control<number>(0),
+          lng: this.formBuilder.control<number>(0),
+        }),
+      }),
     }),
     additionalInformation: this.formBuilder.group({
       price: this.formBuilder.control<string>(''),
@@ -201,10 +272,13 @@ export class AddNewClientComponent implements OnInit {
       { id: 6, name: 'produkty_oddane', status: false, category: 'before' },
     ];
 
+    const fooData: any = this.autcompleteData;
+
     const data = {
       ...this.form.getRawValue().additionalInformation,
       ...this.form.getRawValue().basicInformation,
       client_status: initialStatuses,
+      location2: fooData,
     };
 
     this.clientService.add(data).subscribe({
@@ -225,4 +299,8 @@ export class AddNewClientComponent implements OnInit {
       },
     });
   }
+
+  // onPlaceChanged(place: any) {
+  //   this.form.get('basicInformation.location')?.setValue(place.address);
+  // }
 }

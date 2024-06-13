@@ -15,6 +15,14 @@ export type Client = {
   civil_location?: string;
   church_location?: string;
   location: string;
+  location2?: {
+    address: string;
+    name: string;
+    location: {
+      lat: number;
+      lng: number;
+    };
+  };
   date: string;
   name?: string;
 

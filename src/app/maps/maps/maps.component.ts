@@ -1,20 +1,42 @@
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  inject,
+} from '@angular/core';
 import { ClientsService } from '../../clients/data-access/clients.service';
 import { Client } from '../../clients/model/Client';
-import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
-import { NgFor } from '@angular/common';
-
+import {
+  MapInfoWindow,
+  MapMarker,
+  GoogleMap,
+  MapMarkerClusterer,
+} from '@angular/google-maps';
+import { DatePipe, NgFor } from '@angular/common';
 interface MarkerProperties {
+  id: string;
   position: {
     lat: number;
     lng: number;
   };
+  location: string;
+  name: string;
+  title: string;
 }
 
 @Component({
   selector: 'app-maps',
   standalone: true,
-  imports: [GoogleMap, MapMarker, MapInfoWindow, NgFor],
+  imports: [
+    GoogleMap,
+    MapMarker,
+    MapInfoWindow,
+    NgFor,
+    MapMarkerClusterer,
+    DatePipe,
+  ],
   templateUrl: './maps.component.html',
   styleUrl: './maps.component.scss',
 })
@@ -25,64 +47,273 @@ export class MapsComponent {
 
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
+  @ViewChildren(MapMarker) markerRefs!: QueryList<MapMarker>;
 
-  zoom = 12;
-  center!: google.maps.LatLngLiteral;
-  options: google.maps.MapOptions = {
-    disableDoubleClickZoom: true,
-    mapTypeId: 'hybrid',
-    minZoom: 8,
-  };
-  markers = [{}];
-  infoContent = '';
-
-  logCenter() {
-    console.log(JSON.stringify(this.map.getCenter()));
-  }
-
-  markerss: MarkerProperties[] = [
-    { position: { lat: 48.8584, lng: 2.2945 } },
-    { position: { lat: 48.8606, lng: 2.3376 } },
-    { position: { lat: 48.853, lng: 2.3499 } },
+  mapStyle = [
+    {
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#f5f5f5',
+        },
+      ],
+    },
+    {
+      elementType: 'labels.icon',
+      stylers: [
+        {
+          visibility: 'off',
+        },
+      ],
+    },
+    {
+      elementType: 'labels.text.fill',
+      stylers: [
+        {
+          color: '#616161',
+        },
+      ],
+    },
+    {
+      elementType: 'labels.text.stroke',
+      stylers: [
+        {
+          color: '#f5f5f5',
+        },
+      ],
+    },
+    {
+      featureType: 'administrative.land_parcel',
+      elementType: 'labels.text.fill',
+      stylers: [
+        {
+          color: '#bdbdbd',
+        },
+      ],
+    },
+    {
+      featureType: 'poi',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#eeeeee',
+        },
+      ],
+    },
+    {
+      featureType: 'poi',
+      elementType: 'labels.text.fill',
+      stylers: [
+        {
+          color: '#757575',
+        },
+      ],
+    },
+    {
+      featureType: 'poi.park',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#e5e5e5',
+        },
+      ],
+    },
+    {
+      featureType: 'poi.park',
+      elementType: 'labels.text.fill',
+      stylers: [
+        {
+          color: '#9e9e9e',
+        },
+      ],
+    },
+    {
+      featureType: 'road',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#ffffff',
+        },
+      ],
+    },
+    {
+      featureType: 'road.arterial',
+      elementType: 'labels.text.fill',
+      stylers: [
+        {
+          color: '#757575',
+        },
+      ],
+    },
+    {
+      featureType: 'road.highway',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#dadada',
+        },
+      ],
+    },
+    {
+      featureType: 'road.highway',
+      elementType: 'labels.text.fill',
+      stylers: [
+        {
+          color: '#616161',
+        },
+      ],
+    },
+    {
+      featureType: 'road.local',
+      elementType: 'labels.text.fill',
+      stylers: [
+        {
+          color: '#9e9e9e',
+        },
+      ],
+    },
+    {
+      featureType: 'transit.line',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#e5e5e5',
+        },
+      ],
+    },
+    {
+      featureType: 'transit.station',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#eeeeee',
+        },
+      ],
+    },
+    {
+      featureType: 'water',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#c9c9c9',
+        },
+      ],
+    },
+    {
+      featureType: 'water',
+      elementType: 'labels.text.fill',
+      stylers: [
+        {
+          color: '#9e9e9e',
+        },
+      ],
+    },
   ];
 
-  addMarker() {
-    this.markers.push({
-      position: {
-        lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-        lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-      },
-      label: {
-        color: 'red',
-        text: 'Marker label ' + (this.markers.length + 1),
-      },
-      title: 'Marker title ' + (this.markers.length + 1),
-      info: 'Marker info ' + (this.markers.length + 1),
-      options: {
-        animation: google.maps.Animation.BOUNCE,
-      },
-    });
-
-    console.log(this.markers);
-  }
+  zoom = 9;
+  center: google.maps.LatLngLiteral = { lat: 49.617, lng: 20.715 };
+  options: google.maps.MapOptions = {
+    disableDoubleClickZoom: true,
+    styles: this.mapStyle,
+  };
+  infoContent = '';
+  markerss: any[] = [];
 
   openInfo(marker: MapMarker, content: any) {
     this.infoContent = content;
     this.info.open(marker);
   }
 
-  ngOnInit(): void {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
+  overMarker(marker: MapMarker) {
+    marker.marker?.setAnimation(google.maps.Animation.BOUNCE);
+  }
+  mouseLeave(marker: MapMarker) {
+    marker.marker?.setAnimation(null);
+  }
+
+  generateMarkers() {
+    const itemWithLocation = this.clients.filter(
+      (client) => client.location2?.location
+    );
+
+    itemWithLocation.forEach((item) => {
+      if (item.location2?.location) {
+        this.markerss.push({
+          id: item.id,
+          position: item.location2.location,
+          location: item.location2.address,
+          name: item.bridge_name + ' & ' + item.groom_name,
+          type: item.client_type,
+          date: item.date,
+          title:
+            '<p>' +
+            item.bridge_name +
+            ' & ' +
+            item.groom_name +
+            '</p>' +
+            '<p>' +
+            item.location2.address +
+            '</p>' +
+            '<p>' +
+            item.date +
+            '</p>',
+          options: {
+            animation: google.maps.Animation.DROP,
+            icon:
+              item.client_type === '1'
+                ? '../../../assets/icon-wedding.png'
+                : '../../../assets/icon-other.png',
+          },
+        });
+      }
     });
+  }
+
+  highlightMarker(marker: MarkerProperties) {
+    const mapMarker = this.markerRefs.find(
+      (ref) => ref.marker?.getTitle() === marker.title
+    );
+
+    this.center = marker.position;
+    const bounds = new google.maps.LatLngBounds(marker.position);
+    this.map.panToBounds(bounds);
+    if (mapMarker) {
+      mapMarker.marker?.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  }
+
+  unhighlightMarker(marker: MarkerProperties) {
+    const mapMarker = this.markerRefs.find(
+      (ref) => ref.marker?.getTitle() === marker.title
+    );
+    if (mapMarker) {
+      mapMarker.marker?.setAnimation(null);
+    }
+    this.zoom = 9;
+  }
+
+  openMapInfoWindow(marker: MarkerProperties) {
+    const mapMarker = this.markerRefs.find(
+      (ref) => ref.marker?.getTitle() === marker.title
+    );
+
+    if (mapMarker) {
+      this.openInfo(mapMarker, marker.title);
+    }
+  }
+
+  testx(marker: MapMarker) {
+    console.log('test');
+  }
+
+  ngOnInit(): void {
     this.clientService.getAll(['1', '2', '3']).subscribe({
       next: (response) => {
         if (response.ok) {
           if (Array.isArray(response.body)) {
             this.clients = response.body;
+
+            this.generateMarkers();
           }
         }
       },

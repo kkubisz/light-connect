@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import {
   ControlContainer,
+  FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
@@ -68,8 +69,6 @@ export class PlaceAutocompleteComponent implements AfterViewInit {
         if (!place) {
           return;
         }
-
-        console.log(place);
 
         const result: PlaceSearchResult = {
           address: this.inputField.nativeElement.value,

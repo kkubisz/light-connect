@@ -1,0 +1,12 @@
+.clients {
+  height: 600px;
+  overflow-y: scroll;
+
+  li.wedding {
+    border-left: 3px solid #26c6da;
+  }
+
+  li {
+    border-left: 3px solid #ec407a;
+  }
+}

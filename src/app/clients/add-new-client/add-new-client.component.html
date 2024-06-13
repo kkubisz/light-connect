@@ -107,12 +107,33 @@
           <div>
             <h2>{{ isWedding ? "Venue" : "Location and Info" }}</h2>
 
+            <mat-form-field>
+              <mat-label>Location1</mat-label>
+
+              test
+
+              <input
+                #inputField
+                type="text"
+                id="inputField"
+                class="form-control"
+                matInput
+              />
+            </mat-form-field>
+
             <div class="grid md:grid-cols-2 gap-4 text-center">
               <mat-form-field>
-                <mat-label>Location</mat-label>
+                <mat-label>Locationq</mat-label>
 
-                //to ma byc z compoonentu
-                <app-place-autocomplete></app-place-autocomplete>
+                <!-- <app-place-autocomplete [test]="form.get('autocomplete')"> -->
+                <!-- </app-place-autocomplete> -->
+
+                <input
+                  matInput
+                  placeholder="Location"
+                  formControlName="location"
+                  required
+                />
               </mat-form-field>
 
               <mat-form-field>

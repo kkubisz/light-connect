@@ -72,7 +72,14 @@ export class EditClientComponent {
       bridge_surname: this.formBuilder.control<string>(''),
       bridge_location: this.formBuilder.control<string>(''),
       bridge_phone_number: this.formBuilder.control<string>(''),
-      location: this.formBuilder.control<string>(''),
+      location: this.formBuilder.group({
+        name: this.formBuilder.control<string>(''),
+        address: this.formBuilder.control<string>(''),
+        location: this.formBuilder.group({
+          lat: this.formBuilder.control<number>(0),
+          lng: this.formBuilder.control<number>(0),
+        }),
+      }),
       date: this.formBuilder.control<string>(''),
       client_type: this.formBuilder.control<string>('1'),
       name: this.formBuilder.control<string>(''),
@@ -129,7 +136,15 @@ export class EditClientComponent {
         bridge_phone_number: this.formBuilder.control<string>(
           client.bridge_phone_number ?? ''
         ),
-        location: this.formBuilder.control<string>(client.location ?? ''),
+
+        location: this.formBuilder.group({
+          name: this.formBuilder.control<string>(''),
+          address: this.formBuilder.control<string>(''),
+          location: this.formBuilder.group({
+            lat: this.formBuilder.control<number>(0),
+            lng: this.formBuilder.control<number>(0),
+          }),
+        }),
         date: this.formBuilder.control<string>(client.date ?? ''),
         client_type: this.formBuilder.control<string>(
           client.client_type ?? '1'
