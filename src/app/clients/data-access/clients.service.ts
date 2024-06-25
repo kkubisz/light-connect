@@ -9,6 +9,10 @@ interface ClientStatus {
   status: boolean;
 }
 
+export type ClientTypeParam = {
+  client_type: string | string[];
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -17,10 +21,10 @@ export class ClientsService {
 
   private http = inject(HttpClient);
 
-  getAll(client_type: string | string[]) {
+  getAll(clientType?: ClientTypeParam) {
     return this.http.get<Client[]>(`${this.ClientSeriveURL}/clients`, {
       observe: 'response',
-      params: { client_type },
+      params: clientType,
     });
   }
 

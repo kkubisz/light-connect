@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
+import { AppConfigStateService } from '../../config/config.state.service';
 
 @Component({
   selector: 'app-base-chart',
@@ -15,4 +16,7 @@ export class BaseChartComponent {
   @Input({ required: true }) chartOptions: any = '';
   @Input({ required: true }) chartType: any = '';
   @Input({ required: true }) chartId: string = '';
+
+  private configState = inject(AppConfigStateService);
+  $selectedYear = this.configState.selectedYear;
 }

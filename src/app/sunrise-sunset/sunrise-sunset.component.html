@@ -1,0 +1,97 @@
+@if (sunriseData.results){
+<div
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-20 sm:gap-y-12 xl:gap-y-4 p-4"
+>
+  <div
+    class="block p-6 bg-white border border-gray-200 rounded-lg shadow relative"
+  >
+    <div class="content-wrapper pt-4">
+      <div class="heading-wrapper flex justify-between mb-3 items-end">
+        <img class="w-20" src="../../../assets/sunrise.png" />
+
+        <div class="text-end">
+          <h4
+            class="mb-2 font-light tracking-tight text-gray-300 dark:text-white"
+          >
+            Sunrise
+          </h4>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            {{ sunriseData.results.sunrise }}
+          </p>
+        </div>
+      </div>
+
+      <hr />
+    </div>
+  </div>
+
+  <div
+    class="block p-6 bg-white border border-gray-200 rounded-lg shadow relative"
+  >
+    <div class="content-wrapper pt-4">
+      <div class="heading-wrapper flex justify-between mb-3 items-end">
+        <img class="w-20" src="../../../assets/day-and-night.png" />
+
+        <div class="text-end">
+          <h4
+            class="mb-2 font-light tracking-tight text-gray-300 dark:text-white"
+          >
+            Day length
+          </h4>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            {{ sunriseData.results.day_length }}
+          </p>
+        </div>
+      </div>
+
+      <hr />
+    </div>
+  </div>
+
+  <div
+    class="block p-6 bg-white border border-gray-200 rounded-lg shadow relative"
+  >
+    <div class="content-wrapper pt-4">
+      <div class="heading-wrapper flex justify-between mb-3 items-end">
+        <img class="w-20" src="../../../assets/autumn.png" />
+
+        <div class="text-end">
+          <h4
+            class="mb-2 font-light tracking-tight text-gray-300 dark:text-white"
+          >
+            Golden Hour
+          </h4>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            {{ sunriseData.results.golden_hour }}
+          </p>
+        </div>
+      </div>
+
+      <hr />
+    </div>
+  </div>
+
+  <div
+    class="block p-6 bg-white border border-gray-200 rounded-lg shadow relative"
+  >
+    <div class="content-wrapper pt-4">
+      <div class="heading-wrapper flex justify-between mb-3 items-end">
+        <img class="w-20" src="../../../assets/sunset.png" />
+
+        <div class="text-end">
+          <h4
+            class="mb-2 font-light tracking-tight text-gray-300 dark:text-white"
+          >
+            Sunset
+          </h4>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            {{ sunriseData.results.sunset }}
+          </p>
+        </div>
+      </div>
+
+      <hr />
+    </div>
+  </div>
+</div>
+}

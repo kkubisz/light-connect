@@ -53,8 +53,6 @@ export class WeddingClientsComponent implements OnChanges {
         (client) => client.client_type === '1'
       );
 
-      console.log('weddin chan');
-
       this.dataSource = new MatTableDataSource<Client>(this.weddingClients);
 
       this.dataSource.paginator = this.paginator;

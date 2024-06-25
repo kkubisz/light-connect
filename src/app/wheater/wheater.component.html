@@ -1,0 +1,18 @@
+@if(forecast) {
+<div class="mt-0 ml-10 flex flex-col justify-center items-center">
+  <div class="text-md font-bold flex flex-col text-gray-900">
+    <!-- <span class="uppercase">Today</span> -->
+    <!-- <span class="font-normal text-gray-700 text-sm">October 22</span> -->
+  </div>
+  <div class="w-32 h-32 flex items-center justify-center">
+    <img src="{{ iconURL }}" alt="weather image" />
+  </div>
+  <p class="text-gray-700 mb-2">{{ forecast.weather[0].description }}</p>
+  <div class="text-3xl font-bold text-gray-900 mb-6">
+    {{ forecast.temp.max | number : "1.0-0" }}º<span
+      class="font-normal text-gray-700 mx-1"
+      >/</span
+    >{{ forecast.temp.min | number : "1.0-0" }}º
+  </div>
+</div>
+}

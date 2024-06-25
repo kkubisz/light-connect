@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   QueryList,
   ViewChild,
   ViewChildren,
@@ -15,6 +14,7 @@ import {
   MapMarkerClusterer,
 } from '@angular/google-maps';
 import { DatePipe, NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
 interface MarkerProperties {
   id: string;
   position: {
@@ -30,6 +30,7 @@ interface MarkerProperties {
   selector: 'app-maps',
   standalone: true,
   imports: [
+    RouterLink,
     GoogleMap,
     MapMarker,
     MapInfoWindow,
@@ -48,6 +49,7 @@ export class MapsComponent {
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
   @ViewChildren(MapMarker) markerRefs!: QueryList<MapMarker>;
+  selectedClientId: any;
 
   mapStyle = [
     {
@@ -219,9 +221,10 @@ export class MapsComponent {
   infoContent = '';
   markerss: any[] = [];
 
-  openInfo(marker: MapMarker, content: any) {
-    this.infoContent = content;
+  openInfo(marker: MapMarker, markerIcon: MarkerProperties) {
+    this.infoContent = markerIcon.title;
     this.info.open(marker);
+    this.selectedClientId = markerIcon.id;
   }
 
   overMarker(marker: MapMarker) {
@@ -242,12 +245,12 @@ export class MapsComponent {
           id: item.id,
           position: item.location2.location,
           location: item.location2.address,
-          name: item.bridge_name + ' & ' + item.groom_name,
+          name: item.bride_name + ' & ' + item.groom_name,
           type: item.client_type,
           date: item.date,
           title:
             '<p>' +
-            item.bridge_name +
+            item.bride_name +
             ' & ' +
             item.groom_name +
             '</p>' +
@@ -293,25 +296,30 @@ export class MapsComponent {
   }
 
   openMapInfoWindow(marker: MarkerProperties) {
+    this.selectedClientId = marker.id;
+    console.log(marker.id);
+
     const mapMarker = this.markerRefs.find(
       (ref) => ref.marker?.getTitle() === marker.title
     );
 
     if (mapMarker) {
-      this.openInfo(mapMarker, marker.title);
+      this.openInfo(mapMarker, marker);
     }
   }
 
-  testx(marker: MapMarker) {
-    console.log('test');
-  }
-
   ngOnInit(): void {
-    this.clientService.getAll(['1', '2', '3']).subscribe({
+    this.clientService.getAll().subscribe({
       next: (response) => {
         if (response.ok) {
           if (Array.isArray(response.body)) {
-            this.clients = response.body;
+            const currentYear = new Date().getFullYear();
+
+            this.clients = response.body.filter((client) => {
+              const clientDate = new Date(client.date).getFullYear();
+
+              return clientDate === currentYear;
+            });
 
             this.generateMarkers();
           }

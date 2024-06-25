@@ -18,14 +18,18 @@ export abstract class BaseClientsComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor() {
+    console.log('basesss');
+
     this.dataSource = new MatTableDataSource(this.clients);
   }
 
   abstract getClientTypes(): string[];
 
   ngAfterViewInit() {
-    this.clientService.getAll(this.getClientTypes()).subscribe({
+    this.clientService.getAll().subscribe({
       next: (response) => {
+        console.log('resr', response);
+
         if (response.ok) {
           if (Array.isArray(response.body)) {
             this.clients = response.body;

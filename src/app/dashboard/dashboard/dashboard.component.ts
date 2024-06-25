@@ -26,8 +26,7 @@ import { AppConfigStateService } from '../../config/config.state.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
-import { GoogleMapsModule } from '@angular/google-maps';
-import { PlaceAutocompleteComponent } from '../../shared/place-autocomplete/place-autocomplete.component';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -50,7 +49,7 @@ import { PlaceAutocompleteComponent } from '../../shared/place-autocomplete/plac
     MatDividerModule,
     MatIconModule,
     SnackbarComponent,
-    PlaceAutocompleteComponent,
+    JsonPipe,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -59,16 +58,15 @@ export class DashboardComponent implements OnInit {
   private clientService = inject(ClientsService);
 
   private configState = inject(AppConfigStateService);
-  $view = this.configState.taskListView;
+  $selectedYear = this.configState.selectedYear;
 
   clients: Client[] = [];
   uniqueYears: number[] = [];
   currentYear = new Date().getFullYear();
-
   clientsByYear: Client[] = [];
 
   ngOnInit(): void {
-    this.clientService.getAll(['1', '2', '3']).subscribe({
+    this.clientService.getAll().subscribe({
       next: (response) => {
         if (response.ok) {
           if (Array.isArray(response.body)) {
@@ -89,7 +87,7 @@ export class DashboardComponent implements OnInit {
     return data.filter((item) => {
       const date = new Date(item.date);
 
-      return date.getFullYear() === this.$view();
+      return date.getFullYear() === this.$selectedYear();
     });
   }
 
@@ -103,7 +101,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onValChange(arg0: any) {
-    this.$view.set(+arg0);
+    this.$selectedYear.set(+arg0);
 
     this.clientsByYear = this.getClientsByYear(this.clients);
   }

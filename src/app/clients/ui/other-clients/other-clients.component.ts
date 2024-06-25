@@ -53,7 +53,6 @@ export class OtherClientsComponent implements OnChanges {
       );
 
       this.dataSource = new MatTableDataSource<Client>(this.otherClients);
-
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
@@ -70,9 +69,9 @@ export class OtherClientsComponent implements OnChanges {
 
   mapClientType(type: string): string {
     switch (type) {
-      case '1':
-        return 'Family';
       case '2':
+        return 'Family';
+      case '3':
         return 'Commercial';
       default:
         return 'Family';

@@ -1,5 +1,7 @@
-<div class="grid grid-cols-4 gap-4">
-  <div class="clients bg-white border border-gray-200 rounded-lg shadow sm:p-8">
+<div class="grid grid-cols-1 md:grid-cols-4 mt-20 sm:gap-y-12 md:gap-4">
+  <div
+    class="clients col-span-1 bg-white border border-gray-200 rounded-lg shadow sm:p-8 mb-5"
+  >
     <div class="col-span-1 client-wrapper">
       <div class="flex items-center justify-between mb-4">
         <h5
@@ -38,7 +40,7 @@
     </div>
   </div>
   <div
-    class="col-span-3 map bg-white border border-gray-200 rounded-lg shadow sm:p-8"
+    class="map col-span-3 bg-white border border-gray-200 rounded-lg shadow sm:p-8"
   >
     <!-- google-maps-demo.component.html -->
     <google-map
@@ -48,7 +50,6 @@
       [center]="center"
       [options]="options"
     >
-      >
       <map-marker
         #test="mapMarker"
         *ngFor="let marker of markerss"
@@ -56,13 +57,16 @@
         [label]="marker.label"
         [title]="marker.title"
         [options]="marker.options"
-        (mapClick)="openInfo(test, marker.title)"
+        (mapClick)="openInfo(test, marker)"
         (mapMouseover)="overMarker(test)"
         (mapMouseout)="mouseLeave(test)"
       ></map-marker>
 
       <map-info-window>
         <div [innerHTML]="infoContent"></div>
+        <button [routerLink]="['/clients', selectedClientId]" mat-icon-button>
+          View More
+        </button>
       </map-info-window>
     </google-map>
   </div>

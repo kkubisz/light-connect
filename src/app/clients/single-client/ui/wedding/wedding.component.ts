@@ -3,7 +3,14 @@ import { Client } from '../../../model/Client';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-import { NgFor, NgIf, TitleCasePipe, UpperCasePipe } from '@angular/common';
+import {
+  DatePipe,
+  JsonPipe,
+  NgFor,
+  NgIf,
+  TitleCasePipe,
+  UpperCasePipe,
+} from '@angular/common';
 
 @Component({
   selector: 'app-wedding',
@@ -16,6 +23,8 @@ import { NgFor, NgIf, TitleCasePipe, UpperCasePipe } from '@angular/common';
     NgIf,
     UpperCasePipe,
     TitleCasePipe,
+    JsonPipe,
+    DatePipe,
   ],
   templateUrl: './wedding.component.html',
   styleUrl: './wedding.component.scss',

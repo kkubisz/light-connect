@@ -4,5 +4,5 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class AppConfigStateService {
-  taskListView = signal<number>(new Date().getFullYear());
+  selectedYear = signal<number>(new Date().getFullYear());
 }

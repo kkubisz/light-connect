@@ -1,8 +1,13 @@
 <div class="card-body w-9/12">
-  <div class="relative pt-16">
-    <div
-      class="card-header bg-rose-500 rounded-lg w-full absolute h-28 lg:h-44 -top-8"
-    ></div>
+  <div class="relative pt-56">
+    <div class="card-header bg-rose-500 rounded-lg w-full absolute h-72 -top-8">
+      @if (showWheater) {
+      <app-wheater
+        [date]="client.date"
+        [location]="client.location2?.location"
+      ></app-wheater>
+      }
+    </div>
 
     <div
       class="content-wrapper w-11/12 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 text-center mx-auto relative"
@@ -13,10 +18,17 @@
         </button>
       </div>
       @if (client.client_type === '1') {
-      <app-wedding [client]="this.client" (updateStatus)="updateStatus($event)">
+      <app-wedding [client]="client" (updateStatus)="updateStatus($event)">
       </app-wedding>
       }@else {
-      <app-family [client]="this.client"></app-family>
+      <app-family [client]="client"></app-family>
+      } @if (client.location2?.location?.lat && client.location2?.location?.lng)
+      {
+
+      <app-sunrise-sunset
+        [date]="client.date"
+        [location]="client.location2?.location"
+      ></app-sunrise-sunset>
       }
     </div>
   </div>

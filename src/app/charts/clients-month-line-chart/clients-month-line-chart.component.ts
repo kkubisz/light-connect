@@ -2,7 +2,6 @@ import {
   Component,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
   inject,
 } from '@angular/core';
@@ -28,10 +27,10 @@ export class ClientsMonthLineChartComponent implements OnChanges {
 
   dataClient: any = [];
   totalOrdersPerMonth: number[] = Array(12).fill(0);
-  title: string = 'Clients per Month in [Year]';
+  title: string = 'Clients per Month in ';
 
   description: string =
-    'This chart shows the number of clients per month for the year [Year].';
+    'This chart shows the number of clients per month for the year.';
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clientsData'] && changes['clientsData'].currentValue) {
@@ -46,8 +45,7 @@ export class ClientsMonthLineChartComponent implements OnChanges {
 
     data.forEach((item) => {
       const date = new Date(item.date);
-      const month = date.getMonth(); // Miesiące są indeksowane od 0 (styczeń) do 11 (grudzień)
-
+      const month = date.getMonth();
       this.totalOrdersPerMonth[month] += 1;
     });
 

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddNewClientComponent } from './add-new-client.component';
+import { SunriseSunsetComponent } from './sunrise-sunset.component';
 
-describe('AddNewClientComponent', () => {
-  let component: AddNewClientComponent;
-  let fixture: ComponentFixture<AddNewClientComponent>;
+describe('SunriseSunsetComponent', () => {
+  let component: SunriseSunsetComponent;
+  let fixture: ComponentFixture<SunriseSunsetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddNewClientComponent]
+      imports: [SunriseSunsetComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AddNewClientComponent);
+    fixture = TestBed.createComponent(SunriseSunsetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

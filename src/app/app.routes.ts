@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
-import { AddNewClientComponent } from './clients/add-new-client/add-new-client.component';
+import { ManageClientComponent } from './clients/manage-client/manage-client.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { SingleClientComponent } from './clients/single-client/single-client.component';
-import { EditClientComponent } from './clients/edit-client/edit-client.component';
 import { MapsComponent } from './maps/maps/maps.component';
 
 export const routes: Routes = [
@@ -25,7 +24,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'add',
-        component: AddNewClientComponent,
+        component: ManageClientComponent,
       },
       {
         path: ':clientId',
@@ -34,7 +33,7 @@ export const routes: Routes = [
       },
       {
         path: 'edit/:clientId',
-        component: EditClientComponent,
+        component: ManageClientComponent,
       },
     ],
   },

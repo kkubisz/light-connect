@@ -2,20 +2,23 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { Client } from '../../clients/model/Client';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-upcoming-assignment',
   standalone: true,
-  imports: [MatIcon, RouterLink],
+  imports: [MatIcon, RouterLink, JsonPipe],
   templateUrl: './upcoming-assignment.component.html',
   styleUrl: './upcoming-assignment.component.scss',
 })
 export class UpcomingAssignmentComponent {
   @Input({ required: true }) clients: Client[] = [];
-
   upcomingAssignment: Client = {} as Client;
+
   ngOnChanges(changes: SimpleChanges): void {
+    // if (changes['clients'] && changes['clients'].currentValue) {
     this.getClosestRecordForCurrentYear();
+    // }
   }
 
   getClosestRecordForCurrentYear(): void {
@@ -24,10 +27,15 @@ export class UpcomingAssignmentComponent {
 
     const recordsThisYear = this.clients.filter((client) => {
       const recordDate = new Date(client.date);
-      return recordDate.getFullYear() === currentYear;
+      return (
+        !isNaN(recordDate.getTime()) &&
+        recordDate.getFullYear() === currentYear &&
+        recordDate >= today
+      );
     });
 
     if (recordsThisYear.length === 0) {
+      this.upcomingAssignment = {} as Client;
       return;
     }
 

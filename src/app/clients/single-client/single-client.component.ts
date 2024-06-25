@@ -9,6 +9,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { SnackbarService } from '../../shared/snackbar/service/snackbar.service';
+import { SunriseSunsetComponent } from '../../sunrise-sunset/sunrise-sunset.component';
+import { WheaterComponent } from '../../wheater/wheater.component';
 
 @Component({
   selector: 'app-single-client',
@@ -22,6 +24,8 @@ import { SnackbarService } from '../../shared/snackbar/service/snackbar.service'
     MatIconModule,
     RouterLink,
     JsonPipe,
+    SunriseSunsetComponent,
+    WheaterComponent,
   ],
   templateUrl: './single-client.component.html',
   styleUrl: './single-client.component.scss',
@@ -29,9 +33,12 @@ import { SnackbarService } from '../../shared/snackbar/service/snackbar.service'
 export class SingleClientComponent implements OnInit {
   @Input() clientId?: string;
   private clientService = inject(ClientsService);
-
   private snackbarService = inject(SnackbarService);
   hidden = true;
+
+  currentDate = new Date();
+  clientDate: Date = new Date();
+  showWheater = false;
 
   client: Client = {} as Client;
   ngOnInit(): void {
@@ -40,6 +47,22 @@ export class SingleClientComponent implements OnInit {
         next: (response) => {
           if (response.body) {
             this.client = response.body;
+            this.clientDate = new Date(response.body.date);
+
+            console.log(this.currentDate);
+            console.log(this.clientDate);
+
+            const timeDifference =
+              this.clientDate.getTime() - this.currentDate.getTime();
+
+            const daysDifference = timeDifference / (1000 * 3600 * 24);
+
+            console.log(daysDifference);
+
+            if (daysDifference <= 7) {
+              console.log('pokaz');
+              this.showWheater = true;
+            }
           }
         },
         error: (error) => {
@@ -48,26 +71,17 @@ export class SingleClientComponent implements OnInit {
       });
     }
   }
-  openDropdown() {
-    this.hidden = !this.hidden;
-    console.log(this.hidden);
-  }
 
   updateStatus(statusId: number) {
     if (this.client?.client_status) {
       const status = this.client.client_status.find((s) => s.id === statusId);
-
       const finalStatus = status?.id === 6;
 
       if (status) {
         status.status = !status.status;
 
-        console.log(status.status);
-
         this.clientService.updateClient(this.client).subscribe({
           next: (response) => {
-            console.log(response);
-
             if (finalStatus && status.status) {
               this.snackbarService.show(
                 'Wohho! You are done with it! You deserve good coffee',

@@ -9,7 +9,4 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
-  public menuItems: any[] = [];
-  public isCollapsed = true;
-}
+export class HeaderComponent {}

@@ -62,7 +62,7 @@
             </div>
           </div>
           <div>
-            <h2>Bridge</h2>
+            <h2>Bride</h2>
 
             <div class="grid md:grid-cols-2 gap-4 text-center">
               <mat-form-field>
@@ -70,7 +70,7 @@
                 <input
                   matInput
                   placeholder="First Name"
-                  formControlName="bridge_name"
+                  formControlName="bride_name"
                 />
               </mat-form-field>
               <mat-form-field>
@@ -78,7 +78,7 @@
                 <input
                   matInput
                   placeholder="Surname"
-                  formControlName="bridge_surname"
+                  formControlName="bride_surname"
                 />
               </mat-form-field>
 
@@ -87,7 +87,7 @@
                 <input
                   matInput
                   placeholder="Location"
-                  formControlName="bridge_location"
+                  formControlName="bride_location"
                 />
               </mat-form-field>
               <mat-form-field>
@@ -95,7 +95,7 @@
                 <input
                   matInput
                   placeholder="Phone number"
-                  formControlName="bridge_phone_number"
+                  formControlName="bride_phone_number"
                 />
               </mat-form-field>
             </div>
@@ -109,12 +109,16 @@
 
             <div class="grid md:grid-cols-2 gap-4 text-center">
               <mat-form-field>
-                <mat-label>Locationq</mat-label>
+                <mat-label>Location</mat-label>
+
                 <input
+                  #inputField
+                  type="text"
+                  id="inputField"
+                  class="form-control"
+                  placeholder="Find venue"
                   matInput
-                  placeholder="Location"
                   formControlName="location"
-                  required
                 />
               </mat-form-field>
 
@@ -150,7 +154,7 @@
           </div>
         </div>
 
-        test @if (isWedding) {
+        @if (isWedding) {
 
         <h2>Wedding Type</h2>
         <mat-radio-group
@@ -268,6 +272,7 @@
               <mat-form-field>
                 <mat-label>Price</mat-label>
                 <input
+                  type="number"
                   matInput
                   placeholder="Price"
                   formControlName="price"
@@ -276,13 +281,19 @@
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Petrol</mat-label>
-                <input matInput placeholder="Petrol" formControlName="petrol" />
+                <input
+                  matInput
+                  type="number"
+                  placeholder="Petrol"
+                  formControlName="petrol"
+                />
               </mat-form-field>
 
               <mat-form-field>
                 <mat-label>Additional Cost</mat-label>
                 <input
                   matInput
+                  type="number"
                   placeholder="Additional cost"
                   formControlName="additional_cost"
                 />
@@ -334,7 +345,14 @@
           >
             Back
           </button>
-          <button mat-button matStepperNext (click)="addClient()">Add</button>
+          <button
+            mat-button
+            matStepperNext
+            (click)="addClient()"
+            [disabled]="!form.valid"
+          >
+            {{ isEditMode ? "Edit" : "Add" }}
+          </button>
         </div>
       </mat-step>
 

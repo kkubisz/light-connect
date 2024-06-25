@@ -31,7 +31,7 @@ export class TotalClientsComponent implements OnChanges {
   @Input({ required: true }) clientYearly!: Client[];
 
   private configState = inject(AppConfigStateService);
-  $view = this.configState.taskListView;
+  $view = this.configState.selectedYear;
 
   totalClientData: TotalClientsData = {} as TotalClientsData;
 

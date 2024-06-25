@@ -43,21 +43,21 @@
 
   <div class="border-x-2 border-x-slate-200">
     <div class="pl-8">
-      <h4 class="text-start mb-2">Bridge Info</h4>
+      <h4 class="text-start mb-2">Bride Info</h4>
 
       <ul class="list-group flex flex-col items-start">
         <li class="list-group-item border-0 ps-0 pt-0 text-sm">
           <strong class="text-dark">Full Name:</strong>
 
           <span class="text-slate-500">
-            {{ client.bridge_name }} {{ client.bridge_surname }}
+            {{ client.bride_name }} {{ client.bride_surname }}
           </span>
         </li>
         <li class="list-group-item border-0 ps-0 text-sm">
           <strong class="text-dark">Mobile:</strong> &nbsp;
 
           <span class="text-slate-500">
-            {{ client.bridge_phone_number }}
+            {{ client.bride_phone_number }}
           </span>
         </li>
 
@@ -65,7 +65,7 @@
           <strong class="text-dark">Location:</strong> &nbsp;
 
           <span class="text-slate-500">
-            {{ client.bridge_location }}
+            {{ client.bride_location }}
           </span>
         </li>
       </ul>
@@ -97,13 +97,20 @@
       <h3 class="text-start pt-5">Venue Info</h3>
       <ul class="list-group flex flex-col items-start">
         <li class="list-group-item border-0 ps-0 pt-0 text-sm">
+          <strong class="text-dark">Date:</strong>
+          <span class="text-slate-500">
+            {{ client.date | date }}
+          </span>
+        </li>
+
+        <li class="list-group-item border-0 ps-0 pt-0 text-sm">
           <strong class="text-dark">Wedding type:</strong>
           <span class="text-slate-500">
             {{ client.wedding_type === "1" ? "Church" : "Civili" }}
           </span>
         </li>
         <li class="list-group-item border-0 ps-0 text-sm">
-          <strong class="text-dark"> Wedding location::</strong> &nbsp;
+          <strong class="text-dark"> Wedding location:</strong> &nbsp;
           <span class="text-slate-500">
             {{
               client.wedding_location === "2"
@@ -133,7 +140,7 @@
           <span class="text-slate-500"> {{ client.price }} PLN </span>
         </li>
         <li class="list-group-item border-0 ps-0 text-sm">
-          <strong class="text-dark"> Petrol::</strong> &nbsp;
+          <strong class="text-dark"> Petrol:</strong> &nbsp;
 
           <span class="text-slate-500"> {{ client.petrol }} PLN </span>
         </li>

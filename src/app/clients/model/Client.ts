@@ -6,18 +6,18 @@ export type Client = {
   groom_surname?: string;
   groom_location?: string;
   groom_phone_number?: string;
-  bridge_name?: string;
-  bridge_surname?: string;
-  bridge_location?: string;
-  bridge_phone_number?: string;
+  bride_name?: string;
+  bride_surname?: string;
+  bride_location?: string;
+  bride_phone_number?: string;
   wedding_type?: string;
   wedding_location?: string;
   civil_location?: string;
   church_location?: string;
-  location: string;
+  venue?: string;
   location2?: {
     address: string;
-    name: string;
+    name?: string;
     location: {
       lat: number;
       lng: number;

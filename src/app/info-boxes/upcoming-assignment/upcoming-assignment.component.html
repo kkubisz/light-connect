@@ -13,22 +13,28 @@
         Upcoming assignment
       </h4>
       <p class="font-normal text-gray-700 dark:text-gray-400">
-        {{ upcomingAssignment.location }}
+        {{ upcomingAssignment.location2?.name ?? "-" }}
       </p>
     </div>
 
     <hr />
 
+    @if (upcomingAssignment.wedding_type) {
     <a [routerLink]="['/clients/', upcomingAssignment.id]">
       <div class="footnote flex items-end pt-3">
         <span>{{
           upcomingAssignment.wedding_type == "1"
-            ? upcomingAssignment.bridge_name +
+            ? upcomingAssignment.bride_name +
               " & " +
               upcomingAssignment.groom_name
             : upcomingAssignment.name
         }}</span>
       </div>
     </a>
+    } @else {
+    <span class="footnote flex items-end pt-3"
+      >There is no upcoming events</span
+    >
+    }
   </div>
 </div>

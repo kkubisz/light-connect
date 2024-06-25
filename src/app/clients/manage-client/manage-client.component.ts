@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   NgZone,
   OnInit,
   Output,
@@ -28,10 +29,9 @@ import { JsonPipe, NgFor } from '@angular/common';
 import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 import { ClientsService } from '../data-access/clients.service';
 import { Router } from '@angular/router';
-import { ClientStatus } from '../model/Client';
+import { Client, ClientStatus } from '../model/Client';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { SnackbarService } from '../../shared/snackbar/service/snackbar.service';
-import { PlaceAutocompleteComponent } from '../../shared/place-autocomplete/place-autocomplete.component';
 
 type FormType = {
   basicInformation: FormGroup<{
@@ -39,11 +39,11 @@ type FormType = {
     groom_surname: FormControl<string>;
     groom_location: FormControl<string>;
     groom_phone_number: FormControl<string>;
-    bridge_name: FormControl<string>;
-    bridge_surname: FormControl<string>;
-    bridge_location: FormControl<string>;
-    bridge_phone_number: FormControl<string>;
-    location: FormControl<string>;
+    bride_name: FormControl<string>;
+    bride_surname: FormControl<string>;
+    bride_location: FormControl<string>;
+    bride_phone_number: FormControl<string>;
+    // location: FormControl<string>;
     date: FormControl<string>;
     venue: FormControl<string>;
     client_type: FormControl<string>;
@@ -67,7 +67,7 @@ export interface PlaceSearchResult {
 }
 
 @Component({
-  selector: 'app-add-new-client',
+  selector: 'app-manage-client',
   standalone: true,
   providers: [
     {
@@ -90,12 +90,11 @@ export interface PlaceSearchResult {
     NgFor,
     MatRadioModule,
     SnackbarComponent,
-    PlaceAutocompleteComponent,
   ],
-  templateUrl: './add-new-client.component.html',
-  styleUrl: './add-new-client.component.scss',
+  templateUrl: './manage-client.component.html',
+  styleUrl: './manage-client.component.scss',
 })
-export class AddNewClientComponent implements OnInit {
+export class ManageClientComponent implements OnInit {
   onChangeWeddingLocation($event: MatRadioChange) {
     throw new Error('Method not implemented.');
   }
@@ -103,6 +102,9 @@ export class AddNewClientComponent implements OnInit {
   private clientService = inject(ClientsService);
   private router = inject(Router);
   private snackbarService = inject(SnackbarService);
+
+  isEditMode = false;
+  @Input() clientId!: string;
 
   autocomplete: google.maps.places.Autocomplete | undefined;
 
@@ -116,14 +118,13 @@ export class AddNewClientComponent implements OnInit {
   summary = '';
   autcompleteData = {};
 
-  @ViewChild('inputField')
-  inputField!: ElementRef;
+  @ViewChild('inputField') inputField!: ElementRef;
   @Output() placeChanged = new EventEmitter<PlaceSearchResult>();
 
   constructor(private ngZone: NgZone) {}
 
   options = {
-    componentRestrictions: { country: 'PL' },
+    componentRestrictions: { country: 'pl' }, // Opcjonalnie, aby ograniczyć do Polski
   };
 
   ngAfterViewInit() {
@@ -139,18 +140,13 @@ export class AddNewClientComponent implements OnInit {
           return;
         }
 
-        console.log(place);
-
         const result: PlaceSearchResult = {
           address: this.inputField.nativeElement.value,
           name: place?.name,
           location: place?.geometry?.location?.toJSON(),
         };
 
-        console.log(result);
-
         this.autcompleteData = result;
-        // this.placeChanged.emit(result);
       });
     });
   }
@@ -167,10 +163,10 @@ export class AddNewClientComponent implements OnInit {
       groom_surname: this.formBuilder.control<string>(''),
       groom_location: this.formBuilder.control<string>(''),
       groom_phone_number: this.formBuilder.control<string>(''),
-      bridge_name: this.formBuilder.control<string>(''),
-      bridge_surname: this.formBuilder.control<string>(''),
-      bridge_location: this.formBuilder.control<string>(''),
-      bridge_phone_number: this.formBuilder.control<string>(''),
+      bride_name: this.formBuilder.control<string>(''),
+      bride_surname: this.formBuilder.control<string>(''),
+      bride_location: this.formBuilder.control<string>(''),
+      bride_phone_number: this.formBuilder.control<string>(''),
       location: this.formBuilder.control<string>(''),
       date: this.formBuilder.control<string>(''),
       venue: this.formBuilder.control<string>(''),
@@ -179,20 +175,13 @@ export class AddNewClientComponent implements OnInit {
       wedding_type: this.formBuilder.control<string>('1'),
       wedding_location: this.formBuilder.control<string>(''),
       civil_location: this.formBuilder.control<string>(''),
-      location2: this.formBuilder.group({
-        name: this.formBuilder.control<string>(''),
-        address: this.formBuilder.control<string>(''),
-        location: this.formBuilder.group({
-          lat: this.formBuilder.control<number>(0),
-          lng: this.formBuilder.control<number>(0),
-        }),
-      }),
+      location2: this.formBuilder.control<string>(''),
     }),
     additionalInformation: this.formBuilder.group({
-      price: this.formBuilder.control<string>(''),
-      additional_cost: this.formBuilder.control<string>(''),
-      petrol: this.formBuilder.control<string>(''),
-      session_type: this.formBuilder.control<string>(''),
+      price: this.formBuilder.control<number>(0),
+      additional_cost: this.formBuilder.control<number>(0),
+      petrol: this.formBuilder.control<number>(0),
+      session_type: this.formBuilder.control<string[]>([]),
       other: this.formBuilder.control<string>(''),
     }),
   });
@@ -201,7 +190,59 @@ export class AddNewClientComponent implements OnInit {
     console.log('submit');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log();
+
+    if (this.clientId) {
+      this.isEditMode = true;
+
+      this.loadData(this.clientId);
+    }
+  }
+
+  loadData(clientId: string) {
+    this.clientService.getClient(this.clientId).subscribe({
+      next: (client) => {
+        if (client.body) {
+          this.generateForm(client.body);
+        }
+      },
+    });
+  }
+  generateForm(client: Client) {
+    if (client.client_type !== '1') {
+      this.isWedding = false;
+    }
+
+    this.form.setValue({
+      basicInformation: {
+        groom_name: client.groom_name ?? '',
+        groom_surname: client.groom_surname ?? '',
+        groom_location: client.groom_location ?? '',
+        groom_phone_number: client.groom_phone_number ?? '',
+        bride_name: client.bride_name ?? '',
+        bride_surname: client.bride_surname ?? '',
+        bride_location: client.bride_location ?? '',
+        bride_phone_number: client.bride_phone_number ?? '',
+        date: client.date ?? '',
+        venue: client.venue ?? '',
+        location: client.location2?.address ?? '',
+        client_type: client.client_type ?? '1',
+        location2: client.location2?.name ?? '',
+        name: client.name ?? '',
+        wedding_type: client.wedding_type ?? '1',
+        wedding_location: client.wedding_location ?? '',
+        civil_location: client.civil_location ?? '',
+      },
+      additionalInformation: {
+        price: client.price ?? 0,
+        additional_cost: client.additional_cost ?? 0,
+        petrol: client.petrol ?? 0,
+        session_type: client.session_type ?? [],
+        other: client.other ?? '',
+      },
+    });
+  }
 
   onChange($event: any) {
     this.isWedding = false;
@@ -267,37 +308,56 @@ export class AddNewClientComponent implements OnInit {
       { id: 1, name: 'umowa', status: true, category: 'before' },
       { id: 2, name: 'zadatek', status: false, category: 'before' },
       { id: 3, name: 'sfotografowano', status: false, category: 'before' },
-      { id: 4, name: 'zaplacono', status: false, category: 'before' },
-      { id: 5, name: 'produkty_zamowione', status: false, category: 'before' },
-      { id: 6, name: 'produkty_oddane', status: false, category: 'before' },
+      { id: 4, name: 'produkty_zamowione', status: false, category: 'after' },
+      { id: 5, name: 'produkty_oddane', status: false, category: 'after' },
+      { id: 6, name: 'zaplacono', status: false, category: 'after' },
     ];
 
     const fooData: any = this.autcompleteData;
 
-    const data = {
+    let data = {
       ...this.form.getRawValue().additionalInformation,
       ...this.form.getRawValue().basicInformation,
-      client_status: initialStatuses,
       location2: fooData,
     };
 
-    this.clientService.add(data).subscribe({
-      next: (client) => {
-        this.showSnackBar = true;
+    if (this.isEditMode) {
+      console.log(data);
 
-        this.snackbarService.show(
-          'Congratulation. You get new client',
-          'check'
-        );
+      this.clientService.update(+this.clientId, data).subscribe({
+        next: (client) => {
+          this.snackbarService.show('All data has been saved', 'check');
 
-        setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 1000);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+          }, 1000);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    } else {
+      const finalData = { ...data, client_status: initialStatuses };
+
+      this.clientService.add(finalData).subscribe({
+        next: (client) => {
+          this.showSnackBar = true;
+
+          this.snackbarService.show(
+            'Congratulation. You get new client',
+            'check'
+          );
+
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+          }, 1000);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
+    console.log(data);
   }
 
   // onPlaceChanged(place: any) {

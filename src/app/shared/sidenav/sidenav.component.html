@@ -12,11 +12,9 @@
             <img
               src="../../../assets/angular2-logo-white.webp"
               class="w-10"
-            /></div></a
-        ><a
-          href="https://www.creative-tim.com"
-          class="simple-text logo-normal bg-rose-5"
-        >
+            /></div
+        ></a>
+        <a [routerLink]="'dashboard'" class="simple-text logo-normal bg-rose-5">
           LIGHT CONNECT
         </a>
       </div>
@@ -37,16 +35,6 @@
               ><i class="material-icons">dashboard</i>
               <p>Dashboard</p></a
             >
-          </li>
-          <li routerlinkactive="active" class="nav-item">
-            <!----><a
-              data-toggle="collapse"
-              class="nav-link"
-              href="#components"
-              aria-expanded="true"
-              ><i class="material-icons">apps</i>
-              <p>Components<b class="caret"></b></p></a
-            ><!---->
           </li>
 
           <li routerlinkactive="active" class="nav-item">
@@ -74,7 +62,9 @@
 
   <mat-sidenav-content>
     <mat-toolbar>
-      <span>Light Connect</span>
+      <a [routerLink]="'dashboard'" class="simple-text logo-normal bg-rose-5">
+        LIGHT CONNECT
+      </a>
       <span class="example-spacer"></span>
 
       <button

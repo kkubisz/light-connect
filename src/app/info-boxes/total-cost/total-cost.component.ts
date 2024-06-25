@@ -31,7 +31,7 @@ export class TotalCostComponent implements OnChanges {
   @Input({ required: true }) clientYearly!: Client[];
 
   private configState = inject(AppConfigStateService);
-  $view = this.configState.taskListView;
+  $view = this.configState.selectedYear;
   totalCostData: TotalCostData = {} as TotalCostData;
 
   ngOnChanges(changes: SimpleChanges): void {

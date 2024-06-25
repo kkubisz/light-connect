@@ -1,30 +1,28 @@
+@if (clientsByYear.length) {
+
 <mat-button-toggle-group
   name="selectYear"
   #group="matButtonToggleGroup"
   (change)="onValChange(group.value)"
 >
   @for (item of uniqueYears; track $index) {
-  <mat-button-toggle checked="{{ item === $view() }}" value="{{ item }}">{{
-    item
-  }}</mat-button-toggle>
+  <mat-button-toggle
+    checked="{{ item === $selectedYear() }}"
+    value="{{ item }}"
+    >{{ item }}</mat-button-toggle
+  >
   }
 </mat-button-toggle-group>
 
 <mat-tab-group>
   <mat-tab label="Wedding">
     <ng-template matTabContent>
-      @if (clientsByYear) {
-      <app-wedding-clients
-        [clientsData]="this.clientsByYear"
-      ></app-wedding-clients>
-      }
+      <app-wedding-clients [clientsData]="clientsByYear"></app-wedding-clients>
     </ng-template>
   </mat-tab>
   <mat-tab label="Family/Commercial">
     <ng-template matTabContent>
-      @if (clientsByYear) {
-      <app-other-clients [clientsData]="this.clientsByYear"></app-other-clients>
-      }
+      <app-other-clients [clientsData]="clientsByYear"></app-other-clients>
     </ng-template>
   </mat-tab>
 </mat-tab-group>
@@ -32,23 +30,21 @@
 <div
   class="grid sm:grid-cols-2 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mt-20 lg:gap-y-12"
 >
-  @if (this.clientsByYear) {
   <div>
     <app-clients-summary-doughnut-chart
-      [clientsData]="this.clientsByYear"
+      [clientsData]="clientsByYear"
     ></app-clients-summary-doughnut-chart>
   </div>
   <div>
     <app-income-summary-bar-chart
-      [clientsData]="this.clientsByYear"
+      [clientsData]="clientsByYear"
     ></app-income-summary-bar-chart>
   </div>
   <div>
     <app-clients-month-line-chart
-      [clientsData]="this.clientsByYear"
+      [clientsData]="clientsByYear"
     ></app-clients-month-line-chart>
   </div>
-  }
 </div>
 
 <div
@@ -67,9 +63,15 @@
     [clientYearly]="this.clientsByYear"
   ></app-total-cost>
 
-  @if (currentYear === $view()) {
+  @if (currentYear === $selectedYear()) {
   <app-upcoming-assignment [clients]="this.clients"></app-upcoming-assignment>
   }
 </div>
+} @else {
 
-<app-place-autocomplete></app-place-autocomplete>
+<h2>No data</h2>
+<h3>Please add new client</h3>
+
+<button [routerLink]="['clients/add']">Add</button>
+
+}

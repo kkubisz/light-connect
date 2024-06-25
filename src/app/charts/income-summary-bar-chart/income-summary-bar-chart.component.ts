@@ -4,11 +4,9 @@ import {
   OnInit,
   SimpleChanges,
   ViewChild,
-  inject,
 } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { ClientsService } from '../../clients/data-access/clients.service';
 import { Client } from '../../clients/model/Client';
 import { BaseChartComponent } from '../base-chart/base-chart.component';
 
@@ -19,7 +17,7 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
   templateUrl: './income-summary-bar-chart.component.html',
   styleUrl: './income-summary-bar-chart.component.scss',
 })
-export class IncomeSummaryBarChartComponent implements OnInit {
+export class IncomeSummaryBarChartComponent {
   @Input({ required: true }) clientsData!: Client[];
 
   barChartData: ChartData<'bar'> = { datasets: [] };
@@ -32,10 +30,10 @@ export class IncomeSummaryBarChartComponent implements OnInit {
 
   dataClient: any = [];
 
-  title: string = 'Clients per Month in [Year]';
+  title: string = 'Clients per Month in ';
 
   description: string =
-    'This chart shows the number of clients per month for the year [Year].';
+    'This chart shows the number of clients per month for the year.';
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clientsData'] && changes['clientsData'].currentValue) {
@@ -45,10 +43,6 @@ export class IncomeSummaryBarChartComponent implements OnInit {
         this.generateData();
       }
     }
-  }
-
-  ngOnInit(): void {
-    console.log('init');
   }
 
   calculateIncomeDataByClientType(data: Client[]) {
