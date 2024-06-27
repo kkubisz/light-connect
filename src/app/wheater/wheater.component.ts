@@ -4,9 +4,11 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { WheaterSerivceService } from './wheater-serivce.service';
 import { DecimalPipe } from '@angular/common';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-wheater',
@@ -15,28 +17,27 @@ import { DecimalPipe } from '@angular/common';
   templateUrl: './wheater.component.html',
   styleUrl: './wheater.component.scss',
 })
-export class WheaterComponent implements OnInit, OnChanges {
+export class WheaterComponent implements OnInit {
   weather: any;
   lat: number = 0;
   lon: number = 0;
   forecast: any;
   iconURL: string = '';
+  private weatherService = inject(WheaterSerivceService);
 
-  @Input() location: any;
-  @Input({ required: true }) date: string = '';
+  @Input({ required: true }) location!: any;
+  @Input({ required: true }) date!: Timestamp;
 
-  constructor(private weatherService: WheaterSerivceService) {}
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['location'] && changes['date']) {
-      this.getWeather();
-    }
+  ngOnInit(): void {
+    this.getWeather();
   }
-
-  ngOnInit(): void {}
 
   getWeather() {
     if (this.date && this.location) {
-      const targetDate = new Date(this.date);
+      console.log('aaaa');
+
+      const convertedDate = this.date.seconds * 1000;
+      const targetDate = new Date(convertedDate);
       const targetDateString = targetDate.toDateString();
 
       this.weatherService.getWeather(this.location).subscribe(

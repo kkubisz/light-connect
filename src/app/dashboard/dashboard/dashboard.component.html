@@ -1,5 +1,4 @@
 @if (clientsByYear.length) {
-
 <mat-button-toggle-group
   name="selectYear"
   #group="matButtonToggleGroup"
@@ -67,6 +66,7 @@
   <app-upcoming-assignment [clients]="this.clients"></app-upcoming-assignment>
   }
 </div>
+
 } @else {
 
 <h2>No data</h2>

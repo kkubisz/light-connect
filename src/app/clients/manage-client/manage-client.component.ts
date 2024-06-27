@@ -29,9 +29,10 @@ import { JsonPipe, NgFor } from '@angular/common';
 import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 import { ClientsService } from '../data-access/clients.service';
 import { Router } from '@angular/router';
-import { Client, ClientStatus } from '../model/Client';
+import { Client, Client2, ClientStatus } from '../model/Client';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { SnackbarService } from '../../shared/snackbar/service/snackbar.service';
+import { FirebaseService } from '../../services/firebase.service';
 
 type FormType = {
   basicInformation: FormGroup<{
@@ -103,6 +104,8 @@ export class ManageClientComponent implements OnInit {
   private router = inject(Router);
   private snackbarService = inject(SnackbarService);
 
+  clientsFirebaseService = inject(FirebaseService);
+
   isEditMode = false;
   @Input() clientId!: string;
 
@@ -167,15 +170,14 @@ export class ManageClientComponent implements OnInit {
       bride_surname: this.formBuilder.control<string>(''),
       bride_location: this.formBuilder.control<string>(''),
       bride_phone_number: this.formBuilder.control<string>(''),
-      location: this.formBuilder.control<string>(''),
-      date: this.formBuilder.control<string>(''),
+      date: this.formBuilder.control<any>(''),
       venue: this.formBuilder.control<string>(''),
       client_type: this.formBuilder.control<string>('1'),
       name: this.formBuilder.control<string>(''),
       wedding_type: this.formBuilder.control<string>('1'),
       wedding_location: this.formBuilder.control<string>(''),
       civil_location: this.formBuilder.control<string>(''),
-      location2: this.formBuilder.control<string>(''),
+      location: this.formBuilder.control<string>(''),
     }),
     additionalInformation: this.formBuilder.group({
       price: this.formBuilder.control<number>(0),
@@ -196,23 +198,37 @@ export class ManageClientComponent implements OnInit {
     if (this.clientId) {
       this.isEditMode = true;
 
+      console.log('edit ,mode');
+
       this.loadData(this.clientId);
     }
   }
 
   loadData(clientId: string) {
-    this.clientService.getClient(this.clientId).subscribe({
-      next: (client) => {
-        if (client.body) {
-          this.generateForm(client.body);
-        }
-      },
-    });
+    // this.clientService.getClient(this.clientId).subscribe({
+    //   next: (client) => {
+    //     if (client.body) {
+    //       this.generateForm(client.body);
+    //     }
+    //   },
+    // });
+
+    if (this.clientId) {
+      this.clientsFirebaseService
+        .getSingleClinet(this.clientId)
+        .subscribe((client) => {
+          this.generateForm(client);
+        });
+    }
   }
-  generateForm(client: Client) {
+  generateForm(client: Client2) {
     if (client.client_type !== '1') {
       this.isWedding = false;
     }
+
+    this.autcompleteData = { ...client.location };
+
+    console.log(this.autcompleteData);
 
     this.form.setValue({
       basicInformation: {
@@ -224,11 +240,10 @@ export class ManageClientComponent implements OnInit {
         bride_surname: client.bride_surname ?? '',
         bride_location: client.bride_location ?? '',
         bride_phone_number: client.bride_phone_number ?? '',
-        date: client.date ?? '',
+        date: new Date(client.date.seconds * 1000) ?? Date.now(),
         venue: client.venue ?? '',
-        location: client.location2?.address ?? '',
         client_type: client.client_type ?? '1',
-        location2: client.location2?.name ?? '',
+        location: client.location?.name ?? '',
         name: client.name ?? '',
         wedding_type: client.wedding_type ?? '1',
         wedding_location: client.wedding_location ?? '',
@@ -318,13 +333,11 @@ export class ManageClientComponent implements OnInit {
     let data = {
       ...this.form.getRawValue().additionalInformation,
       ...this.form.getRawValue().basicInformation,
-      location2: fooData,
+      location: fooData,
     };
 
     if (this.isEditMode) {
-      console.log(data);
-
-      this.clientService.update(+this.clientId, data).subscribe({
+      this.clientsFirebaseService.updateClient(data, this.clientId).subscribe({
         next: (client) => {
           this.snackbarService.show('All data has been saved', 'check');
 
@@ -336,13 +349,24 @@ export class ManageClientComponent implements OnInit {
           console.log(err);
         },
       });
+
+      // this.clientService.update(+this.clientId, data).subscribe({
+      //   next: (client) => {
+      //     this.snackbarService.show('All data has been saved', 'check');
+
+      //     setTimeout(() => {
+      //       this.router.navigate(['/dashboard']);
+      //     }, 1000);
+      //   },
+      //   error: (err) => {
+      //     console.log(err);
+      //   },
+      // });
     } else {
       const finalData = { ...data, client_status: initialStatuses };
 
-      this.clientService.add(finalData).subscribe({
-        next: (client) => {
-          this.showSnackBar = true;
-
+      this.clientsFirebaseService.addTodo(finalData).subscribe({
+        next: () => {
           this.snackbarService.show(
             'Congratulation. You get new client',
             'check'
@@ -356,6 +380,24 @@ export class ManageClientComponent implements OnInit {
           console.log(err);
         },
       });
+
+      // this.clientService.add(finalData).subscribe({
+      //   next: (client) => {
+      //     this.showSnackBar = true;
+
+      //     this.snackbarService.show(
+      //       'Congratulation. You get new client',
+      //       'check'
+      //     );
+
+      //     setTimeout(() => {
+      //       this.router.navigate(['/dashboard']);
+      //     }, 1000);
+      //   },
+      //   error: (err) => {
+      //     console.log(err);
+      //   },
+      // });
     }
     console.log(data);
   }

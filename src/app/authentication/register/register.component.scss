@@ -1,0 +1,53 @@
+// :host {
+//   display: flex;
+//   justify-content: center;
+// }
+
+button,
+button:not(:disabled) {
+  color: white;
+  background-color: rgb(244 63 94);
+}
+
+// .card-header {
+//   position: absolute;
+//   margin-left: auto;
+//   margin-right: auto;
+//   left: 0;
+//   right: 0;
+//   text-align: center;
+//   width: 95%;
+// }
+
+// ::ng-deep {
+//   .mat-horizontal-content-container {
+//     margin-top: 20px;
+//   }
+//   .mat-horizontal-stepper-header-container {
+//     padding: 0 50px;
+//   }
+//   .mat-horizontal-stepper-header {
+//     .mat-step-label.mat-step-label-active {
+//       color: white;
+//     }
+
+//     .mat-step-icon-selected {
+//       background-color: white;
+//       color: white;
+//     }
+
+//     .mat-step-label {
+//       color: white;
+//     }
+
+//     .mat-step-icon {
+//       background-color: rgb(244 63 94);
+//       color: white;
+//     }
+//   }
+
+//   .mat-stepper-horizontal-line {
+//     border-top-color: white !important;
+//     z-index: 1;
+//   }
+// }

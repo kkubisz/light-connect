@@ -54,7 +54,7 @@ export class IncomeSummaryBarChartComponent {
     } = {};
 
     data.forEach((item) => {
-      const date = new Date(item.date);
+      const date = new Date(item.date.seconds * 1000);
       const month = date.getMonth(); // Miesiące są indeksowane od 0 (styczeń) do 11 (grudzień)
       const price = item.price;
       const petrol = -Math.abs(item.petrol); // Upewnij się, że wartość jest ujemna

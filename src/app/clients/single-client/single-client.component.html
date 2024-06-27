@@ -1,10 +1,11 @@
 <div class="card-body w-9/12">
   <div class="relative pt-56">
     <div class="card-header bg-rose-500 rounded-lg w-full absolute h-72 -top-8">
-      @if (showWheater) {
+      @if (showWheater && client.location?.location?.lat &&
+      client.location?.location?.lng) {
       <app-wheater
         [date]="client.date"
-        [location]="client.location2?.location"
+        [location]="client.location?.location"
       ></app-wheater>
       }
     </div>
@@ -13,7 +14,7 @@
       class="content-wrapper w-11/12 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 text-center mx-auto relative"
     >
       <div class="absolute top-12 right-5 z-10">
-        <button [routerLink]="['/clients/edit', client.id]" mat-icon-button>
+        <button [routerLink]="['/clients/edit', clientId]" mat-icon-button>
           <mat-icon>more_vert</mat-icon>
         </button>
       </div>
@@ -21,13 +22,12 @@
       <app-wedding [client]="client" (updateStatus)="updateStatus($event)">
       </app-wedding>
       }@else {
-      <app-family [client]="client"></app-family>
-      } @if (client.location2?.location?.lat && client.location2?.location?.lng)
-      {
+      <!-- <app-family [client]="client"></app-family> -->
 
+      } @if (client.location?.location?.lat && client.location?.location?.lng) {
       <app-sunrise-sunset
         [date]="client.date"
-        [location]="client.location2?.location"
+        [location]="client.location?.location"
       ></app-sunrise-sunset>
       }
     </div>

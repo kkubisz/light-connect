@@ -34,9 +34,7 @@ import { Client } from '../../model/Client';
 })
 export class WeddingClientsComponent implements OnChanges {
   @Input({ required: true }) clientsData!: Client[];
-
   weddingClients: Client[] = [];
-
   displayedColumns: string[] = ['No', 'name', 'type', 'location', 'date'];
   dataSource: MatTableDataSource<Client>;
 

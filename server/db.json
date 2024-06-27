@@ -1,112 +1,596 @@
 {
-  "projects": [
-    {
-      "name": "Daily routines",
-      "createdAt": 1700290861039,
-      "updatedAt": null,
-      "id": 1
-    },
-    {
-      "name": "Programming",
-      "createdAt": 1700291084476,
-      "updatedAt": null,
-      "id": 2
-    },
-    {
-      "name": "test",
-      "createdAt": 1713869783133,
-      "id": 3
-    }
-  ],
-  "client_status": [
-    {
-      "name": "umowa",
-      "status": true,
-      "id": 1
-    },
-    {
-      "name": "zadatek",
-      "status": false,
-      "id": 2
-    },
-    {
-      "name": "sfotografowano",
-      "status": false,
-      "id": 3
-    },
-    {
-      "name": "zaplacono",
-      "status": false,
-      "id": 4
-    },
-    {
-      "name": "produkty_zamowione",
-      "status": false,
-      "id": 5
-    },
-    {
-      "name": "produkty_oddane",
-      "status": false,
-      "id": 4
-    }
-  ],
   "clients": [
     {
-      "price": 123123,
-      "additional_cost": 0,
-      "petrol": 1,
-      "session_type": "",
-      "other": "12",
-      "groom_name": "",
+      "price": 4200,
+      "additional_cost": 150,
+      "petrol": 200,
+      "session_type": [
+        "Wedding",
+        "Wedding Session"
+      ],
+      "other": "",
+      "groom_name": "Przemek",
       "groom_surname": "",
-      "groom_location": "",
+      "groom_location": "Barcice",
       "groom_phone_number": "",
-      "bridge_name": "",
+      "bridge_name": "Agata",
       "bridge_surname": "",
-      "bridge_location": "",
+      "bridge_location": "Łącko",
       "bridge_phone_number": "",
-      "location": "KRakow",
-      "date": "2024-05-19T22:00:00.000Z",
-      "year": 2024,
+      "date": "2024-05-31T22:00:00.000Z",
       "venue": "",
-      "type": "2",
-      "name": "Name",
+      "client_type": "1",
+      "name": "",
       "wedding_type": "1",
-      "wedding_location": "",
+      "wedding_location": "Łącko",
       "civil_location": "",
-      "number_of_kids": "1",
-      "client_status": [1, 2, 3],
-      "id": 4
+      "client_status": [
+        {
+          "id": 1,
+          "name": "umowa",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 2,
+          "name": "zadatek",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 3,
+          "name": "sfotografowano",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 4,
+          "name": "produkty_zamowione",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 5,
+          "name": "produkty_oddane",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 6,
+          "name": "zaplacono",
+          "status": false,
+          "category": "after"
+        }
+      ],
+      "location2": {},
+      "id": 1,
+      "bride_name": "Agata",
+      "bride_surname": "",
+      "bride_location": "",
+      "bride_phone_number": "",
+      "location": "Hotel Grodzisko Zyndrama, Łącko, Polska"
     },
     {
-      "price": 1500,
+      "price": 5200,
       "additional_cost": 150,
-      "petrol": 100,
-      "session_type": "",
-      "other": "Number of kids: 3\nAdditional cost: book and prints",
-      "groom_name": "",
+      "petrol": 150,
+      "session_type": [
+        "Wedding"
+      ],
+      "other": "Foto książka",
+      "groom_name": "Wojciech",
       "groom_surname": "",
-      "groom_location": "",
+      "groom_location": "Siedliska",
       "groom_phone_number": "",
-      "bridge_name": "",
+      "bridge_name": "Aleksandra",
       "bridge_surname": "",
+      "bridge_location": "Siedliska",
+      "bridge_phone_number": "",
+      "date": "2024-06-07T22:00:00.000Z",
+      "venue": "",
+      "client_type": "1",
+      "name": "",
+      "wedding_type": "1",
+      "wedding_location": "Siedliska",
+      "civil_location": "",
+      "client_status": [
+        {
+          "id": 1,
+          "name": "umowa",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 2,
+          "name": "zadatek",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 3,
+          "name": "sfotografowano",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 4,
+          "name": "produkty_zamowione",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 5,
+          "name": "produkty_oddane",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 6,
+          "name": "zaplacono",
+          "status": false,
+          "category": "after"
+        }
+      ],
+      "location2": {
+        "address": "Restauracja Bartna Chata w Stróżach, Stróże, Polska",
+        "name": "Restauracja Bartna Chata w Stróżach",
+        "location": {
+          "lat": 49.6704826,
+          "lng": 20.9650993
+        }
+      },
+      "id": 2,
+      "bride_name": "",
+      "bride_surname": "",
+      "bride_location": "",
+      "bride_phone_number": "",
+      "location": "Restauracja Bartna Chata w Stróżach, Stróże, Polska"
+    },
+    {
+      "price": 4900,
+      "additional_cost": 150,
+      "petrol": 200,
+      "session_type": [
+        "Wedding",
+        "Wedding Session"
+      ],
+      "other": "2 Lipiec Plener",
+      "groom_name": "Kamil",
+      "groom_surname": "",
+      "groom_location": "Szczurowo",
+      "groom_phone_number": "",
+      "bridge_name": "Klaudia",
+      "bridge_surname": "Motyka",
+      "bridge_location": "Nowy Wiśnicz",
+      "bridge_phone_number": "",
+      "date": "2024-06-14T22:00:00.000Z",
+      "venue": "",
+      "client_type": "1",
+      "name": "",
+      "wedding_type": "1",
+      "wedding_location": "Brzesko",
+      "civil_location": "",
+      "client_status": [
+        {
+          "id": 1,
+          "name": "umowa",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 2,
+          "name": "zadatek",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 3,
+          "name": "sfotografowano",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 4,
+          "name": "produkty_zamowione",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 5,
+          "name": "produkty_oddane",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 6,
+          "name": "zaplacono",
+          "status": false,
+          "category": "after"
+        }
+      ],
+      "location2": {
+        "address": "Folwark Więckowice, Więckowice, Polska",
+        "name": "Folwark Więckowice",
+        "location": {
+          "lat": 49.9466347,
+          "lng": 20.8172317
+        }
+      },
+      "id": 3
+    },
+    {
+      "price": 4200,
+      "additional_cost": 150,
+      "petrol": 300,
+      "session_type": [
+        "Wedding"
+      ],
+      "other": "Hotel w domu weselnym",
+      "groom_name": "Grzegorz",
+      "groom_surname": "",
+      "groom_location": "Orzesze",
+      "groom_phone_number": "",
+      "bridge_name": "Gosia",
+      "bridge_surname": "Radzikowska",
       "bridge_location": "",
       "bridge_phone_number": "",
-      "location": "Nowy Sącz",
-      "date": "2024-05-23T22:00:00.000Z",
-      "year": 2024,
+      "date": "2024-06-29T22:00:00.000Z",
       "venue": "",
-      "client_type": "2",
-      "name": "Anna Skoczeń",
+      "client_type": "1",
+      "name": "",
       "wedding_type": "1",
-      "wedding_location": "",
+      "wedding_location": "Orzesze, ul. Kusiciego",
       "civil_location": "",
-      "id": 5
+      "client_status": [
+        {
+          "id": 1,
+          "name": "umowa",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 2,
+          "name": "zadatek",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 3,
+          "name": "sfotografowano",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 4,
+          "name": "produkty_zamowione",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 5,
+          "name": "produkty_oddane",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 6,
+          "name": "zaplacono",
+          "status": false,
+          "category": "after"
+        }
+      ],
+      "location2": {
+        "address": "Restauracja Timberland, Rybnicka, Orzesze, Polska",
+        "name": "Restauracja Timberland",
+        "location": {
+          "lat": 50.1280508,
+          "lng": 18.7426312
+        }
+      },
+      "id": 4,
+      "bride_name": "Gosia",
+      "bride_surname": "",
+      "bride_location": "",
+      "bride_phone_number": "",
+      "location": "orzesze tim"
     },
     {
       "price": 9500,
-      "additional_cost": 699,
-      "petrol": "900",
+      "additional_cost": 150,
+      "petrol": 150,
+      "session_type": [
+        "Wedding",
+        "Full Movie",
+        "Short",
+        "Wedding Session"
+      ],
+      "other": "",
+      "groom_name": "Naglak",
+      "groom_surname": "",
+      "groom_location": "Korzenna",
+      "groom_phone_number": "",
+      "bridge_name": "Iga",
+      "bridge_surname": "Naglak",
+      "bridge_location": "Korzenna",
+      "bridge_phone_number": "",
+      "date": "2024-07-19T22:00:00.000Z",
+      "venue": "",
+      "client_type": "1",
+      "name": "",
+      "wedding_type": "1",
+      "wedding_location": "Korzenna",
+      "civil_location": "",
+      "client_status": [
+        {
+          "id": 1,
+          "name": "umowa",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 2,
+          "name": "zadatek",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 3,
+          "name": "sfotografowano",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 4,
+          "name": "produkty_zamowione",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 5,
+          "name": "produkty_oddane",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 6,
+          "name": "zaplacono",
+          "status": false,
+          "category": "after"
+        }
+      ],
+      "location2": {
+        "address": "Restauracja Willa Poprad, Rytro, Polska",
+        "name": "Restauracja Willa Poprad",
+        "location": {
+          "lat": 49.49062199999999,
+          "lng": 20.6822837
+        }
+      },
+      "id": 5
+    },
+    {
+      "price": 7000,
+      "additional_cost": 150,
+      "petrol": 250,
+      "session_type": [
+        "Wedding",
+        "Wedding Session"
+      ],
+      "other": "Repo + Plener + Poprawiny",
+      "groom_name": "Szymon",
+      "groom_surname": "",
+      "groom_location": "Poronin, ul Słasikówka 90",
+      "groom_phone_number": "",
+      "bridge_name": "Anna",
+      "bridge_surname": "Krzysik",
+      "bridge_location": "Bukowina Tatrzańska, ul Kościuszki 14",
+      "bridge_phone_number": "",
+      "date": "2025-09-05T22:00:00.000Z",
+      "venue": "",
+      "client_type": "1",
+      "name": "",
+      "wedding_type": "1",
+      "wedding_location": "Bukowina Tatrzańksa",
+      "civil_location": "",
+      "client_status": [
+        {
+          "id": 1,
+          "name": "umowa",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 2,
+          "name": "zadatek",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 3,
+          "name": "sfotografowano",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 4,
+          "name": "produkty_zamowione",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 5,
+          "name": "produkty_oddane",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 6,
+          "name": "zaplacono",
+          "status": false,
+          "category": "after"
+        }
+      ],
+      "location2": {
+        "address": "Litworowy Staw, Zakopane, Polska",
+        "name": "Litworowy Staw Gąsienicowy",
+        "location": {
+          "lat": 49.2336126,
+          "lng": 19.9970913
+        }
+      },
+      "id": 6
+    },
+    {
+      "price": 700,
+      "additional_cost": "",
+      "petrol": 50,
+      "session_type": "",
+      "other": "",
+      "groom_name": "",
+      "groom_surname": "",
+      "groom_location": "",
+      "groom_phone_number": "",
+      "bridge_name": "",
+      "bridge_surname": "",
+      "bridge_location": "",
+      "bridge_phone_number": "",
+      "date": "2024-05-17T22:00:00.000Z",
+      "venue": "",
+      "client_type": "2",
+      "name": "Komunia Kantor",
+      "wedding_type": "1",
+      "wedding_location": "",
+      "civil_location": "",
+      "client_status": [
+        {
+          "id": 1,
+          "name": "umowa",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 2,
+          "name": "zadatek",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 3,
+          "name": "sfotografowano",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 4,
+          "name": "produkty_zamowione",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 5,
+          "name": "produkty_oddane",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 6,
+          "name": "zaplacono",
+          "status": false,
+          "category": "after"
+        }
+      ],
+      "location2": {
+        "address": "Stary Młyn. Dom weselny., Leona Wyczółkowskiego, Nowy Sącz, Polska",
+        "name": "Stary Młyn. Dom weselny.",
+        "location": {
+          "lat": 49.586774,
+          "lng": 20.734422
+        }
+      },
+      "id": 7,
+      "bride_name": "",
+      "bride_surname": "",
+      "bride_location": "",
+      "bride_phone_number": "",
+      "location": "stary mlyn zawa"
+    },
+    {
+      "price": 2520,
+      "additional_cost": 123123,
+      "petrol": 123123,
+      "session_type": [
+        "Engagement Session",
+        "Wedding"
+      ],
+      "other": "test",
+      "groom_name": "test",
+      "groom_surname": "etst",
+      "groom_location": "etst",
+      "groom_phone_number": "",
+      "bride_name": "etst",
+      "bride_surname": "etst",
+      "bride_location": "",
+      "bride_phone_number": "",
+      "location": "Willa po",
+      "date": "2024-06-28T22:00:00.000Z",
+      "venue": "",
+      "client_type": "1",
+      "name": "",
+      "wedding_type": "1",
+      "wedding_location": "1258",
+      "civil_location": "",
+      "location2": {
+        "address": "Willa Pod Kolejką, Główna, Szczawnica, Polska",
+        "name": "Willa Pod Kolejką",
+        "location": {
+          "lat": 49.42533239999999,
+          "lng": 20.4806978
+        }
+      },
+      "client_status": [
+        {
+          "id": 1,
+          "name": "umowa",
+          "status": true,
+          "category": "before"
+        },
+        {
+          "id": 2,
+          "name": "zadatek",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 3,
+          "name": "sfotografowano",
+          "status": false,
+          "category": "before"
+        },
+        {
+          "id": 4,
+          "name": "produkty_zamowione",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 5,
+          "name": "produkty_oddane",
+          "status": false,
+          "category": "after"
+        },
+        {
+          "id": 6,
+          "name": "zaplacono",
+          "status": false,
+          "category": "after"
+        }
+      ],
+      "id": 8
+    },
+    {
+      "price": 123123,
+      "additional_cost": 123123,
+      "petrol": 123123,
       "session_type": [
         "Engagement Session",
         "Wedding",
@@ -114,408 +598,70 @@
         "Short",
         "Wedding Session"
       ],
-      "other": "",
-      "groom_name": "Tomek1",
-      "groom_surname": "Las1",
-      "groom_location": "Krakow ul dluga",
+      "other": "zxsa",
+      "groom_name": "Anna",
+      "groom_surname": "suran",
+      "groom_location": "ana lo",
       "groom_phone_number": "123123",
-      "bridge_name": "Kasia1",
-      "bridge_surname": "Lis1",
-      "bridge_location": "Krakow. ul krotka",
-      "bridge_phone_number": "123123",
-      "location": "Brzezna",
-      "date": "2024-05-21T22:00:00.000Z",
+      "bride_name": "Bride 11212",
+      "bride_surname": "bride su",
+      "bride_location": "bride lo",
+      "bride_phone_number": "123123",
+      "location": {
+        "address": "Villa Love Sala Weselna Kraków małopolska, Lwowska, Izdebnik, Polska",
+        "name": "Villa Love Sala Weselna Kraków małopolska",
+        "location": {
+          "lat": 49.85875099999999,
+          "lng": 19.7660817
+        }
+      },
+      "date": "2024-06-27T22:00:00.000Z",
       "venue": "",
       "client_type": "1",
       "name": "",
       "wedding_type": "1",
-      "wedding_location": "Brzezna ul 2020",
+      "wedding_location": "12121212",
       "civil_location": "",
-      "id": 6
-    },
-    {
-      "price": 4500,
-      "additional_cost": 450,
-      "petrol": 200,
-      "session_type": ["Engagement Session", "Wedding", "Full Movie"],
-      "other": "",
-      "groom_name": "Romek",
-      "groom_surname": "Las",
-      "groom_location": "Krakow ul dluga",
-      "groom_phone_number": "123123",
-      "bridge_name": "Asia",
-      "bridge_surname": "Lis",
-      "bridge_location": "Krakow. ul krotka",
-      "bridge_phone_number": "123123",
-      "location": "Brzezna",
-      "date": "2024-09-21T22:00:00.000Z",
-      "year": 2024,
-      "venue": "",
-      "client_type": "1",
-      "name": "",
-      "wedding_type": "1",
-      "wedding_location": "Brzezna ul 2020",
-      "civil_location": "",
-      "id": 7
-    },
-    {
-      "price": 8500,
-      "additional_cost": 300,
-      "petrol": 250,
-      "session_type": ["Wedding", "Full Movie", "Short"],
-      "other": "",
-      "groom_name": "Jasiek",
-      "groom_surname": "Franek",
-      "groom_location": "Krakow",
-      "groom_phone_number": "12123",
-      "bridge_name": "Asia",
-      "bridge_surname": "Kasia",
-      "bridge_location": "Krakow ul.dluga",
-      "bridge_phone_number": "123123",
-      "location": "Krakow",
-      "date": "2024-05-31T22:00:00.000Z",
-      "year": 2024,
-      "venue": "",
-      "client_type": "1",
-      "name": "",
-      "wedding_type": "2",
-      "wedding_location": "2",
-      "civil_location": "Pod chmurka",
-      "id": 8
-    },
-    {
-      "price": 7800,
-      "additional_cost": 150,
-      "petrol": 100,
-      "session_type": ["Wedding"],
-      "other": "",
-      "groom_name": "Pawel",
-      "groom_surname": "Nowak",
-      "groom_location": "Nowy Sacz",
-      "groom_phone_number": "123123",
-      "bridge_name": "Marzena",
-      "bridge_surname": "Hans",
-      "bridge_location": "Zabelcze",
-      "bridge_phone_number": "123123",
-      "location": "Kwiat Lotosu",
-      "date": "2024-05-19T22:00:00.000Z",
-      "venue": "",
-      "client_type": "1",
-      "name": "",
-      "wedding_type": "1",
-      "wedding_location": "Zabelcze",
-      "civil_location": "",
-      "id": 9
-    },
-    {
-      "price": 1000,
-      "additional_cost": 100,
-      "petrol": 50,
-      "session_type": "",
-      "other": "",
-      "groom_name": "",
-      "groom_surname": "",
-      "groom_location": "",
-      "groom_phone_number": "",
-      "bridge_name": "",
-      "bridge_surname": "",
-      "bridge_location": "",
-      "bridge_phone_number": "",
-      "location": "Family Location",
-      "date": "2024-05-25T22:00:00.000Z",
-      "year": 2024,
-      "venue": "",
-      "client_type": "2",
-      "name": "Ksia Nosowska",
-      "wedding_type": "1",
-      "wedding_location": "",
-      "civil_location": "",
-      "id": 10
-    },
-    {
-      "price": 5000,
-      "additional_cost": 20,
-      "petrol": 100,
-      "session_type": "",
-      "other": "",
-      "groom_name": "",
-      "groom_surname": "",
-      "groom_location": "",
-      "groom_phone_number": "",
-      "bridge_name": "",
-      "bridge_surname": "",
-      "bridge_location": "",
-      "bridge_phone_number": "",
-      "location": "Loc COmmecrial",
-      "date": "2024-09-12T23:00:00.000Z",
-      "year": 2024,
-      "venue": "",
-      "client_type": "3",
-      "name": "Fakro S.A",
-      "wedding_type": "1",
-      "wedding_location": "",
-      "civil_location": "",
-      "id": 11
-    },
-    {
-      "price": 1200,
-      "additional_cost": 150,
-      "petrol": 50,
-      "session_type": "",
-      "other": "",
-      "groom_name": "",
-      "groom_surname": "",
-      "groom_location": "",
-      "groom_phone_number": "",
-      "bridge_name": "",
-      "bridge_surname": "",
-      "bridge_location": "",
-      "bridge_phone_number": "",
-      "location": "LOcation2",
-      "date": "2024-02-12T23:00:00.000Z",
-      "year": 2024,
-      "venue": "",
-      "client_type": "2",
-      "name": "FebruRY Photo",
-      "wedding_type": "1",
-      "wedding_location": "",
-      "civil_location": "",
-      "id": 12
-    },
-    {
-      "price": "50006",
-      "additional_cost": 199,
-      "petrol": 90,
-      "session_type": "",
-      "other": "",
-      "groom_name": "",
-      "groom_surname": "",
-      "groom_location": "",
-      "groom_phone_number": "",
-      "bridge_name": "",
-      "bridge_surname": "",
-      "bridge_location": "",
-      "bridge_phone_number": "",
-      "location": "Com 2",
-      "date": "2024-10-14T22:00:00.000Z",
-      "year": 2024,
-      "venue": "",
-      "client_type": "3",
-      "name": "Com 2",
-      "wedding_type": "1",
-      "wedding_location": "",
-      "civil_location": "",
-      "id": 13
-    },
-    {
-      "price": 5000,
-      "additional_cost": 250,
-      "petrol": 100,
-      "session_type": "",
-      "other": "",
-      "groom_name": "",
-      "groom_surname": "",
-      "groom_location": "",
-      "groom_phone_number": "",
-      "bridge_name": "",
-      "bridge_surname": "",
-      "bridge_location": "",
-      "bridge_phone_number": "",
-      "location": "Com 2",
-      "date": "2024-11-14T22:00:00.000Z",
-      "year": 2024,
-      "venue": "",
-      "client_type": "3",
-      "name": "Com 3",
-      "wedding_type": "1",
-      "wedding_location": "",
-      "civil_location": "",
-      "id": 14
-    },
-    {
-      "price": 29000,
-      "additional_cost": 250,
-      "petrol": 500,
-      "session_type": ["Wedding", "Full Movie"],
-      "other": "",
-      "groom_name": "Tom",
-      "groom_surname": "Ro",
-      "groom_location": "asdas",
-      "groom_phone_number": "123123",
-      "bridge_name": "Name",
-      "bridge_surname": "SUern",
-      "bridge_location": "123123",
-      "bridge_phone_number": "",
-      "location": "Warszawa",
-      "date": "2025-07-16T22:00:00.000Z",
-      "year": 2025,
-      "venue": "",
-      "client_type": "1",
-      "name": "",
-      "wedding_type": "1",
-      "wedding_location": "",
-      "civil_location": "",
-      "id": 15
-    },
-    {
-      "price": 49000,
-      "additional_cost": 250,
-      "petrol": 500,
-      "session_type": ["Wedding", "Full Movie"],
-      "other": "",
-      "groom_name": "Tom2",
-      "groom_surname": "Ro2",
-      "groom_location": "asdas",
-      "groom_phone_number": "123123",
-      "bridge_name": "Name",
-      "bridge_surname": "SUern",
-      "bridge_location": "123123",
-      "bridge_phone_number": "",
-      "location": "Warszawa 2",
-      "date": "2025-07-16T22:00:00.000Z",
-      "year": 2025,
-      "venue": "",
-      "client_type": "1",
-      "name": "",
-      "wedding_type": "1",
-      "wedding_location": "",
-      "civil_location": "",
-      "id": 15
-    },
-    {
-      "price": 37000,
-      "additional_cost": 1200,
-      "petrol": 500,
-      "session_type": ["Wedding", "Full Movie"],
-      "other": "",
-      "groom_name": "Tom2 2023",
-      "groom_surname": "Ro2 2023",
-      "groom_location": "asdas",
-      "groom_phone_number": "123123",
-      "bridge_name": "Name 2023",
-      "bridge_surname": "SUern",
-      "bridge_location": "123123",
-      "bridge_phone_number": "",
-      "location": "Warszawa 2023",
-      "date": "2023-07-16T22:00:00.000Z",
-      "year": 2023,
-      "venue": "",
-      "client_type": "1",
-      "name": "",
-      "wedding_type": "1",
-      "wedding_location": "",
-      "civil_location": "",
-      "id": 16
-    },
-    {
-      "price": 9000,
-      "additional_cost": 20,
-      "petrol": 10,
-      "session_type": "",
-      "other": "",
-      "groom_name": "",
-      "groom_surname": "",
-      "groom_location": "",
-      "groom_phone_number": "",
-      "bridge_name": "",
-      "bridge_surname": "",
-      "bridge_location": "",
-      "bridge_phone_number": "",
-      "location": "Location 2025",
-      "date": "2025-06-25T22:00:00.000Z",
-      "venue": "",
-      "client_type": "3",
-      "name": "Location 2025 COmmercial",
-      "wedding_type": "1",
-      "wedding_location": "",
-      "civil_location": "",
-      "id": 17
-    },
-    {
-      "price": 7800,
-      "additional_cost": 20,
-      "petrol": 150,
-      "session_type": ["Engagement Session", "Wedding"],
-      "other": "",
-      "groom_name": "Jasiek",
-      "groom_surname": "Jaskiowak",
-      "groom_location": "Korzenna",
-      "groom_phone_number": "78787878",
-      "bridge_name": "Marzena",
-      "bridge_surname": "Marzec",
-      "bridge_location": "Krakow",
-      "bridge_phone_number": "888888",
-      "location": "Kwiat Lotosu",
-      "date": "2025-01-16T23:00:00.000Z",
-      "venue": "",
-      "client_type": "2",
-      "name": "test",
-      "wedding_type": "2",
-      "wedding_location": "2",
-      "civil_location": "Kwiat Lotosu POle",
-      "id": 18
-    },
-    {
-      "price": 9800,
-      "additional_cost": 898,
-      "petrol": 89,
-      "session_type": ["Wedding", "Full Movie", "Short"],
-      "other": "",
-      "groom_name": "Aleksander",
-      "groom_surname": "Olek",
-      "groom_location": "Gdans",
-      "groom_phone_number": "123123",
-      "bridge_name": "Marzena ",
-      "bridge_surname": "Nycz",
-      "bridge_location": "Szczecin",
-      "bridge_phone_number": "12323",
-      "location": "Nad potokiem",
-      "date": "2024-07-14T22:00:00.000Z",
-      "venue": "",
-      "client_type": "1",
-      "name": "",
-      "wedding_type": "1",
-      "wedding_location": "Na potokiem Church",
-      "civil_location": "",
+      "location2": "",
       "client_status": [
         {
+          "id": 1,
           "name": "umowa",
           "status": true,
-          "id": 1,
           "category": "before"
         },
         {
-          "name": "zadatek",
-          "status": true,
           "id": 2,
+          "name": "zadatek",
+          "status": false,
           "category": "before"
         },
         {
-          "name": "sfotografowano",
-          "status": true,
           "id": 3,
+          "name": "sfotografowano",
+          "status": false,
           "category": "before"
         },
         {
-          "name": "zaplacono",
-          "status": true,
           "id": 4,
-          "category": "after"
-        },
-        {
           "name": "produkty_zamowione",
           "status": false,
-          "id": 5,
           "category": "after"
         },
         {
+          "id": 5,
           "name": "produkty_oddane",
-          "status": true,
+          "status": false,
+          "category": "after"
+        },
+        {
           "id": 6,
+          "name": "zaplacono",
+          "status": false,
           "category": "after"
         }
       ],
-      "id": 19
+      "id": 9
     }
   ]
 }

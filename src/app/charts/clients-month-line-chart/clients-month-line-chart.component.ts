@@ -44,7 +44,7 @@ export class ClientsMonthLineChartComponent implements OnChanges {
     this.totalOrdersPerMonth = Array(12).fill(0);
 
     data.forEach((item) => {
-      const date = new Date(item.date);
+      const date = new Date(item.date.seconds * 1000);
       const month = date.getMonth();
       this.totalOrdersPerMonth[month] += 1;
     });

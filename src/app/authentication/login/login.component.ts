@@ -1,0 +1,63 @@
+import { Component, OnInit, inject } from '@angular/core';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  NonNullableFormBuilder,
+} from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { AuthService } from '../auth/auth.service';
+import { Router, RouterLink } from '@angular/router';
+import { SnackbarService } from '../../shared/snackbar/service/snackbar.service';
+
+export interface UserInteraface {
+  email: string;
+  username: string;
+}
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    SnackbarComponent,
+    RouterLink,
+  ],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
+})
+export class LoginComponent {
+  private formBuilder = inject(NonNullableFormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private snackbarService = inject(SnackbarService);
+
+  form = this.formBuilder.group({
+    email: this.formBuilder.control<string>(''),
+    password: this.formBuilder.control<string>(''),
+  });
+
+  errorMessage: string | null = null;
+
+  submit() {
+    const rawValue = this.form.getRawValue();
+
+    this.authService.login(rawValue.email, rawValue.password).subscribe({
+      next: (displayName) => {
+        this.snackbarService.show(`Welcome back ${displayName}`, 'check');
+        this.router.navigateByUrl('/dashboard');
+      },
+      error: (error) => {
+        this.errorMessage = error.code;
+      },
+    });
+  }
+}

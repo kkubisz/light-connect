@@ -26,7 +26,7 @@ export class UpcomingAssignmentComponent {
     const today = new Date();
 
     const recordsThisYear = this.clients.filter((client) => {
-      const recordDate = new Date(client.date);
+      const recordDate = new Date(client.date.seconds * 1000);
       return (
         !isNaN(recordDate.getTime()) &&
         recordDate.getFullYear() === currentYear &&
@@ -40,8 +40,8 @@ export class UpcomingAssignmentComponent {
     }
 
     recordsThisYear.sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
+      const dateA = new Date(a.date.seconds * 1000);
+      const dateB = new Date(b.date.seconds * 1000);
       return (
         Math.abs(dateA.getTime() - today.getTime()) -
         Math.abs(dateB.getTime() - today.getTime())

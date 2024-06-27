@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, inject } from '@angular/core';
+import { Timestamp } from '@angular/fire/firestore';
 
 type SunrideData = {
   results: {
@@ -32,11 +33,15 @@ export class SunriseSunsetComponent implements OnInit {
   sunriseData: SunrideData = {} as SunrideData;
 
   @Input() location: any;
-  @Input({ required: true }) date: string = '';
+  @Input({ required: true }) date!: Timestamp;
 
   ngOnInit(): void {
     if (this.location && this.date) {
-      const formatedDate = new Date(this.date).toISOString().split('T')[0];
+      const convertedDate = this.date.seconds * 1000;
+
+      console.log(convertedDate);
+
+      const formatedDate = new Date(convertedDate).toISOString().split('T')[0];
       const url = `${this.sunriseURL}json?lat=${this.location.lat}&lng=${this.location.lng}&timezone=CET&date=${formatedDate}`;
       this.http.get<SunrideData>(url).subscribe((data) => {
         if (data.status === 'OK') {

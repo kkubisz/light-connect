@@ -30,7 +30,7 @@
               </p>
 
               <p class="text-sm italic text-gray-900 dark:text-white">
-                {{ client.date | date }}
+                {{ client.date.seconds * 1000 | date }}
               </p>
             </div>
           </li>

@@ -44,7 +44,7 @@
         </th>
         <td mat-cell *matCellDef="let row">
           {{
-            row.wedding_type == "1" ? row.location2?.name : row.civil_location
+            row.wedding_type == "1" ? row.location?.name : row.civil_location
           }}
         </td>
       </ng-container>
@@ -52,7 +52,9 @@
       <!-- Fruit Column -->
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-        <td mat-cell *matCellDef="let row">{{ row.date | date }}</td>
+        <td mat-cell *matCellDef="let row">
+          {{ row.date.seconds * 1000 | date }}
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

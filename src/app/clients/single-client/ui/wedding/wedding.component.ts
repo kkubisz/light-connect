@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Client } from '../../../model/Client';
+import { Client, Client2 } from '../../../model/Client';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,7 +30,7 @@ import {
   styleUrl: './wedding.component.scss',
 })
 export class WeddingComponent {
-  @Input({ required: true }) client!: Client;
+  @Input({ required: true }) client!: Client2;
   @Output() updateStatus = new EventEmitter<number>();
 
   toggleStatus(statusId: number) {

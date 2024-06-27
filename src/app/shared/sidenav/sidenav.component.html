@@ -20,16 +20,21 @@
       </div>
 
       <div class="sidebar-wrapper">
+        @if(authService.currentUserSig()?.email) {
         <hr />
+
         <div class="user flex items-center py-5">
           <div class="photo mr-3">
-            <img class="w-10 rounded-full" src="../../../assets/avatar.jpeg" />
+            <!-- <img class="w-10 rounded-full" src="../../../assets/avatar.jpeg" /> -->
           </div>
-          <div class="user-info">John Andrew</div>
+          <div class="user-info">
+            {{ authService.currentUserSig()?.username }}
+          </div>
         </div>
         <hr />
-        <!---->
+        }
         <ul class="nav">
+          @if(authService.currentUserSig()?.email) {
           <li routerlinkactive="active" class="nav-item active">
             <a class="nav-link" [routerLink]="'dashboard'"
               ><i class="material-icons">dashboard</i>
@@ -52,9 +57,22 @@
               ><i class="material-icons">add_circle</i>
               <p>Add<b class="caret"></b></p
             ></a>
-
-            <!---->
           </li>
+
+          <li routerlinkactive="active" class="nav-item">
+            <a class="nav-link" (click)="logOut()"
+              ><i class="material-icons">logout</i>
+              <p>Logout<b class="caret"></b></p
+            ></a>
+          </li>
+          }@else {
+          <li routerlinkactive="active" class="nav-item">
+            <a class="nav-link" [routerLink]="['/login']"
+              ><i class="material-icons">login</i>
+              <p>Login<b class="caret"></b></p
+            ></a>
+          </li>
+          }
         </ul>
       </div>
     </div>

@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { ClientsService } from '../../clients/data-access/clients.service';
-import { Client } from '../../clients/model/Client';
+import { Client, Client2 } from '../../clients/model/Client';
 import {
   MapInfoWindow,
   MapMarker,
@@ -15,6 +15,7 @@ import {
 } from '@angular/google-maps';
 import { DatePipe, NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { FirebaseService } from '../../services/firebase.service';
 interface MarkerProperties {
   id: string;
   position: {
@@ -44,7 +45,7 @@ interface MarkerProperties {
 export class MapsComponent {
   private clientService = inject(ClientsService);
 
-  clients: Client[] = [];
+  clients: Client2[] = [];
 
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
@@ -236,15 +237,14 @@ export class MapsComponent {
 
   generateMarkers() {
     const itemWithLocation = this.clients.filter(
-      (client) => client.location2?.location
+      (client) => client.location?.location
     );
 
     itemWithLocation.forEach((item) => {
-      if (item.location2?.location) {
+      if (item.location?.location) {
         this.markerss.push({
-          id: item.id,
-          position: item.location2.location,
-          location: item.location2.address,
+          position: item.location.location,
+          location: item.location.address,
           name: item.bride_name + ' & ' + item.groom_name,
           type: item.client_type,
           date: item.date,
@@ -255,7 +255,7 @@ export class MapsComponent {
             item.groom_name +
             '</p>' +
             '<p>' +
-            item.location2.address +
+            item.location.address +
             '</p>' +
             '<p>' +
             item.date +
@@ -307,27 +307,44 @@ export class MapsComponent {
       this.openInfo(mapMarker, marker);
     }
   }
+  clientsFirebaseService = inject(FirebaseService);
 
   ngOnInit(): void {
-    this.clientService.getAll().subscribe({
-      next: (response) => {
-        if (response.ok) {
-          if (Array.isArray(response.body)) {
-            const currentYear = new Date().getFullYear();
+    this.clientsFirebaseService.getClients().subscribe((client) => {
+      const currentYear = new Date().getFullYear();
 
-            this.clients = response.body.filter((client) => {
-              const clientDate = new Date(client.date).getFullYear();
+      this.clients = client.filter((client: any) => {
+        const clientDate = new Date(client.date.seconds * 1000).getFullYear();
 
-              return clientDate === currentYear;
-            });
+        return clientDate === currentYear;
+      });
 
-            this.generateMarkers();
-          }
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
+      this.generateMarkers();
+
+      console.log(this.clients);
     });
+
+    // this.clientService.getAll().subscribe({
+    //   next: (response) => {
+    //     if (response.ok) {
+    //       if (Array.isArray(response.body)) {
+    //         const currentYear = new Date().getFullYear();
+
+    //         this.clients = response.body.filter((client) => {
+    //           const clientDate = new Date(
+    //             client.date.seconds * 1000
+    //           ).getFullYear();
+
+    //           return clientDate === currentYear;
+    //         });
+
+    //         this.generateMarkers();
+    //       }
+    //     }
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   },
+    // });
   }
 }

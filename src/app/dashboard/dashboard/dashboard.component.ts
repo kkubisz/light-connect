@@ -27,6 +27,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { JsonPipe } from '@angular/common';
+import { FirebaseService } from '../../services/firebase.service';
+import { AuthService } from '../../authentication/auth/auth.service';
+import { updateProfile } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-dashboard',
@@ -57,6 +60,8 @@ import { JsonPipe } from '@angular/common';
 export class DashboardComponent implements OnInit {
   private clientService = inject(ClientsService);
 
+  authService = inject(AuthService);
+
   private configState = inject(AppConfigStateService);
   $selectedYear = this.configState.selectedYear;
 
@@ -65,34 +70,59 @@ export class DashboardComponent implements OnInit {
   currentYear = new Date().getFullYear();
   clientsByYear: Client[] = [];
 
-  ngOnInit(): void {
-    this.clientService.getAll().subscribe({
-      next: (response) => {
-        if (response.ok) {
-          if (Array.isArray(response.body)) {
-            this.clients = response.body;
+  clientsFirebaseService = inject(FirebaseService);
 
-            this.clientsByYear = this.getClientsByYear(this.clients);
-            this.uniqueYears = this.getUniqueYears(this.clients);
-          }
+  ngOnInit(): void {
+    this.clientsFirebaseService.getClients().subscribe((client) => {
+      this.clients = client;
+
+      this.clientsByYear = this.getClientsByYear(client);
+      this.uniqueYears = this.getUniqueYears(this.clients);
+
+      this.authService.user$.subscribe((user) => {
+        if (user) {
+          this.authService.currentUserSig.set({
+            email: user.email!,
+            username: user.displayName!,
+          });
+        } else {
+          this.authService.currentUserSig.set(null);
         }
-      },
-      error: (error) => {
-        console.log(error);
-      },
+
+        console.log(this.authService.currentUserSig());
+      });
     });
+
+    // this.clientService.getAll().subscribe({
+    //   next: (response) => {
+    //     if (response.ok) {
+    //       if (Array.isArray(response.body)) {
+    //         this.clients = response.body;
+    //         console.log('aa', this.clients);
+
+    //         this.clientsByYear = this.getClientsByYear(this.clients);
+    //         this.uniqueYears = this.getUniqueYears(this.clients);
+    //       }
+    //     }
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   },
+    // });
   }
 
   getClientsByYear(data: Client[]) {
     return data.filter((item) => {
-      const date = new Date(item.date);
+      const date = new Date(item.date.seconds * 1000);
 
       return date.getFullYear() === this.$selectedYear();
     });
   }
 
   getUniqueYears(data: Client[]): number[] {
-    const years = data.map((client) => new Date(client.date).getFullYear());
+    const years = data.map((client) =>
+      new Date(client.date.seconds * 1000).getFullYear()
+    );
 
     const uniqueYears = [...new Set(years)];
     uniqueYears.sort((a, b) => a - b);

@@ -1,0 +1,64 @@
+<div class="bg-gray-100 flex justify-center items-center h-screen">
+  <!-- Left: Image -->
+
+  <!-- Right: Login Form -->
+  <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
+    <div class="w-3/4">
+      <h1 class="text-2xl font-semibold mb-4">Sign In</h1>
+      <p>Enter your email and password to sign in</p>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="grid grid-cols-1 gap-20 text-center w-full">
+          <div>
+            <p>
+              <mat-form-field class="w-full">
+                <mat-label>Email</mat-label>
+                <input
+                  type="email"
+                  matInput
+                  placeholder="Email"
+                  formControlName="email"
+                />
+              </mat-form-field>
+            </p>
+
+            <p>
+              <mat-form-field class="w-full">
+                <mat-label>Password</mat-label>
+                <input
+                  type="password"
+                  matInput
+                  placeholder="Password"
+                  formControlName="password"
+                />
+              </mat-form-field>
+            </p>
+
+            @if (errorMessage) {
+            <p>{{ errorMessage }}</p>
+            }
+
+            <div class="button">
+              <button type="submit" [disabled]="!form.valid" mat-button>
+                Login
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Sign up  Link -->
+      <div class="mt-6 text-center">
+        <span>
+          Don't have an account?
+          <a [routerLink]="'/register'" class="text-blue-500 cursor-pointer"
+            >Sign up</a
+          ></span
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="w-1/2 h-screen hidden lg:block">
+    <img src="../../../assets/login-svg.svg" class="h-full" />
+  </div>
+</div>

@@ -84,7 +84,7 @@ export class TotalCostComponent implements OnChanges {
 
   getPreviousYearClient() {
     return this.clients.filter((client) => {
-      const date = new Date(client.date);
+      const date = new Date(client.date.seconds * 1000);
 
       return date.getFullYear() === this.$view() - 1;
     });
