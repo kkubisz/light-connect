@@ -8,7 +8,7 @@ import {
 import { ClientsService } from '../../clients/data-access/clients.service';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { Client } from '../../clients/model/Client';
+import { Client, Client2 } from '../../clients/model/Client';
 import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 @Component({
@@ -21,26 +21,20 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
 export class ClientsMonthLineChartComponent implements OnChanges {
   @Input({ required: true }) clientsData!: Client[];
 
-  private clientService = inject(ClientsService);
   lineChartData: ChartData<'line'> = { datasets: [] };
   recordCountArray: number[] = [];
 
-  dataClient: any = [];
+  dataClient: number[] = [];
   totalOrdersPerMonth: number[] = Array(12).fill(0);
-  title: string = 'Clients per Month in ';
-
-  description: string =
-    'This chart shows the number of clients per month for the year.';
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clientsData'] && changes['clientsData'].currentValue) {
       this.dataClient = this.calculateTotalOrdersPerMonth(this.clientsData);
-
       this.generateData();
     }
   }
 
-  calculateTotalOrdersPerMonth(data: Client[]) {
+  calculateTotalOrdersPerMonth(data: Client2[]) {
     this.totalOrdersPerMonth = Array(12).fill(0);
 
     data.forEach((item) => {

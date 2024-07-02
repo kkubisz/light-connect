@@ -18,6 +18,9 @@
                   placeholder="Email"
                   formControlName="email"
                 />
+                <mat-error *ngIf="form.controls.email.invalid">
+                  {{ getErrorMessage(form.controls.email) }}
+                </mat-error>
               </mat-form-field>
             </p>
 
@@ -30,6 +33,9 @@
                   placeholder="Password"
                   formControlName="password"
                 />
+                <mat-error *ngIf="form.controls.password.invalid">
+                  {{ getErrorMessage(form.controls.password) }}
+                </mat-error>
               </mat-form-field>
             </p>
 

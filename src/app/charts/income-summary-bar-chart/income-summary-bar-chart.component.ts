@@ -28,12 +28,11 @@ export class IncomeSummaryBarChartComponent {
     totalCostPerMonth: number[];
   }[] = [];
 
-  dataClient: any = [];
-
-  title: string = 'Clients per Month in ';
-
-  description: string =
-    'This chart shows the number of clients per month for the year.';
+  dataClient: {
+    clientType: string;
+    incomePricePerMonth: number[];
+    totalCostPerMonth: number[];
+  }[] = [];
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clientsData'] && changes['clientsData'].currentValue) {
@@ -55,11 +54,11 @@ export class IncomeSummaryBarChartComponent {
 
     data.forEach((item) => {
       const date = new Date(item.date.seconds * 1000);
-      const month = date.getMonth(); // Miesiące są indeksowane od 0 (styczeń) do 11 (grudzień)
+      const month = date.getMonth();
       const price = item.price;
-      const petrol = -Math.abs(item.petrol); // Upewnij się, że wartość jest ujemna
-      const additionalCost = -Math.abs(item.additional_cost); // Upewnij się, że wartość jest ujemna
-      const totalCost = petrol + additionalCost; // Sumujemy koszty
+      const petrol = -Math.abs(item.petrol);
+      const additionalCost = -Math.abs(item.additional_cost);
+      const totalCost = petrol + additionalCost;
       const clientType = item.client_type;
 
       if (!clientTypeMap[clientType]) {

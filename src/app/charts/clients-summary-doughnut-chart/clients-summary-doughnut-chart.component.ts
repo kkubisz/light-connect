@@ -16,11 +16,7 @@ export class ClientsSummaryDoughnutChartComponent implements OnChanges {
   doughnutChartData: ChartData<'doughnut'> = { datasets: [] };
   recordCountArray: number[] = [];
 
-  dataClient: any = [];
-  title: string = `Clients per Month in `;
-
-  description: string =
-    'This chart shows the number of clients per month for the year.';
+  dataClient: { [clientType: string]: number } = {};
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clientsData'] && changes['clientsData'].currentValue) {
@@ -45,8 +41,6 @@ export class ClientsSummaryDoughnutChartComponent implements OnChanges {
 
     return recordCountMap;
   }
-
-  public doughnutChartType: ChartType = 'doughnut';
 
   generateData() {
     const datasets: any[] = [];

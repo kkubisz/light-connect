@@ -16,7 +16,6 @@ import { ClientsSummaryDoughnutChartComponent } from '../../charts/clients-summa
 import { ClientsMonthLineChartComponent } from '../../charts/clients-month-line-chart/clients-month-line-chart.component';
 import { MatIconModule } from '@angular/material/icon';
 import { Client } from '../../clients/model/Client';
-import { ClientsService } from '../../clients/data-access/clients.service';
 import { TotalClientsComponent } from '../../info-boxes/total-clients/total-clients.component';
 import { TotalCostComponent } from '../../info-boxes/total-cost/total-cost.component';
 import { TotalIncomeComponent } from '../../info-boxes/total-income/total-income.component';
@@ -29,7 +28,6 @@ import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { JsonPipe } from '@angular/common';
 import { FirebaseService } from '../../services/firebase.service';
 import { AuthService } from '../../authentication/auth/auth.service';
-import { updateProfile } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-dashboard',
@@ -58,8 +56,6 @@ import { updateProfile } from '@angular/fire/auth';
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  private clientService = inject(ClientsService);
-
   authService = inject(AuthService);
 
   private configState = inject(AppConfigStateService);
@@ -88,27 +84,8 @@ export class DashboardComponent implements OnInit {
         } else {
           this.authService.currentUserSig.set(null);
         }
-
-        console.log(this.authService.currentUserSig());
       });
     });
-
-    // this.clientService.getAll().subscribe({
-    //   next: (response) => {
-    //     if (response.ok) {
-    //       if (Array.isArray(response.body)) {
-    //         this.clients = response.body;
-    //         console.log('aa', this.clients);
-
-    //         this.clientsByYear = this.getClientsByYear(this.clients);
-    //         this.uniqueYears = this.getUniqueYears(this.clients);
-    //       }
-    //     }
-    //   },
-    //   error: (error) => {
-    //     console.log(error);
-    //   },
-    // });
   }
 
   getClientsByYear(data: Client[]) {

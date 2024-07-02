@@ -5,6 +5,7 @@ import {
   FormGroup,
   FormControl,
   NonNullableFormBuilder,
+  Validators,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { AuthService } from '../auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { getErrorMessage } from '../../utlis/error-messae';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +29,7 @@ import { Router, RouterLink } from '@angular/router';
     MatIconModule,
     SnackbarComponent,
     RouterLink,
+    NgIf,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -36,9 +40,15 @@ export class RegisterComponent {
   private router = inject(Router);
 
   form = this.formBuilder.group({
-    username: this.formBuilder.control<string>(''),
-    email: this.formBuilder.control<string>(''),
-    password: this.formBuilder.control<string>(''),
+    username: this.formBuilder.control<string>('', [Validators.required]),
+    email: this.formBuilder.control<string>('', [
+      Validators.email,
+      Validators.required,
+    ]),
+    password: this.formBuilder.control<string>('', [
+      Validators.minLength(3),
+      Validators.required,
+    ]),
   });
 
   errorMessage: string | null = null;
@@ -57,5 +67,9 @@ export class RegisterComponent {
           this.errorMessage = error.code;
         },
       });
+  }
+
+  getErrorMessage(control: FormControl): string {
+    return getErrorMessage(control);
   }
 }

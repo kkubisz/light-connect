@@ -3,6 +3,8 @@ import {
   FormsModule,
   ReactiveFormsModule,
   NonNullableFormBuilder,
+  Validators,
+  FormControl,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +14,8 @@ import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { AuthService } from '../auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { SnackbarService } from '../../shared/snackbar/service/snackbar.service';
+import { NgIf } from '@angular/common';
+import { getErrorMessage } from '../../utlis/error-messae';
 
 export interface UserInteraface {
   email: string;
@@ -30,6 +34,7 @@ export interface UserInteraface {
     MatIconModule,
     SnackbarComponent,
     RouterLink,
+    NgIf,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -41,8 +46,11 @@ export class LoginComponent {
   private snackbarService = inject(SnackbarService);
 
   form = this.formBuilder.group({
-    email: this.formBuilder.control<string>(''),
-    password: this.formBuilder.control<string>(''),
+    email: this.formBuilder.control<string>('', [
+      Validators.required,
+      Validators.email,
+    ]),
+    password: this.formBuilder.control<string>('', [Validators.required]),
   });
 
   errorMessage: string | null = null;
@@ -59,5 +67,9 @@ export class LoginComponent {
         this.errorMessage = error.code;
       },
     });
+  }
+
+  getErrorMessage(control: FormControl): string {
+    return getErrorMessage(control);
   }
 }
