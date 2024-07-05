@@ -8,7 +8,6 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
   standalone: true,
   imports: [BaseChartDirective, BaseChartComponent],
   templateUrl: './clients-summary-doughnut-chart.component.html',
-  styleUrl: './clients-summary-doughnut-chart.component.scss',
 })
 export class ClientsSummaryDoughnutChartComponent implements OnChanges {
   @Input({ required: true }) clientsData!: Client[];

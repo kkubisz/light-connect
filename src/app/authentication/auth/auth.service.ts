@@ -57,4 +57,8 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.firebaseAuth.currentUser;
   }
+
+  getUser(): Observable<any> {
+    return user(this.firebaseAuth);
+  }
 }

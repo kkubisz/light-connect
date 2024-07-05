@@ -9,6 +9,7 @@ import { BaseInfoComponent } from '../base-info/base-info.component';
 import { Client } from '../../clients/model/Client';
 import { getIcon } from '../../utlis/icon-type';
 import { AppConfigStateService } from '../../config/config.state.service';
+import { getPreviousYearClient } from '../../utlis/previous-client';
 
 type TotalIncomeData = {
   currentYear: number;
@@ -24,7 +25,6 @@ type TotalIncomeData = {
   standalone: true,
   imports: [BaseInfoComponent],
   templateUrl: './total-income.component.html',
-  styleUrl: './total-income.component.scss',
 })
 export class TotalIncomeComponent implements OnChanges {
   @Input({ required: true }) clients: Client[] = [];
@@ -32,7 +32,6 @@ export class TotalIncomeComponent implements OnChanges {
 
   private configState = inject(AppConfigStateService);
   $view = this.configState.selectedYear;
-
   totalIncomeData: TotalIncomeData = {} as TotalIncomeData;
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -78,10 +77,6 @@ export class TotalIncomeComponent implements OnChanges {
   }
 
   getPreviousYearClient() {
-    return this.clients.filter((client) => {
-      const date = new Date(client.date.seconds * 1000);
-
-      return date.getFullYear() === this.$view() - 1;
-    });
+    return getPreviousYearClient(this.clients, this.$view());
   }
 }

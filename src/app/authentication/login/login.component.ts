@@ -39,7 +39,20 @@ export interface UserInteraface {
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  ngOnInit(): void {
+    this.authService.user$.subscribe((user) => {
+      if (user) {
+        console.log('aaaa', user);
+
+        return true;
+      } else {
+        console.log('false');
+
+        return false;
+      }
+    });
+  }
   private formBuilder = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -64,7 +77,7 @@ export class LoginComponent {
         this.router.navigateByUrl('/dashboard');
       },
       error: (error) => {
-        this.errorMessage = error.code;
+        this.snackbarService.show(`${error.code}`, 'warning');
       },
     });
   }

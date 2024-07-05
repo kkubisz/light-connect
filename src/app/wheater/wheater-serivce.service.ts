@@ -12,10 +12,7 @@ export class WheaterSerivceService {
   constructor(private http: HttpClient) {}
 
   getWeather(location: { lat: number; lng: number }) {
-    console.log(location);
-
     const url = `${this.apiUrl}?lat=${location.lat}&lon=${location.lng}&exclude=current,minutely,hourly,alerts&appid=${this.apiKey}&units=metric`;
-    console.log(url);
 
     return this.http.get<any>(url);
   }

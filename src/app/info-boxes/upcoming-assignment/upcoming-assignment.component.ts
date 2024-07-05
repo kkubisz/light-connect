@@ -9,7 +9,6 @@ import { JsonPipe } from '@angular/common';
   standalone: true,
   imports: [MatIcon, RouterLink, JsonPipe],
   templateUrl: './upcoming-assignment.component.html',
-  styleUrl: './upcoming-assignment.component.scss',
 })
 export class UpcomingAssignmentComponent {
   @Input({ required: true }) clients: Client[] = [];

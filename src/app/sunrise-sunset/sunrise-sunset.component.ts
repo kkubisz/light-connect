@@ -39,8 +39,6 @@ export class SunriseSunsetComponent implements OnInit {
     if (this.location && this.date) {
       const convertedDate = this.date.seconds * 1000;
 
-      console.log(convertedDate);
-
       const formatedDate = new Date(convertedDate).toISOString().split('T')[0];
       const url = `${this.sunriseURL}json?lat=${this.location.lat}&lng=${this.location.lng}&timezone=CET&date=${formatedDate}`;
       this.http.get<SunrideData>(url).subscribe((data) => {

@@ -16,7 +16,6 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
   standalone: true,
   imports: [BaseChartDirective, BaseChartComponent],
   templateUrl: './clients-month-line-chart.component.html',
-  styleUrl: './clients-month-line-chart.component.scss',
 })
 export class ClientsMonthLineChartComponent implements OnChanges {
   @Input({ required: true }) clientsData!: Client[];

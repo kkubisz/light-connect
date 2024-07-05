@@ -15,7 +15,6 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
   standalone: true,
   imports: [BaseChartDirective, BaseChartComponent],
   templateUrl: './income-summary-bar-chart.component.html',
-  styleUrl: './income-summary-bar-chart.component.scss',
 })
 export class IncomeSummaryBarChartComponent {
   @Input({ required: true }) clientsData!: Client[];

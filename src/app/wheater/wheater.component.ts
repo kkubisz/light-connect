@@ -34,16 +34,12 @@ export class WheaterComponent implements OnInit {
 
   getWeather() {
     if (this.date && this.location) {
-      console.log('aaaa');
-
       const convertedDate = this.date.seconds * 1000;
       const targetDate = new Date(convertedDate);
       const targetDateString = targetDate.toDateString();
 
       this.weatherService.getWeather(this.location).subscribe(
         (data) => {
-          console.log(data);
-
           this.weather = data;
           this.forecast = this.weather.daily.find((day: any) => {
             const dayDate = new Date(day.dt * 1000);

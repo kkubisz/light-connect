@@ -96,11 +96,7 @@ export interface PlaceSearchResult {
   styleUrl: './manage-client.component.scss',
 })
 export class ManageClientComponent implements OnInit {
-  onChangeWeddingLocation($event: MatRadioChange) {
-    throw new Error('Method not implemented.');
-  }
   private formBuilder = inject(NonNullableFormBuilder);
-  private clientService = inject(ClientsService);
   private router = inject(Router);
   private snackbarService = inject(SnackbarService);
 
@@ -188,31 +184,17 @@ export class ManageClientComponent implements OnInit {
     }),
   });
 
-  onSubmit() {
-    console.log('submit');
-  }
+  onSubmit() {}
 
   ngOnInit(): void {
-    console.log();
-
     if (this.clientId) {
       this.isEditMode = true;
-
-      console.log('edit ,mode');
 
       this.loadData(this.clientId);
     }
   }
 
   loadData(clientId: string) {
-    // this.clientService.getClient(this.clientId).subscribe({
-    //   next: (client) => {
-    //     if (client.body) {
-    //       this.generateForm(client.body);
-    //     }
-    //   },
-    // });
-
     if (this.clientId) {
       this.clientsFirebaseService
         .getSingleClinet(this.clientId)
@@ -349,19 +331,6 @@ export class ManageClientComponent implements OnInit {
           console.log(err);
         },
       });
-
-      // this.clientService.update(+this.clientId, data).subscribe({
-      //   next: (client) => {
-      //     this.snackbarService.show('All data has been saved', 'check');
-
-      //     setTimeout(() => {
-      //       this.router.navigate(['/dashboard']);
-      //     }, 1000);
-      //   },
-      //   error: (err) => {
-      //     console.log(err);
-      //   },
-      // });
     } else {
       const finalData = { ...data, client_status: initialStatuses };
 
@@ -376,33 +345,8 @@ export class ManageClientComponent implements OnInit {
             this.router.navigate(['/dashboard']);
           }, 1000);
         },
-        error: (err) => {
-          console.log(err);
-        },
+        error: (err) => {},
       });
-
-      // this.clientService.add(finalData).subscribe({
-      //   next: (client) => {
-      //     this.showSnackBar = true;
-
-      //     this.snackbarService.show(
-      //       'Congratulation. You get new client',
-      //       'check'
-      //     );
-
-      //     setTimeout(() => {
-      //       this.router.navigate(['/dashboard']);
-      //     }, 1000);
-      //   },
-      //   error: (err) => {
-      //     console.log(err);
-      //   },
-      // });
     }
-    console.log(data);
   }
-
-  // onPlaceChanged(place: any) {
-  //   this.form.get('basicInformation.location')?.setValue(place.address);
-  // }
 }

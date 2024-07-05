@@ -9,6 +9,7 @@ import { BaseInfoComponent } from '../base-info/base-info.component';
 import { Client } from '../../clients/model/Client';
 import { getIcon } from '../../utlis/icon-type';
 import { AppConfigStateService } from '../../config/config.state.service';
+import { getPreviousYearClient } from '../../utlis/previous-client';
 
 type TotalClientsData = {
   currentYear: number;
@@ -24,7 +25,6 @@ type TotalClientsData = {
   standalone: true,
   imports: [BaseInfoComponent],
   templateUrl: './total-clients.component.html',
-  styleUrl: './total-clients.component.scss',
 })
 export class TotalClientsComponent implements OnChanges {
   @Input({ required: true }) clients!: Client[];
@@ -65,10 +65,6 @@ export class TotalClientsComponent implements OnChanges {
   }
 
   getPreviousYearClient() {
-    return this.clients.filter((client) => {
-      const date = new Date(client.date.seconds * 1000);
-
-      return date.getFullYear() === this.$view() - 1;
-    });
+    return getPreviousYearClient(this.clients, this.$view());
   }
 }

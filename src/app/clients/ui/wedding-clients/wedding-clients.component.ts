@@ -1,5 +1,6 @@
 import { DatePipe, JsonPipe } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   Input,
   OnChanges,
@@ -13,7 +14,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { Client } from '../../model/Client';
+import { Client, Client2 } from '../../model/Client';
+import { mapClientType } from '../../../utlis/map-client-type';
 
 @Component({
   selector: 'app-wedding-clients',
@@ -32,11 +34,11 @@ import { Client } from '../../model/Client';
   templateUrl: './wedding-clients.component.html',
   styleUrl: './wedding-clients.component.scss',
 })
-export class WeddingClientsComponent implements OnChanges {
-  @Input({ required: true }) clientsData!: Client[];
-  weddingClients: Client[] = [];
+export class WeddingClientsComponent implements AfterViewInit {
+  @Input({ required: true }) clientsData!: Client2[];
+  weddingClients: Client2[] = [];
   displayedColumns: string[] = ['No', 'name', 'type', 'location', 'date'];
-  dataSource: MatTableDataSource<Client>;
+  dataSource: MatTableDataSource<Client2>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -45,17 +47,14 @@ export class WeddingClientsComponent implements OnChanges {
     this.dataSource = new MatTableDataSource(this.weddingClients);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['clientsData'] && changes['clientsData'].currentValue) {
-      this.weddingClients = this.clientsData.filter(
-        (client) => client.client_type === '1'
-      );
+  ngAfterViewInit(): void {
+    this.weddingClients = this.clientsData.filter(
+      (client) => client.client_type === '1'
+    );
 
-      this.dataSource = new MatTableDataSource<Client>(this.weddingClients);
-
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
+    this.dataSource = new MatTableDataSource<Client2>(this.weddingClients);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
@@ -68,13 +67,6 @@ export class WeddingClientsComponent implements OnChanges {
   }
 
   mapClientType(type: string): string {
-    switch (type) {
-      case '1':
-        return 'Church Wedding';
-      case '2':
-        return 'Civil Wedding';
-      default:
-        return 'Church Wedding';
-    }
+    return mapClientType(type);
   }
 }

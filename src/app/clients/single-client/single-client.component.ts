@@ -33,7 +33,6 @@ import { FirebaseService } from '../../services/firebase.service';
 })
 export class SingleClientComponent implements OnInit {
   @Input() clientId?: string;
-  private clientService = inject(ClientsService);
   private snackbarService = inject(SnackbarService);
   hidden = true;
 
@@ -59,7 +58,6 @@ export class SingleClientComponent implements OnInit {
           const daysDifference = timeDifference / (1000 * 3600 * 24);
 
           if (daysDifference <= 7) {
-            console.log('pokaz');
             this.showWheater = true;
           }
         });
@@ -101,23 +99,28 @@ export class SingleClientComponent implements OnInit {
       const status = this.client.client_status.find((s) => s.id === statusId);
       const finalStatus = status?.id === 6;
 
-      // if (status) {
-      //   status.status = !status.status;
+      if (status && this.clientId) {
+        status.status = !status.status;
 
-      //   this.clientService.updateClient(this.client).subscribe({
-      //     next: (response) => {
-      //       if (finalStatus && status.status) {
-      //         this.snackbarService.show(
-      //           'Wohho! You are done with it! You deserve good coffee',
-      //           'check'
-      //         );
-      //       }
-      //     },
-      //     error: (error) => {
-      //       console.log(error);
-      //     },
-      //   });
-      // }
+        console.log(status.status);
+        console.log('a', status);
+
+        this.clientsFirebaseService
+          .updateClient(this.client, this.clientId)
+          .subscribe({
+            next: (response) => {
+              if (finalStatus && status.status) {
+                this.snackbarService.show(
+                  'Wohho! You are done with it! You deserve good coffee',
+                  'check'
+                );
+              }
+            },
+            error: (error) => {
+              console.log(error);
+            },
+          });
+      }
     }
   }
 }

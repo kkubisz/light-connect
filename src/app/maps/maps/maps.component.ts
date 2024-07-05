@@ -5,8 +5,7 @@ import {
   ViewChildren,
   inject,
 } from '@angular/core';
-import { ClientsService } from '../../clients/data-access/clients.service';
-import { Client, Client2 } from '../../clients/model/Client';
+import { Client2 } from '../../clients/model/Client';
 import {
   MapInfoWindow,
   MapMarker,
@@ -43,14 +42,14 @@ interface MarkerProperties {
   styleUrl: './maps.component.scss',
 })
 export class MapsComponent {
-  private clientService = inject(ClientsService);
-
   clients: Client2[] = [];
 
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
   @ViewChildren(MapMarker) markerRefs!: QueryList<MapMarker>;
   selectedClientId: any;
+
+  clientsFirebaseService = inject(FirebaseService);
 
   mapStyle = [
     {
@@ -278,8 +277,7 @@ export class MapsComponent {
     );
 
     this.center = marker.position;
-    const bounds = new google.maps.LatLngBounds(marker.position);
-    this.map.panToBounds(bounds);
+    this.map.panTo(marker.position);
     if (mapMarker) {
       mapMarker.marker?.setAnimation(google.maps.Animation.BOUNCE);
     }
@@ -307,7 +305,6 @@ export class MapsComponent {
       this.openInfo(mapMarker, marker);
     }
   }
-  clientsFirebaseService = inject(FirebaseService);
 
   ngOnInit(): void {
     this.clientsFirebaseService.getClients().subscribe((client) => {
@@ -320,31 +317,6 @@ export class MapsComponent {
       });
 
       this.generateMarkers();
-
-      console.log(this.clients);
     });
-
-    // this.clientService.getAll().subscribe({
-    //   next: (response) => {
-    //     if (response.ok) {
-    //       if (Array.isArray(response.body)) {
-    //         const currentYear = new Date().getFullYear();
-
-    //         this.clients = response.body.filter((client) => {
-    //           const clientDate = new Date(
-    //             client.date.seconds * 1000
-    //           ).getFullYear();
-
-    //           return clientDate === currentYear;
-    //         });
-
-    //         this.generateMarkers();
-    //       }
-    //     }
-    //   },
-    //   error: (error) => {
-    //     console.log(error);
-    //   },
-    // });
   }
 }
