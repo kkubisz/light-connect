@@ -15,21 +15,31 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    loadComponent: () =>
+      import('./dashboard/dashboard/dashboard.component').then(
+        (c) => c.DashboardComponent
+      ),
     canActivate: [AuthGuard],
   },
   {
     path: 'map',
-    component: MapsComponent,
+    loadComponent: () =>
+      import('./maps/maps/maps.component').then((c) => c.MapsComponent),
     canActivate: [AuthGuard],
   },
   {
     path: 'login',
-    component: LoginComponent,
+    loadComponent: () =>
+      import('./authentication/login/login.component').then(
+        (c) => c.LoginComponent
+      ),
   },
   {
     path: 'register',
-    component: RegisterComponent,
+    loadComponent: () =>
+      import('./authentication/register/register.component').then(
+        (c) => c.RegisterComponent
+      ),
   },
   {
     path: 'clients',
@@ -38,16 +48,25 @@ export const routes: Routes = [
     children: [
       {
         path: 'add',
-        component: ManageClientComponent,
+        loadComponent: () =>
+          import('./clients/manage-client/manage-client.component').then(
+            (c) => c.ManageClientComponent
+          ),
       },
       {
         path: ':clientId',
         title: 'Client',
-        component: SingleClientComponent,
+        loadComponent: () =>
+          import('./clients/single-client/single-client.component').then(
+            (c) => c.SingleClientComponent
+          ),
       },
       {
         path: 'edit/:clientId',
-        component: ManageClientComponent,
+        loadComponent: () =>
+          import('./clients/manage-client/manage-client.component').then(
+            (c) => c.ManageClientComponent
+          ),
       },
     ],
   },
