@@ -1,4 +1,8 @@
-@if (clientsByYear.length) {
+@if(loadingState){
+
+<app-skeleton></app-skeleton>
+
+} @if (clientsByYear.length) {
 <mat-button-toggle-group
   name="selectYear"
   #group="matButtonToggleGroup"
@@ -53,6 +57,7 @@
     [clients]="this.clients"
     [clientYearly]="this.clientsByYear"
   ></app-total-clients>
+
   <app-total-income
     [clients]="this.clients"
     [clientYearly]="this.clientsByYear"

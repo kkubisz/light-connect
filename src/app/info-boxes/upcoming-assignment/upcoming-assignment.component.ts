@@ -1,5 +1,12 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { Client } from '../../clients/model/Client';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  SimpleChanges,
+} from '@angular/core';
+import { Client, Client2 } from '../../clients/model/Client';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { JsonPipe } from '@angular/common';
@@ -9,15 +16,18 @@ import { JsonPipe } from '@angular/common';
   standalone: true,
   imports: [MatIcon, RouterLink, JsonPipe],
   templateUrl: './upcoming-assignment.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UpcomingAssignmentComponent {
-  @Input({ required: true }) clients: Client[] = [];
-  upcomingAssignment: Client = {} as Client;
+  @Input({ required: true }) clients: Client2[] = [];
+  upcomingAssignment: Client2 = {} as Client2;
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if (changes['clients'] && changes['clients'].currentValue) {
-    this.getClosestRecordForCurrentYear();
-    // }
+    if (changes['clients'] && changes['clients'].currentValue) {
+      this.getClosestRecordForCurrentYear();
+      // this.cdr.markForCheck();
+    }
   }
 
   getClosestRecordForCurrentYear(): void {

@@ -239,6 +239,8 @@ export class MapsComponent {
       (client) => client.location?.location
     );
 
+    console.log(itemWithLocation);
+
     itemWithLocation.forEach((item) => {
       if (item.location?.location) {
         this.markerss.push({
@@ -257,7 +259,7 @@ export class MapsComponent {
             item.location.address +
             '</p>' +
             '<p>' +
-            item.date +
+            new Date(item.date.seconds * 1000).toLocaleDateString() +
             '</p>',
           options: {
             animation: google.maps.Animation.DROP,

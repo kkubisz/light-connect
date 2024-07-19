@@ -34,7 +34,7 @@ import { mapClientType } from '../../../utlis/map-client-type';
   templateUrl: './wedding-clients.component.html',
   styleUrl: './wedding-clients.component.scss',
 })
-export class WeddingClientsComponent implements AfterViewInit {
+export class WeddingClientsComponent implements AfterViewInit, OnChanges {
   @Input({ required: true }) clientsData!: Client2[];
   weddingClients: Client2[] = [];
   displayedColumns: string[] = ['No', 'name', 'type', 'location', 'date'];
@@ -47,7 +47,18 @@ export class WeddingClientsComponent implements AfterViewInit {
     this.dataSource = new MatTableDataSource(this.weddingClients);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['clientsData'] && changes['clientsData'].currentValue) {
+      console.log('change cos');
+      this.updateMatTable();
+    }
+  }
+
   ngAfterViewInit(): void {
+    this.updateMatTable();
+  }
+
+  updateMatTable() {
     this.weddingClients = this.clientsData.filter(
       (client) => client.client_type === '1'
     );

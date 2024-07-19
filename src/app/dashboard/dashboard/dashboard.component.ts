@@ -28,6 +28,7 @@ import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { JsonPipe } from '@angular/common';
 import { FirebaseService } from '../../services/firebase.service';
 import { AuthService } from '../../authentication/auth/auth.service';
+import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -51,12 +52,14 @@ import { AuthService } from '../../authentication/auth/auth.service';
     MatIconModule,
     SnackbarComponent,
     JsonPipe,
+    SkeletonComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
   authService = inject(AuthService);
+  loadingState = false;
 
   private configState = inject(AppConfigStateService);
   $selectedYear = this.configState.selectedYear;
@@ -69,6 +72,7 @@ export class DashboardComponent implements OnInit {
   clientsFirebaseService = inject(FirebaseService);
 
   ngOnInit(): void {
+    this.loadingState = true;
     this.clientsFirebaseService.getClients().subscribe((client) => {
       this.clients = client;
 
@@ -85,6 +89,8 @@ export class DashboardComponent implements OnInit {
           this.authService.currentUserSig.set(null);
         }
       });
+
+      this.loadingState = false;
     });
   }
 
@@ -107,8 +113,8 @@ export class DashboardComponent implements OnInit {
     return uniqueYears;
   }
 
-  onValChange(arg0: any) {
-    this.$selectedYear.set(+arg0);
+  onValChange(selectedYear: string) {
+    this.$selectedYear.set(+selectedYear);
 
     this.clientsByYear = this.getClientsByYear(this.clients);
   }

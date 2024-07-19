@@ -1,4 +1,6 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
@@ -25,10 +27,13 @@ type TotalCostData = {
   standalone: true,
   imports: [BaseInfoComponent],
   templateUrl: './total-cost.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TotalCostComponent implements OnChanges {
   @Input({ required: true }) clients: Client[] = [];
   @Input({ required: true }) clientYearly!: Client[];
+
+  private cdr = inject(ChangeDetectorRef);
 
   private configState = inject(AppConfigStateService);
   $view = this.configState.selectedYear;

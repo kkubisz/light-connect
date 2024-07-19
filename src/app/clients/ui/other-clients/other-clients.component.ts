@@ -8,7 +8,6 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Client, Client2 } from '../../model/Client';
 import { RouterLink } from '@angular/router';
-import { mapClientType } from '../../../utlis/map-client-type';
 
 @Component({
   selector: 'app-other-clients',
@@ -61,6 +60,15 @@ export class OtherClientsComponent implements AfterViewInit {
   }
 
   mapClientType(type: string): string {
-    return mapClientType(type);
+    switch (type) {
+      case '1':
+        return 'Wedding';
+      case '2':
+        return 'Familly';
+      case '3':
+        return 'Commercial';
+      default:
+        return 'Wedding';
+    }
   }
 }

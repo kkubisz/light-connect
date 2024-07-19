@@ -44,6 +44,7 @@ export interface ClientStatus {
 }
 
 export type Client2 = {
+  id?: string;
   client_type: string; // can be const
   groom_name?: string;
   groom_surname?: string;
