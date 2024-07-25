@@ -54,7 +54,6 @@
         #test="mapMarker"
         *ngFor="let marker of markerss"
         [position]="marker.position"
-        [label]="marker.label"
         [title]="marker.title"
         [options]="marker.options"
         (mapClick)="openInfo(test, marker)"

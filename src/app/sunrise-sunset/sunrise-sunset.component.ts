@@ -19,6 +19,11 @@ type SunrideData = {
   };
   status: string;
 };
+
+type LatLang = {
+  lat: number;
+  lng: number;
+};
 @Component({
   selector: 'app-sunrise-sunset',
   standalone: true,
@@ -32,7 +37,7 @@ export class SunriseSunsetComponent implements OnInit {
 
   sunriseData: SunrideData = {} as SunrideData;
 
-  @Input() location: any;
+  @Input() location!: LatLang;
   @Input({ required: true }) date!: Timestamp;
 
   ngOnInit(): void {

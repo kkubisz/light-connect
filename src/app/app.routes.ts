@@ -1,10 +1,4 @@
 import { Routes } from '@angular/router';
-import { ManageClientComponent } from './clients/manage-client/manage-client.component';
-import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
-import { SingleClientComponent } from './clients/single-client/single-client.component';
-import { MapsComponent } from './maps/maps/maps.component';
-import { LoginComponent } from './authentication/login/login.component';
-import { RegisterComponent } from './authentication/register/register.component';
 import { AuthGuard } from './authentication/auth/auth.guard.service';
 
 export const routes: Routes = [

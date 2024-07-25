@@ -104,14 +104,14 @@
         <li class="list-group-item border-0 ps-0 pt-0 text-sm">
           <strong class="text-dark">Wedding type:</strong>
           <span class="text-slate-500">
-            {{ client.wedding_type === "1" ? "Church" : "Civili" }}
+            {{ client.wedding_type === '1' ? 'Church' : 'Civili' }}
           </span>
         </li>
         <li class="list-group-item border-0 ps-0 text-sm">
           <strong class="text-dark"> Wedding location:</strong> &nbsp;
           <span class="text-slate-500">
             {{
-              client.wedding_location === "2"
+              client.wedding_location === '2'
                 ? client.civil_location
                 : client.wedding_location
             }}
@@ -154,7 +154,7 @@
           <strong class="text-dark">Other:</strong> &nbsp;
 
           <span class="text-slate-500">
-            {{ client.other ? client.other : "-" }}
+            {{ client.other ? client.other : '-' }}
           </span>
         </li>
       </ul>

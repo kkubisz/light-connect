@@ -30,13 +30,13 @@ mat-sidenav-content {
   position: relative;
 
   &::before {
-    content: "";
+    content: '';
     background-image: linear-gradient(
         to bottom,
         rgb(254, 205, 211, 0.9),
         rgb(255, 241, 242, 0.2)
       ),
-      url("../../../assets/mountain.jpg");
+      url('../../../assets/mountain.jpg');
     background-size: 100%;
     background-size: cover;
     position: absolute;

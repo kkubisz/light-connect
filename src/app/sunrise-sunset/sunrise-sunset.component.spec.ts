@@ -8,10 +8,9 @@ describe('SunriseSunsetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SunriseSunsetComponent]
-    })
-    .compileComponents();
-    
+      imports: [SunriseSunsetComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(SunriseSunsetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

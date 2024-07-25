@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { ClientsService } from '../data-access/clients.service';
-import { Client, Client2, ClientStatus } from '../model/Client';
+import { Client2 } from '../model/Client';
 import { MatChipsModule } from '@angular/material/chips';
 import { WeddingComponent } from './ui/wedding/wedding.component';
 import { FamilyComponent } from './ui/family/family.component';
@@ -35,6 +34,7 @@ export class SingleClientComponent implements OnInit {
   @Input() clientId?: string;
   private snackbarService = inject(SnackbarService);
   hidden = true;
+  location: { lat: number; lng: number } | undefined;
 
   currentDate = new Date();
   clientDate: Date = new Date();
@@ -51,6 +51,7 @@ export class SingleClientComponent implements OnInit {
           this.client = client;
 
           this.clientDate = new Date(client.date.seconds * 1000);
+          this.location = client.location?.location;
 
           const timeDifference =
             this.clientDate.getTime() - this.currentDate.getTime();
@@ -108,7 +109,7 @@ export class SingleClientComponent implements OnInit {
         this.clientsFirebaseService
           .updateClient(this.client, this.clientId)
           .subscribe({
-            next: (response) => {
+            next: () => {
               if (finalStatus && status.status) {
                 this.snackbarService.show(
                   'Wohho! You are done with it! You deserve good coffee',

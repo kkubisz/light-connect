@@ -1,5 +1,3 @@
-import { FormControl } from '@angular/forms';
-
 export function getIcon(value: number): string {
   if (value === 0) {
     return 'horizontal_rule';

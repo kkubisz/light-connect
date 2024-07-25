@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { WeatherData } from '../utlis/weather-type';
+import { LatLang } from '../utlis/lat-lang-type';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,9 @@ export class WheaterSerivceService {
 
   constructor(private http: HttpClient) {}
 
-  getWeather(location: { lat: number; lng: number }) {
+  getWeather(location: LatLang) {
     const url = `${this.apiUrl}?lat=${location.lat}&lon=${location.lng}&exclude=current,minutely,hourly,alerts&appid=${this.apiKey}&units=metric`;
 
-    return this.http.get<any>(url);
+    return this.http.get<WeatherData>(url);
   }
 }

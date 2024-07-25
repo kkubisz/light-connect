@@ -15,6 +15,7 @@ import {
 import { DatePipe, NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FirebaseService } from '../../services/firebase.service';
+import { Timestamp } from '@angular/fire/firestore';
 interface MarkerProperties {
   id: string;
   position: {
@@ -25,6 +26,23 @@ interface MarkerProperties {
   name: string;
   title: string;
 }
+
+type markerIconType = {
+  id: string;
+  position: {
+    lat: number;
+    lng: number;
+  };
+  location: string;
+  name: string;
+  type: string;
+  date: Timestamp;
+  title: string;
+  options: {
+    animation: number;
+    icon: string;
+  };
+};
 
 @Component({
   selector: 'app-maps',
@@ -47,7 +65,7 @@ export class MapsComponent {
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow;
   @ViewChildren(MapMarker) markerRefs!: QueryList<MapMarker>;
-  selectedClientId: any;
+  selectedClientId: string = '';
 
   clientsFirebaseService = inject(FirebaseService);
 
@@ -219,11 +237,13 @@ export class MapsComponent {
     styles: this.mapStyle,
   };
   infoContent = '';
-  markerss: any[] = [];
+  markerss: markerIconType[] = [];
 
   openInfo(marker: MapMarker, markerIcon: MarkerProperties) {
     this.infoContent = markerIcon.title;
     this.info.open(marker);
+    console.log('ASDASD', markerIcon.id);
+
     this.selectedClientId = markerIcon.id;
   }
 
@@ -244,6 +264,7 @@ export class MapsComponent {
     itemWithLocation.forEach((item) => {
       if (item.location?.location) {
         this.markerss.push({
+          id: item.id ?? '',
           position: item.location.location,
           location: item.location.address,
           name: item.bride_name + ' & ' + item.groom_name,
@@ -269,6 +290,8 @@ export class MapsComponent {
                 : '../../../assets/icon-other.png',
           },
         });
+
+        console.log(this.markerss);
       }
     });
   }
@@ -312,7 +335,7 @@ export class MapsComponent {
     this.clientsFirebaseService.getClients().subscribe((client) => {
       const currentYear = new Date().getFullYear();
 
-      this.clients = client.filter((client: any) => {
+      this.clients = client.filter((client: Client2) => {
         const clientDate = new Date(client.date.seconds * 1000).getFullYear();
 
         return clientDate === currentYear;

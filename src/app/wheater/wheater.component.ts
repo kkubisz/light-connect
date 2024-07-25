@@ -1,14 +1,9 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { WheaterSerivceService } from './wheater-serivce.service';
 import { DecimalPipe } from '@angular/common';
 import { Timestamp } from '@angular/fire/firestore';
+import { WeatherDaily, WeatherData } from '../utlis/weather-type';
+import { LatLang } from '../utlis/lat-lang-type';
 
 @Component({
   selector: 'app-wheater',
@@ -18,14 +13,14 @@ import { Timestamp } from '@angular/fire/firestore';
   styleUrl: './wheater.component.scss',
 })
 export class WheaterComponent implements OnInit {
-  weather: any;
+  weather!: WeatherData;
   lat: number = 0;
   lon: number = 0;
-  forecast: any;
+  forecast?: WeatherDaily;
   iconURL: string = '';
   private weatherService = inject(WheaterSerivceService);
 
-  @Input({ required: true }) location!: any;
+  @Input() location!: LatLang;
   @Input({ required: true }) date!: Timestamp;
 
   ngOnInit(): void {
@@ -40,17 +35,21 @@ export class WheaterComponent implements OnInit {
 
       this.weatherService.getWeather(this.location).subscribe(
         (data) => {
+          console.log(data);
+
           this.weather = data;
-          this.forecast = this.weather.daily.find((day: any) => {
+          this.forecast = this.weather.daily.find((day: WeatherDaily) => {
             const dayDate = new Date(day.dt * 1000);
 
             return dayDate.toDateString() === targetDateString;
           });
 
-          this.iconURL =
-            'https://openweathermap.org/img/wn/' +
-            this.forecast.weather[0].icon +
-            '@2x.png';
+          if (this.forecast) {
+            this.iconURL =
+              'https://openweathermap.org/img/wn/' +
+              this.forecast.weather[0].icon +
+              '@2x.png';
+          }
         },
         (error) => {
           console.error(error);
