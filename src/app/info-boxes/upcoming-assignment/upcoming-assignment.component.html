@@ -13,7 +13,7 @@
         Upcoming assignment
       </h4>
       <p class="font-normal text-gray-700 dark:text-gray-400 truncate">
-        {{ upcomingAssignment.location?.name ?? "-" }}
+        {{ upcomingAssignment.location?.name ?? '-' }}
       </p>
     </div>
 
@@ -23,9 +23,9 @@
     <a [routerLink]="['/clients/', upcomingAssignment.id]">
       <div class="footnote flex items-end pt-3">
         <span>{{
-          upcomingAssignment.client_type == "1"
+          upcomingAssignment.client_type == '1'
             ? upcomingAssignment.bride_name +
-              " & " +
+              ' & ' +
               upcomingAssignment.groom_name
             : upcomingAssignment.name
         }}</span>

@@ -1,11 +1,5 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
-import { ChartConfiguration, ChartData, ChartEvent } from 'chart.js';
+import { Component, Input, SimpleChanges, ViewChild } from '@angular/core';
+import { ChartConfiguration, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { Client } from '../../clients/model/Client';
 import { BaseChartComponent } from '../base-chart/base-chart.component';
@@ -115,7 +109,11 @@ export class IncomeSummaryBarChartComponent {
   };
 
   generateData() {
-    const datasets: any[] = [];
+    const datasets: {
+      data: number[];
+      label: string;
+      backgroundColor: string;
+    }[] = [];
     if (
       this.dataClient[0]?.incomePricePerMonth &&
       this.dataClient[0]?.incomePricePerMonth.length > 0

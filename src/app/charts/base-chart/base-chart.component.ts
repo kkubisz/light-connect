@@ -1,11 +1,12 @@
 import { Component, Input, inject } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { AppConfigStateService } from '../../config/config.state.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-base-chart',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [BaseChartDirective, JsonPipe],
   templateUrl: './base-chart.component.html',
   styleUrl: './base-chart.component.scss',
 })

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { Client } from '../../clients/model/Client';
 import { BaseChartComponent } from '../base-chart/base-chart.component';
@@ -42,7 +42,8 @@ export class ClientsSummaryDoughnutChartComponent implements OnChanges {
   }
 
   generateData() {
-    const datasets: any[] = [];
+    const datasets: { data: number; label: string; backgroundColor: string }[] =
+      [];
 
     if (this.dataClient[1] > 0) {
       datasets.push({
@@ -78,6 +79,8 @@ export class ClientsSummaryDoughnutChartComponent implements OnChanges {
       labels: labels,
       datasets: [{ data: Object.values(this.dataClient) }],
     };
+
+    console.log(datasets);
   }
 
   generateDataset(

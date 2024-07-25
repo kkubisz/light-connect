@@ -14,7 +14,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { Client, Client2 } from '../../model/Client';
+import { Client2 } from '../../model/Client';
 import { mapClientType } from '../../../utlis/map-client-type';
 
 @Component({

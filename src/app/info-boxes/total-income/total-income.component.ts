@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { BaseInfoComponent } from '../base-info/base-info.component';
-import { Client } from '../../clients/model/Client';
+import { Client2 } from '../../clients/model/Client';
 import { getIcon } from '../../utlis/icon-type';
 import { AppConfigStateService } from '../../config/config.state.service';
 import { getPreviousYearClient } from '../../utlis/previous-client';
@@ -27,8 +27,8 @@ type TotalIncomeData = {
   templateUrl: './total-income.component.html',
 })
 export class TotalIncomeComponent implements OnChanges {
-  @Input({ required: true }) clients: Client[] = [];
-  @Input({ required: true }) clientYearly!: Client[];
+  @Input({ required: true }) clients: Client2[] = [];
+  @Input({ required: true }) clientYearly!: Client2[];
 
   private configState = inject(AppConfigStateService);
   $view = this.configState.selectedYear;

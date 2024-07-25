@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Client, Client2 } from '../../model/Client';
+import { Client2 } from '../../model/Client';
 import { RouterLink } from '@angular/router';
 
 @Component({

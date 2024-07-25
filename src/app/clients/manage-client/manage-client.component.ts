@@ -13,7 +13,6 @@ import {
   FormsModule,
   ReactiveFormsModule,
   FormGroup,
-  FormControl,
   NonNullableFormBuilder,
 } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -27,39 +26,11 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { JsonPipe, NgFor } from '@angular/common';
 import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
-import { ClientsService } from '../data-access/clients.service';
 import { Router } from '@angular/router';
-import { Client, Client2, ClientStatus } from '../model/Client';
+import { Client2, ClientStatus } from '../model/Client';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { SnackbarService } from '../../shared/snackbar/service/snackbar.service';
 import { FirebaseService } from '../../services/firebase.service';
-
-type FormType = {
-  basicInformation: FormGroup<{
-    groom_name: FormControl<string>;
-    groom_surname: FormControl<string>;
-    groom_location: FormControl<string>;
-    groom_phone_number: FormControl<string>;
-    bride_name: FormControl<string>;
-    bride_surname: FormControl<string>;
-    bride_location: FormControl<string>;
-    bride_phone_number: FormControl<string>;
-    // location: FormControl<string>;
-    date: FormControl<string>;
-    venue: FormControl<string>;
-    client_type: FormControl<string>;
-    name: FormControl<string>;
-    wedding_type: FormControl<string>;
-    wedding_location: FormControl<string>;
-    session_type: FormControl<string>;
-  }>;
-  additionalInformation: FormGroup<{
-    price: FormControl<string>;
-    additional_cost: FormControl<string>;
-    petrol: FormControl<string>;
-    other: FormControl<string>;
-  }>;
-};
 
 export interface PlaceSearchResult {
   address: string;
@@ -112,8 +83,6 @@ export class ManageClientComponent implements OnInit {
   selectedType: string = '';
   isWedding = true;
   isChurchWedding = true;
-
-  fromValues: any;
   summary = '';
   autcompleteData = {};
 
@@ -166,7 +135,7 @@ export class ManageClientComponent implements OnInit {
       bride_surname: this.formBuilder.control<string>(''),
       bride_location: this.formBuilder.control<string>(''),
       bride_phone_number: this.formBuilder.control<string>(''),
-      date: this.formBuilder.control<any>(''),
+      date: this.formBuilder.control<Date>(new Date()),
       venue: this.formBuilder.control<string>(''),
       client_type: this.formBuilder.control<string>('1'),
       name: this.formBuilder.control<string>(''),
@@ -190,11 +159,11 @@ export class ManageClientComponent implements OnInit {
     if (this.clientId) {
       this.isEditMode = true;
 
-      this.loadData(this.clientId);
+      this.loadData();
     }
   }
 
-  loadData(clientId: string) {
+  loadData() {
     if (this.clientId) {
       this.clientsFirebaseService
         .getSingleClinet(this.clientId)
@@ -222,7 +191,7 @@ export class ManageClientComponent implements OnInit {
         bride_surname: client.bride_surname ?? '',
         bride_location: client.bride_location ?? '',
         bride_phone_number: client.bride_phone_number ?? '',
-        date: new Date(client.date.seconds * 1000) ?? Date.now(),
+        date: client.date ? new Date(client.date.seconds * 1000) : new Date(),
         venue: client.venue ?? '',
         client_type: client.client_type ?? '1',
         location: client.location?.name ?? '',
@@ -241,7 +210,7 @@ export class ManageClientComponent implements OnInit {
     });
   }
 
-  onChange($event: any) {
+  onChange($event: MatRadioChange) {
     this.isWedding = false;
 
     this.selectedType = $event.value;
@@ -252,7 +221,9 @@ export class ManageClientComponent implements OnInit {
     }
   }
 
-  onChangeWeddingType($event: any) {
+  onChangeWeddingType($event: MatRadioChange) {
+    console.log('aaa', $event);
+
     this.isChurchWedding = false;
 
     if ($event.value === '1') {
@@ -260,27 +231,31 @@ export class ManageClientComponent implements OnInit {
     }
   }
 
-  generateSummary(formGroup: any) {
+  generateSummary(formGroup: FormGroup) {
+    console.log('summary', formGroup);
+
     this.summary = '';
     Object.keys(formGroup.controls).forEach((controlName) => {
-      const control = formGroup.get(controlName);
+      const control = formGroup.get(controlName) as FormGroup;
 
       this.summary += this.mapGroupForm(controlName);
 
-      Object.keys(control.controls).forEach((singleForm) => {
-        const test = control.get(singleForm);
+      if (control instanceof FormGroup) {
+        Object.keys(control.controls).forEach((singleForm) => {
+          const test = control.get(singleForm);
 
-        if (test) {
-          if (
-            test.value ||
-            (Array.isArray(control.value) && control.value.length)
-          ) {
-            this.summary += `<p class="capitalize"><strong>${this.formatControlName(
-              singleForm
-            )}:</strong> ${test.value}</p>`;
+          if (test) {
+            if (
+              test.value ||
+              (Array.isArray(test.value) && test.value.length)
+            ) {
+              this.summary += `<p class="capitalize"><strong>${this.formatControlName(
+                singleForm
+              )}:</strong> ${test.value}</p>`;
+            }
           }
-        }
-      });
+        });
+      }
     });
 
     this.summary += '</div>';
@@ -312,7 +287,7 @@ export class ManageClientComponent implements OnInit {
 
     const fooData: any = this.autcompleteData;
 
-    let data = {
+    const data = {
       ...this.form.getRawValue().additionalInformation,
       ...this.form.getRawValue().basicInformation,
       location: fooData,
@@ -320,7 +295,9 @@ export class ManageClientComponent implements OnInit {
 
     if (this.isEditMode) {
       this.clientsFirebaseService.updateClient(data, this.clientId).subscribe({
-        next: (client) => {
+        next: () => {
+          console.log('asaaaa', data);
+
           this.snackbarService.show('All data has been saved', 'check');
 
           setTimeout(() => {
@@ -345,7 +322,9 @@ export class ManageClientComponent implements OnInit {
             this.router.navigate(['/dashboard']);
           }, 1000);
         },
-        error: (err) => {},
+        error: (err) => {
+          console.log(err);
+        },
       });
     }
   }

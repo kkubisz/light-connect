@@ -1,12 +1,6 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
-import { ClientsService } from '../../clients/data-access/clients.service';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+// import { ClientsService } from '../../clients/data-access/clients.service';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { Client, Client2 } from '../../clients/model/Client';
 import { BaseChartComponent } from '../base-chart/base-chart.component';

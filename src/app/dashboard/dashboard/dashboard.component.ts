@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { WeddingClientsComponent } from '../../clients/ui/wedding-clients/wedding-clients.component';

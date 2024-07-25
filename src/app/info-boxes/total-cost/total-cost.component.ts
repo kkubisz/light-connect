@@ -7,7 +7,7 @@ import {
   SimpleChanges,
   inject,
 } from '@angular/core';
-import { Client } from '../../clients/model/Client';
+import { Client2 } from '../../clients/model/Client';
 import { getIcon } from '../../utlis/icon-type';
 import { BaseInfoComponent } from '../base-info/base-info.component';
 import { AppConfigStateService } from '../../config/config.state.service';
@@ -30,8 +30,8 @@ type TotalCostData = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TotalCostComponent implements OnChanges {
-  @Input({ required: true }) clients: Client[] = [];
-  @Input({ required: true }) clientYearly!: Client[];
+  @Input({ required: true }) clients: Client2[] = [];
+  @Input({ required: true }) clientYearly!: Client2[];
 
   private cdr = inject(ChangeDetectorRef);
 
@@ -69,7 +69,7 @@ export class TotalCostComponent implements OnChanges {
       percentageCompare = (comparedClients / totalCost) * 100;
     }
 
-    let calculatedCost =
+    const calculatedCost =
       totalCostLastYear > totalCost
         ? +Math.abs(percentageCompare)
         : -Math.abs(percentageCompare);

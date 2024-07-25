@@ -105,7 +105,7 @@
 
         <div class="grid grid-cols-1 text-center">
           <div>
-            <h2>{{ isWedding ? "Venue" : "Location and Info" }}</h2>
+            <h2>{{ isWedding ? 'Venue' : 'Location and Info' }}</h2>
 
             <div class="grid md:grid-cols-2 gap-4 text-center">
               <mat-form-field>
@@ -186,13 +186,13 @@
         } @if (isChurchWedding) {
         <div class="grid grid-cols-1 text-center">
           <div>
-            <h2>{{ isChurchWedding ? "Church" : "Civil" }} Location</h2>
+            <h2>{{ isChurchWedding ? 'Church' : 'Civil' }} Location</h2>
 
             <div class="grid gap-4 text-center">
               <mat-form-field>
                 <mat-label
                   >{{
-                    isChurchWedding ? "Church" : "Civil"
+                    isChurchWedding ? 'Church' : 'Civil'
                   }}
                   Location</mat-label
                 >
@@ -212,7 +212,7 @@
 
         <div class="grid grid-cols-1 text-center">
           <div>
-            <h2>{{ isChurchWedding ? "Church" : "Civil" }} Location</h2>
+            <h2>{{ isChurchWedding ? 'Church' : 'Civil' }} Location</h2>
 
             <div class="grid gap-4 text-center">
               <mat-form-field>
@@ -351,7 +351,7 @@
             (click)="addClient()"
             [disabled]="!form.valid"
           >
-            {{ isEditMode ? "Edit" : "Add" }}
+            {{ isEditMode ? 'Edit' : 'Add' }}
           </button>
         </div>
       </mat-step>
