@@ -12,9 +12,12 @@ import { AppConfigStateService } from '../../config/config.state.service';
 export class BaseChartComponent {
   @Input({ required: true }) title: string = '';
   @Input({ required: true }) description: string = '';
-  @Input({ required: true }) chartData: unknown = '';
-  @Input({ required: true }) chartOptions: unknown = '';
-  @Input({ required: true }) chartType: unknown = '';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input({ required: true }) chartData: any = '';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input({ required: true }) chartOptions: any = '';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input({ required: true }) chartType: any = '';
   @Input({ required: true }) chartId: string = '';
 
   private configState = inject(AppConfigStateService);
