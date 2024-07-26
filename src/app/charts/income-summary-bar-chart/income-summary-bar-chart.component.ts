@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { Client } from '../../clients/model/Client';
+import { Client2 } from '../../clients/model/Client';
 import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 @Component({
@@ -11,7 +11,7 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
   templateUrl: './income-summary-bar-chart.component.html',
 })
 export class IncomeSummaryBarChartComponent {
-  @Input({ required: true }) clientsData!: Client[];
+  @Input({ required: true }) clientsData!: Client2[];
 
   barChartData: ChartData<'bar'> = { datasets: [] };
 
@@ -37,7 +37,7 @@ export class IncomeSummaryBarChartComponent {
     }
   }
 
-  calculateIncomeDataByClientType(data: Client[]) {
+  calculateIncomeDataByClientType(data: Client2[]) {
     const clientTypeMap: {
       [key: string]: {
         incomePricePerMonth: number[];

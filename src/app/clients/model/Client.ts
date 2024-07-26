@@ -61,7 +61,7 @@ export type Client2 = {
   venue?: string;
   location?: {
     address: string;
-    name?: string;
+    name: string;
     location: {
       lat: number;
       lng: number;

@@ -1,12 +1,8 @@
 <div class="card-body w-9/12">
   <div class="relative pt-56">
     <div class="card-header bg-rose-500 rounded-lg w-full absolute h-72 -top-8">
-      @if (showWheater && client.location?.location?.lat &&
-      client.location?.location?.lng) {
-      <app-wheater
-        [date]="client.date"
-        [location]="client.location?.location"
-      ></app-wheater>
+      @if (showWheater && location) {
+      <app-wheater [date]="client.date" [location]="location"></app-wheater>
       }
     </div>
 
@@ -24,11 +20,11 @@
       }@else {
       <!-- <app-family [client]="client"></app-family> -->
 
-      } @if (client.location?.location?.lat && client.location?.location?.lng) {
-      <app-sunrise-sunset
+      } @if (location) {
+      <!-- <app-sunrise-sunset
         [date]="client.date"
-        [location]="client.location?.location"
-      ></app-sunrise-sunset>
+        [location]="location"
+      ></app-sunrise-sunset> -->
       }
     </div>
   </div>

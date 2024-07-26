@@ -19,10 +19,10 @@ export class FirebaseService {
 
   clientsCollection = collection(this.firestore, 'clients');
 
-  getClients(): Observable<any> {
+  getClients(): Observable<Client2[]> {
     return collectionData(this.clientsCollection, {
       idField: 'id',
-    });
+    }) as Observable<Client2[]>;
   }
 
   getSingleClinet(clientId: string): Observable<any> {
@@ -31,7 +31,7 @@ export class FirebaseService {
     return from(docData(docRef));
   }
 
-  addTodo(payload: any): Observable<string> {
+  addTodo(payload: Client2): Observable<string> {
     const promise = addDoc(this.clientsCollection, payload).then(
       (response) => response.id
     );

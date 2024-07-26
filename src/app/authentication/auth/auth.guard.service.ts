@@ -1,10 +1,9 @@
-import { inject, Injectable } from '@angular/core';
-import { CanActivate, CanActivateFn, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
 import { map, take, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
-export const AuthGuard: CanActivateFn = (route, state) => {
+export const AuthGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 

@@ -8,7 +8,7 @@ import {
   user,
 } from '@angular/fire/auth';
 
-import { Observable, from, map } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { UserInteraface } from '../login/login.component';
 
 @Injectable({

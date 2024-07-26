@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { Client } from '../../clients/model/Client';
+import { Client2 } from '../../clients/model/Client';
 import { BaseChartComponent } from '../base-chart/base-chart.component';
 @Component({
   selector: 'app-clients-summary-doughnut-chart',
@@ -10,7 +10,7 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
   templateUrl: './clients-summary-doughnut-chart.component.html',
 })
 export class ClientsSummaryDoughnutChartComponent implements OnChanges {
-  @Input({ required: true }) clientsData!: Client[];
+  @Input({ required: true }) clientsData!: Client2[];
 
   doughnutChartData: ChartData<'doughnut'> = { datasets: [] };
   recordCountArray: number[] = [];
@@ -25,7 +25,7 @@ export class ClientsSummaryDoughnutChartComponent implements OnChanges {
     }
   }
 
-  calculateRecordCountByClientType(data: Client[]) {
+  calculateRecordCountByClientType(data: Client2[]) {
     const recordCountMap: { [clientType: string]: number } = {};
 
     data.forEach((item) => {

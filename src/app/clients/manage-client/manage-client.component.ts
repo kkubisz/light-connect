@@ -31,11 +31,12 @@ import { Client2, ClientStatus } from '../model/Client';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { SnackbarService } from '../../shared/snackbar/service/snackbar.service';
 import { FirebaseService } from '../../services/firebase.service';
+import { Timestamp } from '@angular/fire/firestore';
 
 export interface PlaceSearchResult {
   address: string;
-  location?: { lat: number; lng: number };
-  name?: string;
+  location: { lat: number; lng: number };
+  name: string;
 }
 
 @Component({
@@ -84,7 +85,7 @@ export class ManageClientComponent implements OnInit {
   isWedding = true;
   isChurchWedding = true;
   summary = '';
-  autcompleteData = {};
+  autcompleteData = {} as PlaceSearchResult;
 
   @ViewChild('inputField') inputField!: ElementRef;
   @Output() placeChanged = new EventEmitter<PlaceSearchResult>();
@@ -92,7 +93,7 @@ export class ManageClientComponent implements OnInit {
   constructor(private ngZone: NgZone) {}
 
   options = {
-    componentRestrictions: { country: 'pl' }, // Opcjonalnie, aby ograniczyć do Polski
+    componentRestrictions: { country: 'pl' },
   };
 
   ngAfterViewInit() {
@@ -108,13 +109,15 @@ export class ManageClientComponent implements OnInit {
           return;
         }
 
-        const result: PlaceSearchResult = {
-          address: this.inputField.nativeElement.value,
-          name: place?.name,
-          location: place?.geometry?.location?.toJSON(),
-        };
+        if (place.name && place.geometry?.location) {
+          const result: PlaceSearchResult = {
+            address: this.inputField.nativeElement.value,
+            name: place.name,
+            location: place.geometry.location.toJSON(),
+          };
 
-        this.autcompleteData = result;
+          this.autcompleteData = result;
+        }
       });
     });
   }
@@ -177,9 +180,9 @@ export class ManageClientComponent implements OnInit {
       this.isWedding = false;
     }
 
-    this.autcompleteData = { ...client.location };
-
-    console.log(this.autcompleteData);
+    if (client.location) {
+      this.autcompleteData = { ...client.location };
+    }
 
     this.form.setValue({
       basicInformation: {
@@ -285,12 +288,16 @@ export class ManageClientComponent implements OnInit {
       { id: 6, name: 'zaplacono', status: false, category: 'after' },
     ];
 
-    const fooData: any = this.autcompleteData;
+    const fooData: PlaceSearchResult = this.autcompleteData;
+
+    console.log('fooo', fooData);
+    console.log('aazxczx', this.autcompleteData);
 
     const data = {
       ...this.form.getRawValue().additionalInformation,
       ...this.form.getRawValue().basicInformation,
       location: fooData,
+      date: Timestamp.fromDate(this.form.getRawValue().basicInformation.date),
     };
 
     if (this.isEditMode) {

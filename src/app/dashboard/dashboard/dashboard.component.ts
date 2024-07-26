@@ -7,7 +7,7 @@ import { IncomeSummaryBarChartComponent } from '../../charts/income-summary-bar-
 import { ClientsSummaryDoughnutChartComponent } from '../../charts/clients-summary-doughnut-chart/clients-summary-doughnut-chart.component';
 import { ClientsMonthLineChartComponent } from '../../charts/clients-month-line-chart/clients-month-line-chart.component';
 import { MatIconModule } from '@angular/material/icon';
-import { Client } from '../../clients/model/Client';
+import { Client2 } from '../../clients/model/Client';
 import { TotalClientsComponent } from '../../info-boxes/total-clients/total-clients.component';
 import { TotalCostComponent } from '../../info-boxes/total-cost/total-cost.component';
 import { TotalIncomeComponent } from '../../info-boxes/total-income/total-income.component';
@@ -56,10 +56,10 @@ export class DashboardComponent implements OnInit {
   private configState = inject(AppConfigStateService);
   $selectedYear = this.configState.selectedYear;
 
-  clients: Client[] = [];
+  clients: Client2[] = [];
   uniqueYears: number[] = [];
   currentYear = new Date().getFullYear();
-  clientsByYear: Client[] = [];
+  clientsByYear: Client2[] = [];
 
   clientsFirebaseService = inject(FirebaseService);
 
@@ -86,7 +86,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getClientsByYear(data: Client[]) {
+  getClientsByYear(data: Client2[]) {
     return data.filter((item) => {
       const date = new Date(item.date.seconds * 1000);
 
@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getUniqueYears(data: Client[]): number[] {
+  getUniqueYears(data: Client2[]): number[] {
     const years = data.map((client) =>
       new Date(client.date.seconds * 1000).getFullYear()
     );
