@@ -49,7 +49,6 @@ export class WeddingClientsComponent implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['clientsData'] && changes['clientsData'].currentValue) {
-      console.log('change cos');
       this.updateMatTable();
     }
   }

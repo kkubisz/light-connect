@@ -43,12 +43,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
       if (user) {
-        console.log('aaaa', user);
-
         return true;
       } else {
-        console.log('false');
-
         return false;
       }
     });

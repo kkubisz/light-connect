@@ -217,7 +217,6 @@ export class ManageClientComponent implements OnInit {
     this.isWedding = false;
 
     this.selectedType = $event.value;
-    console.log(this.selectedType);
 
     if (this.selectedType === '1') {
       this.isWedding = true;
@@ -225,8 +224,6 @@ export class ManageClientComponent implements OnInit {
   }
 
   onChangeWeddingType($event: MatRadioChange) {
-    console.log('aaa', $event);
-
     this.isChurchWedding = false;
 
     if ($event.value === '1') {
@@ -235,8 +232,6 @@ export class ManageClientComponent implements OnInit {
   }
 
   generateSummary(formGroup: FormGroup) {
-    console.log('summary', formGroup);
-
     this.summary = '';
     Object.keys(formGroup.controls).forEach((controlName) => {
       const control = formGroup.get(controlName) as FormGroup;
@@ -288,23 +283,16 @@ export class ManageClientComponent implements OnInit {
       { id: 6, name: 'zaplacono', status: false, category: 'after' },
     ];
 
-    const fooData: PlaceSearchResult = this.autcompleteData;
-
-    console.log('fooo', fooData);
-    console.log('aazxczx', this.autcompleteData);
-
     const data = {
       ...this.form.getRawValue().additionalInformation,
       ...this.form.getRawValue().basicInformation,
-      location: fooData,
+      location: this.autcompleteData,
       date: Timestamp.fromDate(this.form.getRawValue().basicInformation.date),
     };
 
     if (this.isEditMode) {
       this.clientsFirebaseService.updateClient(data, this.clientId).subscribe({
         next: () => {
-          console.log('asaaaa', data);
-
           this.snackbarService.show('All data has been saved', 'check');
 
           setTimeout(() => {

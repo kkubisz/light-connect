@@ -102,10 +102,6 @@ export class SingleClientComponent implements OnInit {
 
       if (status && this.clientId) {
         status.status = !status.status;
-
-        console.log(status.status);
-        console.log('a', status);
-
         this.clientsFirebaseService
           .updateClient(this.client, this.clientId)
           .subscribe({

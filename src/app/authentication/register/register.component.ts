@@ -54,7 +54,6 @@ export class RegisterComponent {
 
   submit() {
     const rawValue = this.form.getRawValue();
-    console.log(rawValue);
 
     this.authService
       .register(rawValue.email, rawValue.username, rawValue.password)

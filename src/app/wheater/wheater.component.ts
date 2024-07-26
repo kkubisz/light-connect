@@ -35,8 +35,6 @@ export class WheaterComponent implements OnInit {
 
       this.weatherService.getWeather(this.location).subscribe(
         (data) => {
-          console.log(data);
-
           this.weather = data;
           this.forecast = this.weather.daily.find((day: WeatherDaily) => {
             const dayDate = new Date(day.dt * 1000);

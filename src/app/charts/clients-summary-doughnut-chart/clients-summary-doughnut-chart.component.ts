@@ -79,8 +79,6 @@ export class ClientsSummaryDoughnutChartComponent implements OnChanges {
       labels: labels,
       datasets: [{ data: Object.values(this.dataClient) }],
     };
-
-    console.log(datasets);
   }
 
   generateDataset(

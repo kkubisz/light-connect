@@ -242,8 +242,6 @@ export class MapsComponent {
   openInfo(marker: MapMarker, markerIcon: MarkerProperties) {
     this.infoContent = markerIcon.title;
     this.info.open(marker);
-    console.log('ASDASD', markerIcon.id);
-
     this.selectedClientId = markerIcon.id;
   }
 
@@ -258,8 +256,6 @@ export class MapsComponent {
     const itemWithLocation = this.clients.filter(
       (client) => client.location?.location
     );
-
-    console.log(itemWithLocation);
 
     itemWithLocation.forEach((item) => {
       if (item.location?.location) {
@@ -290,8 +286,6 @@ export class MapsComponent {
                 : '../../../assets/icon-other.png',
           },
         });
-
-        console.log(this.markerss);
       }
     });
   }
@@ -320,7 +314,6 @@ export class MapsComponent {
 
   openMapInfoWindow(marker: MarkerProperties) {
     this.selectedClientId = marker.id;
-    console.log(marker.id);
 
     const mapMarker = this.markerRefs.find(
       (ref) => ref.marker?.getTitle() === marker.title
